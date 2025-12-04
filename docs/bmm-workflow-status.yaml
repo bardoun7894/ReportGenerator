@@ -1,0 +1,9 @@
+project_name: ReportCreator
+current_phase: analysis
+workflow_status:
+  product-brief: c:\Users\Chairi\ReportCreator\docs\analysis\product-brief-ReportCreator-2025-12-03.md
+  prd: pending
+  ux-design: pending
+  architecture: pending
+  implementation: pending
+last_updated: 2025-12-03T22:47:50+01:00
