@@ -10,8 +10,10 @@ import {
           DocumentTextIcon,
           FlagIcon,
           BuildingLibraryIcon,
-          PhotoIcon
+          PhotoIcon,
+          ListBulletIcon
 } from "@heroicons/react/24/outline";
+import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -78,7 +80,7 @@ export default function TemplateModernMinimal({ formData, reportTypeTitle }: Tem
                                                             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">الفئة المستهدفة</p>
                                                             <div className="flex flex-col gap-2">
                                                                       {formData.targetAudience?.map((a, i) => (
-                                                                                <span key={i} className="text-sm text-gray-600 border-b border-gray-100 pb-1 w-fit">{a}</span>
+                                                                                <span key={i} className="text-sm text-gray-600 border-b border-gray-100 pb-1 w-fit">{getAudienceLabel(a)}</span>
                                                                       ))}
                                                             </div>
                                                   </div>
@@ -92,9 +94,29 @@ export default function TemplateModernMinimal({ formData, reportTypeTitle }: Tem
                                         {/* Right Column - Narrative (8 cols) */}
                                         <div className="col-span-12 md:col-span-8">
                                                   <div className="mb-12">
-                                                            <p className="text-xl text-gray-800 leading-loose font-light">
-                                                                      {formData.executionSteps || 'وصف الفعالية...'}
-                                                            </p>
+                                                            {/* Description */}
+                                                            {extractDescription(formData.executionSteps) && (
+                                                                      <p className="text-xl text-gray-800 leading-loose font-light mb-6">
+                                                                                {extractDescription(formData.executionSteps)}
+                                                                      </p>
+                                                            )}
+                                                            {/* Steps */}
+                                                            {extractSteps(formData.executionSteps).length > 0 && (
+                                                                      <div className="space-y-3">
+                                                                                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                                                                          <ListBulletIcon className="w-4 h-4" />
+                                                                                          خطوات التنفيذ
+                                                                                </p>
+                                                                                {extractSteps(formData.executionSteps).map((step, idx) => (
+                                                                                          <div key={idx} className="flex gap-3 items-start border-b border-gray-100 pb-2">
+                                                                                                    <span className="w-6 h-6 bg-gray-800 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                                                                                              {idx + 1}
+                                                                                                    </span>
+                                                                                                    <p className="text-gray-700">{step}</p>
+                                                                                          </div>
+                                                                                ))}
+                                                                      </div>
+                                                            )}
                                                   </div>
 
                                                   {/* Photo Gallery - Masonry style */}

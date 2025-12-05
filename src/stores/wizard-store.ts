@@ -13,6 +13,7 @@ export interface WizardFormData {
           // Step 1: Organization
           educationRegion?: string;  // NEW: إدارة التعليم
           schoolName?: string;
+          schoolType?: string;       // NEW: نوع المدرسة (ابتدائي، متوسط، ثانوي)
           department?: string;
           schoolLogo?: string;
 
@@ -154,3 +155,45 @@ export const DOMAIN_OPTIONS = [
           'الديني',
           'المهني',
 ];
+
+export const LOCATION_OPTIONS = [
+          'فناء المدرسة',
+          'الملعب الرياضي',
+          'المسرح المدرسي',
+          'قاعة الاجتماعات',
+          'المختبر',
+          'المكتبة',
+          'الفصول الدراسية',
+          'غرفة مصادر التعلم',
+          'المصلى',
+          'ساحة المدرسة',
+          'قاعة النشاط',
+          'أخرى',
+];
+
+export const DURATION_OPTIONS = [
+          'ساعة واحدة',
+          'ساعتان',
+          'نصف يوم',
+          'يوم واحد',
+          'يومان',
+          'ثلاثة أيام',
+          'أسبوع',
+          'أسبوعان',
+          'شهر',
+          'فصل دراسي',
+];
+
+export const SCHOOL_TYPE_OPTIONS = [
+          'ابتدائي',
+          'متوسط',
+          'ثانوي',
+];
+
+// Typical participant counts based on school type in Saudi Arabia
+export const PARTICIPANTS_COUNT_OPTIONS: Record<string, number[]> = {
+          'ابتدائي': [50, 100, 150, 200, 250, 300, 350, 400],
+          'متوسط': [50, 100, 150, 200, 250, 300, 350],
+          'ثانوي': [50, 100, 150, 200, 250, 300, 350, 400, 450, 500],
+          'default': [25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500],
+};

@@ -57,13 +57,9 @@ export default function TemplateAcademicExcellence({ formData, reportTypeTitle }
                                                   </div>
                                         </div>
 
-                                        {formData.schoolLogo ? (
+                                        {formData.schoolLogo && (
                                                   <div className="w-24 h-24 mx-auto mb-4 relative">
                                                             <Image src={formData.schoolLogo} alt="Logo" fill className="object-contain" />
-                                                  </div>
-                                        ) : (
-                                                  <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center">
-                                                            <BuildingLibraryIcon className="w-16 h-16 text-[#881337] opacity-50" />
                                                   </div>
                                         )}
                                         <h1 className="text-4xl font-bold text-[#881337] mb-2 tracking-wide">{formData.schoolName}</h1>

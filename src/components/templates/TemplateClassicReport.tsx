@@ -39,8 +39,8 @@ export default function TemplateClassicReport({ formData, reportTypeTitle }: Tem
                                                   </div>
 
                                                   {/* School Logo - Left */}
-                                                  <div className="text-left">
-                                                            {formData.schoolLogo ? (
+                                                  {formData.schoolLogo && (
+                                                            <div className="text-left">
                                                                       <div className="w-20 h-20 border-2 border-[#006747] rounded-lg overflow-hidden bg-white relative">
                                                                                 <Image
                                                                                           src={formData.schoolLogo}
@@ -49,12 +49,8 @@ export default function TemplateClassicReport({ formData, reportTypeTitle }: Tem
                                                                                           className="object-contain p-1"
                                                                                 />
                                                                       </div>
-                                                            ) : (
-                                                                      <div className="w-20 h-20 border-2 border-[#006747] rounded-lg flex items-center justify-center bg-white">
-                                                                                <BuildingLibraryIcon className="w-10 h-10 text-[#006747]" />
-                                                                      </div>
-                                                            )}
-                                                  </div>
+                                                            </div>
+                                                  )}
                                         </div>
 
                                         {/* School Name */}

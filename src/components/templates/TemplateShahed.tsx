@@ -9,8 +9,11 @@ import {
           AcademicCapIcon,
           DocumentTextIcon,
           FlagIcon,
-          BuildingLibraryIcon
+          BuildingLibraryIcon,
+          CameraIcon,
+          ListBulletIcon
 } from "@heroicons/react/24/outline";
+import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -48,18 +51,14 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                   </div>
                                         </div>
 
-                                        <div className="flex flex-col items-center w-32 pt-2">
-                                                  {formData.schoolLogo ? (
+                                        {formData.schoolLogo && (
+                                                  <div className="flex flex-col items-center w-32 pt-2">
                                                             <div className="w-24 h-24 relative mb-2">
                                                                       <Image src={formData.schoolLogo} alt="School Logo" fill className="object-contain" />
                                                             </div>
-                                                  ) : (
-                                                            <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center border border-gray-100">
-                                                                      <BuildingLibraryIcon className="w-10 h-10 text-gray-300" />
-                                                            </div>
-                                                  )}
-                                                  <p className="text-gray-500 text-[10px] text-center mt-1">شعار المدرسة</p>
-                                        </div>
+                                                            <p className="text-gray-500 text-[10px] text-center mt-1">شعار المدرسة</p>
+                                                  </div>
+                                        )}
                               </header>
 
                               {/* Main Content */}
@@ -109,7 +108,7 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                             <div className="flex flex-wrap gap-2">
                                                                       {formData.targetAudience?.map((audience, idx) => (
                                                                                 <span key={idx} className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700">
-                                                                                          {audience}
+                                                                                          {getAudienceLabel(audience)}
                                                                                 </span>
                                                                       ))}
                                                             </div>
@@ -132,9 +131,31 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                                       <DocumentTextIcon className="w-6 h-6 text-[#C8A051]" />
                                                                       وصف البرنامج
                                                             </h3>
-                                                            <p className="text-gray-700 leading-loose text-justify bg-white p-4 rounded-xl border border-gray-50 shadow-sm">
-                                                                      {formData.executionSteps}
-                                                            </p>
+                                                            <div className="bg-white p-4 rounded-xl border border-gray-50 shadow-sm">
+                                                                      {/* Description paragraph */}
+                                                                      {extractDescription(formData.executionSteps) && (
+                                                                                <p className="text-gray-700 leading-loose text-justify mb-4">
+                                                                                          {extractDescription(formData.executionSteps)}
+                                                                                </p>
+                                                                      )}
+                                                                      {/* Execution Steps as numbered list */}
+                                                                      {extractSteps(formData.executionSteps).length > 0 && (
+                                                                                <div className="space-y-2">
+                                                                                          <h4 className="font-bold text-[#006C35] text-sm flex items-center gap-2 mb-2">
+                                                                                                    <ListBulletIcon className="w-4 h-4" />
+                                                                                                    خطوات التنفيذ
+                                                                                          </h4>
+                                                                                          {extractSteps(formData.executionSteps).map((step, idx) => (
+                                                                                                    <div key={idx} className="flex gap-2 items-start">
+                                                                                                              <span className="w-5 h-5 bg-[#006C35] text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                                                                                                        {idx + 1}
+                                                                                                              </span>
+                                                                                                              <p className="text-gray-700 text-sm leading-relaxed">{step}</p>
+                                                                                                    </div>
+                                                                                          ))}
+                                                                                </div>
+                                                                      )}
+                                                            </div>
                                                   </div>
 
                                                   {/* Goals */}
@@ -158,7 +179,7 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                   {/* Photos */}
                                                   <div>
                                                             <h3 className="font-bold text-[#006C35] text-lg mb-3 flex items-center gap-2 border-b border-gray-100 pb-2">
-                                                                      <span className="text-2xl">📷</span>
+                                                                      <CameraIcon className="w-6 h-6 text-[#006C35]" />
                                                                       التوثيق الصوري
                                                             </h3>
                                                             <div className="grid grid-cols-2 gap-4">

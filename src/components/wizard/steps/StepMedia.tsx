@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ArrowUpTrayIcon,
   XMarkIcon,
@@ -8,16 +8,39 @@ import {
   QrCodeIcon,
   CameraIcon,
   PencilSquareIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 import { PhotoIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useWizardStore } from "@/stores/wizard-store";
+import { useUserProfileStore } from "@/stores/user-profile-store";
 
 export default function StepMedia() {
   const { formData, updateFormData } = useWizardStore();
+  const { profile, updateProfile } = useUserProfileStore();
   const [dragOver, setDragOver] = useState(false);
+  const [saveToProfile, setSaveToProfile] = useState(true);
+  const [hasLoadedProfile, setHasLoadedProfile] = useState(false);
 
   const photos = formData.photos || [];
   const MAX_PHOTOS = 2;
+
+  // Load saved profile data for personnel on first render
+  useEffect(() => {
+    if (!hasLoadedProfile && (profile.activityLeaderName || profile.principalName)) {
+      updateFormData({
+        activityLeaderName: formData.activityLeaderName || profile.activityLeaderName,
+        principalName: formData.principalName || profile.principalName,
+      });
+      setHasLoadedProfile(true);
+    }
+  }, [profile, hasLoadedProfile]);
+
+  const handlePersonnelChange = (field: string, value: string) => {
+    updateFormData({ [field]: value });
+    if (saveToProfile) {
+      updateProfile({ [field]: value });
+    }
+  };
 
   const handleFiles = (files: File[]) => {
     const remainingSlots = MAX_PHOTOS - photos.length;
@@ -137,6 +160,30 @@ export default function StepMedia() {
             <PencilSquareIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
             التوقيعات
           </label>
+
+          {/* Show saved info notice */}
+          {(profile.activityLeaderName || profile.principalName) && (
+            <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3">
+              <CheckCircleIcon className="w-5 h-5 text-green-600 dark:text-green-400" />
+              <span className="text-green-700 dark:text-green-300 text-sm">تم تحميل بيانات التوقيعات المحفوظة مسبقاً</span>
+            </div>
+          )}
+
+          {/* Save checkbox */}
+          <div className="mb-4">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={saveToProfile}
+                onChange={(e) => setSaveToProfile(e.target.checked)}
+                className="w-4 h-4 accent-primary"
+              />
+              <span className="text-sm text-slate-600 dark:text-white/70">
+                حفظ الأسماء للاستخدام في التقارير القادمة
+              </span>
+            </label>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Activity Leader */}
             <div>
@@ -147,7 +194,7 @@ export default function StepMedia() {
               <input
                 type="text"
                 value={formData.activityLeaderName || ""}
-                onChange={(e) => updateFormData({ activityLeaderName: e.target.value })}
+                onChange={(e) => handlePersonnelChange('activityLeaderName', e.target.value)}
                 placeholder="اسم رائد النشاط"
                 className="form-input"
               />
@@ -161,7 +208,7 @@ export default function StepMedia() {
               <input
                 type="text"
                 value={formData.principalName || ""}
-                onChange={(e) => updateFormData({ principalName: e.target.value })}
+                onChange={(e) => handlePersonnelChange('principalName', e.target.value)}
                 placeholder="اسم مدير المدرسة"
                 className="form-input"
               />

@@ -57,18 +57,16 @@ export default function TemplateTealFrame({ formData, reportTypeTitle }: Templat
                                                             </div>
 
                                                             {/* School Logo - Left */}
-                                                            <div className="w-14 h-14 rounded-full bg-white/20 overflow-hidden flex items-center justify-center relative">
-                                                                      {formData.schoolLogo ? (
+                                                            {formData.schoolLogo && (
+                                                                      <div className="w-14 h-14 rounded-full bg-white/20 overflow-hidden flex items-center justify-center relative">
                                                                                 <Image
                                                                                           src={formData.schoolLogo}
                                                                                           alt="شعار المدرسة"
                                                                                           fill
                                                                                           className="object-contain p-1"
                                                                                 />
-                                                                      ) : (
-                                                                                <BuildingLibraryIcon className="w-8 h-8 text-white/80" />
-                                                                      )}
-                                                            </div>
+                                                                      </div>
+                                                            )}
                                                   </div>
                                         </div>
 

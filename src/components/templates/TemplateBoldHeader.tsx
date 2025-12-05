@@ -29,7 +29,7 @@ export default function TemplateBoldHeader({ formData, reportTypeTitle }: Templa
                                         {/* Top Bar */}
                                         <div className="flex justify-between items-center mb-8 relative z-10">
                                                   <div className="flex items-center gap-3">
-                                                            {formData.schoolLogo ? (
+                                                            {formData.schoolLogo && (
                                                                       <div className="w-14 h-14 bg-white rounded-xl overflow-hidden relative">
                                                                                 <Image
                                                                                           src={formData.schoolLogo}
@@ -37,10 +37,6 @@ export default function TemplateBoldHeader({ formData, reportTypeTitle }: Templa
                                                                                           fill
                                                                                           className="object-contain p-1"
                                                                                 />
-                                                                      </div>
-                                                            ) : (
-                                                                      <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
-                                                                                <BuildingLibraryIcon className="w-8 h-8 text-white" />
                                                                       </div>
                                                             )}
                                                             <div className="text-white">

@@ -28,18 +28,16 @@ export default function TemplateProfessionalGrid({ formData, reportTypeTitle }: 
                               <div className="bg-gradient-to-l from-[#1E40AF] via-[#3B82F6] to-[#1E40AF] p-8">
                                         <div className="flex items-center justify-between max-w-3xl mx-auto">
                                                   {/* Logo */}
-                                                  <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg relative overflow-hidden">
-                                                            {formData.schoolLogo ? (
+                                                  {formData.schoolLogo && (
+                                                            <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg relative overflow-hidden">
                                                                       <Image
                                                                                 src={formData.schoolLogo}
                                                                                 alt="الشعار"
                                                                                 fill
                                                                                 className="object-contain p-1"
                                                                       />
-                                                            ) : (
-                                                                      <BuildingLibraryIcon className="w-10 h-10 text-[#1E40AF]" />
-                                                            )}
-                                                  </div>
+                                                            </div>
+                                                  )}
 
                                                   {/* School Info */}
                                                   <div className="text-white text-center flex-1 px-6">

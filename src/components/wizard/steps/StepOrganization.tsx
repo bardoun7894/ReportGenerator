@@ -1,14 +1,42 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
           BuildingOffice2Icon,
           AcademicCapIcon,
 } from "@heroicons/react/24/solid";
-import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
+import { ArrowUpTrayIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { useWizardStore, EDUCATION_REGIONS } from "@/stores/wizard-store";
+import { useUserProfileStore } from "@/stores/user-profile-store";
 
 export default function StepOrganization() {
           const { formData, updateFormData } = useWizardStore();
+          const { profile, updateProfile } = useUserProfileStore();
+          const [saveToProfile, setSaveToProfile] = useState(true);
+          const [hasLoadedProfile, setHasLoadedProfile] = useState(false);
+
+          // Load saved profile data on first render
+          useEffect(() => {
+                    if (!hasLoadedProfile && profile.schoolName) {
+                              // Pre-fill form with saved profile data
+                              updateFormData({
+                                        educationRegion: formData.educationRegion || profile.educationRegion,
+                                        schoolName: formData.schoolName || profile.schoolName,
+                                        schoolType: formData.schoolType || profile.schoolType,
+                                        department: formData.department || profile.department,
+                                        schoolLogo: formData.schoolLogo || profile.schoolLogo,
+                              });
+                              setHasLoadedProfile(true);
+                    }
+          }, [profile, hasLoadedProfile]);
+
+          // Save to profile when form data changes (if checkbox is enabled)
+          const handleFieldChange = (field: string, value: string) => {
+                    updateFormData({ [field]: value });
+                    if (saveToProfile) {
+                              updateProfile({ [field]: value });
+                    }
+          };
 
           const handleLogoUpload = (file: File) => {
                     if (file.size > 5 * 1024 * 1024) {
@@ -18,7 +46,11 @@ export default function StepOrganization() {
 
                     const reader = new FileReader();
                     reader.onloadend = () => {
-                              updateFormData({ schoolLogo: reader.result as string });
+                              const logoData = reader.result as string;
+                              updateFormData({ schoolLogo: logoData });
+                              if (saveToProfile) {
+                                        updateProfile({ schoolLogo: logoData });
+                              }
                     };
                     reader.readAsDataURL(file);
           };
@@ -29,7 +61,29 @@ export default function StepOrganization() {
                                         <BuildingOffice2Icon className="w-7 h-7 text-primary" />
                                         <span>بيانات الجهة</span>
                               </h2>
-                              <p className="text-slate-600 dark:text-white/60 mb-8">أدخل معلومات المدرسة والإدارة التعليمية</p>
+                              <p className="text-slate-600 dark:text-white/60 mb-6">أدخل معلومات المدرسة والإدارة التعليمية</p>
+
+                              {/* Save to Profile Checkbox */}
+                              {profile.schoolName && (
+                                        <div className="mb-6 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3">
+                                                  <CheckCircleIcon className="w-5 h-5 text-green-600 dark:text-green-400" />
+                                                  <span className="text-green-700 dark:text-green-300 text-sm">تم تحميل بيانات المدرسة المحفوظة مسبقاً</span>
+                                        </div>
+                              )}
+
+                              <div className="mb-4">
+                                        <label className="flex items-center gap-2 cursor-pointer">
+                                                  <input
+                                                            type="checkbox"
+                                                            checked={saveToProfile}
+                                                            onChange={(e) => setSaveToProfile(e.target.checked)}
+                                                            className="w-4 h-4 accent-primary"
+                                                  />
+                                                  <span className="text-sm text-slate-600 dark:text-white/70">
+                                                            حفظ البيانات للاستخدام في التقارير القادمة
+                                                  </span>
+                                        </label>
+                              </div>
 
                               <div className="space-y-6">
                                         {/* Education Region */}
@@ -40,7 +94,7 @@ export default function StepOrganization() {
                                                   </label>
                                                   <select
                                                             value={formData.educationRegion || ""}
-                                                            onChange={(e) => updateFormData({ educationRegion: e.target.value })}
+                                                            onChange={(e) => handleFieldChange('educationRegion', e.target.value)}
                                                             className="form-input"
                                                   >
                                                             <option value="">اختر إدارة التعليم</option>
@@ -61,10 +115,28 @@ export default function StepOrganization() {
                                                   <input
                                                             type="text"
                                                             value={formData.schoolName || ""}
-                                                            onChange={(e) => updateFormData({ schoolName: e.target.value })}
-                                                            placeholder="مثال: مدرسة الملك فهد الابتدائية"
+                                                            onChange={(e) => handleFieldChange('schoolName', e.target.value)}
+                                                            placeholder="مثال: مدرسة الملك فهد"
                                                             className="form-input"
                                                   />
+                                        </div>
+
+                                        {/* School Type */}
+                                        <div>
+                                                  <label className="block text-sm font-medium mb-2 flex items-center gap-2 text-slate-700 dark:text-white">
+                                                            <AcademicCapIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
+                                                            نوع المدرسة <span className="text-accent">*</span>
+                                                  </label>
+                                                  <select
+                                                            value={formData.schoolType || ""}
+                                                            onChange={(e) => handleFieldChange('schoolType', e.target.value)}
+                                                            className="form-input"
+                                                  >
+                                                            <option value="">اختر نوع المدرسة</option>
+                                                            <option value="ابتدائي">ابتدائي</option>
+                                                            <option value="متوسط">متوسط</option>
+                                                            <option value="ثانوي">ثانوي</option>
+                                                  </select>
                                         </div>
 
                                         {/* Department */}
@@ -75,7 +147,7 @@ export default function StepOrganization() {
                                                   <input
                                                             type="text"
                                                             value={formData.department || ""}
-                                                            onChange={(e) => updateFormData({ department: e.target.value })}
+                                                            onChange={(e) => handleFieldChange('department', e.target.value)}
                                                             placeholder="مثال: قسم النشاط الطلابي"
                                                             className="form-input"
                                                   />

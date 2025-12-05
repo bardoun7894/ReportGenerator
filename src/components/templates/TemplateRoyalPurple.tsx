@@ -63,18 +63,16 @@ export default function TemplateRoyalPurple({ formData, reportTypeTitle }: Templ
                                                             </div>
 
                                                             {/* School Logo or Star */}
-                                                            <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center relative overflow-hidden">
-                                                                      {formData.schoolLogo ? (
+                                                            {formData.schoolLogo && (
+                                                                      <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center relative overflow-hidden">
                                                                                 <Image
                                                                                           src={formData.schoolLogo}
                                                                                           alt="الشعار"
                                                                                           fill
                                                                                           className="object-contain p-1"
                                                                                 />
-                                                                      ) : (
-                                                                                <StarIcon className="w-8 h-8 text-white" />
-                                                                      )}
-                                                            </div>
+                                                                      </div>
+                                                            )}
                                                   </div>
                                         </div>
 

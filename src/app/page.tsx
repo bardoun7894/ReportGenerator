@@ -53,13 +53,6 @@ export default function LandingPage() {
                               {/* Hero Section */}
                               <main className="relative z-10 px-6 lg:px-12 py-8 lg:py-12">
                                         <div className="max-w-7xl mx-auto">
-                                                  {/* Trust Badge */}
-                                                  <div className="flex justify-center lg:justify-start mb-6">
-                                                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-full text-sm shadow-sm dark:shadow-none">
-                                                                      <AcademicCapIcon className="w-4 h-4 text-primary" />
-                                                                      <span className="text-slate-700 dark:text-slate-200 font-medium">متوافق مع معايير وزارة التعليم</span>
-                                                            </div>
-                                                  </div>
 
                                                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                                                             {/* Text Content */}

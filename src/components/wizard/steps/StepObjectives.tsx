@@ -11,46 +11,11 @@ import {
 import { FlagIcon } from "@heroicons/react/24/solid";
 import { useWizardStore, EnhancedText } from "@/stores/wizard-store";
 
-// Generate objectives based on activity data
-const generateObjectivesFromData = (data: any): string[] => {
-          const objectives: string[] = [];
-          const title = data.title || "";
-          const audience = data.targetAudience || [];
-          const domain = data.domain || "";
-
-          // Base objectives pattern based on activity title
-          if (title) {
-                    objectives.push(`تعريف المشاركين بأهمية ${title} ودوره في تعزيز البيئة التعليمية.`);
-                    objectives.push(`تنمية الوعي لدى الحضور بالجوانب المختلفة المتعلقة ب${title}.`);
-          }
-
-          // Domain-specific objectives
-          if (domain === 'المواطنة') {
-                    objectives.push("تعزيز الهوية الوطنية والانتماء والولاء للوطن.");
-          } else if (domain === 'التطوعي') {
-                    objectives.push("غرس قيم العمل التطوعي وخدمة المجتمع لدى المشاركين.");
-          } else if (domain === 'الصحي') {
-                    objectives.push("نشر الوعي الصحي وتعزيز السلوكيات الصحية السليمة.");
-          }
-
-          // Audience-specific objectives
-          if (audience.includes("students")) {
-                    objectives.push("إكساب الطلاب مهارات جديدة وتعزيز قدراتهم الإبداعية.");
-          }
-          if (audience.includes("teachers")) {
-                    objectives.push("تبادل الخبرات بين المعلمين وتطوير الممارسات التربوية.");
-          }
-          if (audience.includes("parents")) {
-                    objectives.push("تعزيز الشراكة بين المدرسة والأسرة في دعم العملية التعليمية.");
-          }
-
-          return objectives.slice(0, 4);
-};
-
 export default function StepObjectives() {
           const { formData, updateFormData } = useWizardStore();
           const [isGenerating, setIsGenerating] = useState(false);
           const [hasGenerated, setHasGenerated] = useState(false);
+          const [generationError, setGenerationError] = useState<string | null>(null);
 
           const objectives = formData.objectives || [];
 
@@ -62,19 +27,53 @@ export default function StepObjectives() {
 
           const handleGenerateAll = async () => {
                     setIsGenerating(true);
-                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    setGenerationError(null);
 
-                    const generatedTexts = generateObjectivesFromData(formData);
-                    const newObjectives: EnhancedText[] = generatedTexts.map(text => ({
-                              original: text,
-                              enhanced: text,
-                              isAIEnhanced: true,
-                              acceptedAt: new Date(),
-                    }));
+                    try {
+                              const response = await fetch('/api/generate', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                                  title: formData.title,
+                                                  domain: formData.domain,
+                                                  targetAudience: formData.targetAudience,
+                                                  location: formData.location,
+                                                  participantsCount: formData.participantsCount,
+                                                  executors: formData.executors,
+                                                  duration: formData.duration,
+                                                  schoolName: formData.schoolName,
+                                        }),
+                              });
 
-                    updateFormData({ objectives: newObjectives });
-                    setIsGenerating(false);
-                    setHasGenerated(true);
+                              if (!response.ok) {
+                                        throw new Error('فشل في توليد الأهداف');
+                              }
+
+                              const data = await response.json();
+
+                              const newObjectives: EnhancedText[] = (data.objectives || []).map((text: string) => ({
+                                        original: text,
+                                        enhanced: text,
+                                        isAIEnhanced: true,
+                                        acceptedAt: new Date(),
+                              }));
+
+                              updateFormData({ objectives: newObjectives });
+                    } catch (error) {
+                              console.error('Generation error:', error);
+                              setGenerationError('حدث خطأ أثناء توليد الأهداف. حاول مرة أخرى.');
+
+                              // Fallback to basic objectives
+                              const fallbackObjectives: EnhancedText[] = [
+                                        { original: 'تحقيق أهداف الفعالية التعليمية', enhanced: 'تحقيق أهداف الفعالية التعليمية', isAIEnhanced: false },
+                                        { original: 'تعزيز مهارات المشاركين', enhanced: 'تعزيز مهارات المشاركين', isAIEnhanced: false },
+                                        { original: 'إثراء البيئة التعليمية', enhanced: 'إثراء البيئة التعليمية', isAIEnhanced: false },
+                              ];
+                              updateFormData({ objectives: fallbackObjectives });
+                    } finally {
+                              setIsGenerating(false);
+                              setHasGenerated(true);
+                    }
           };
 
           const addObjective = () => {

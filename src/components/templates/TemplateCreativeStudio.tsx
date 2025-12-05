@@ -36,15 +36,13 @@ export default function TemplateCreativeStudio({ formData, reportTypeTitle }: Te
                               {/* Glass Header */}
                               <div className="relative z-10 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 mb-8 flex items-center justify-between">
                                         <div className="flex items-center gap-4">
-                                                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-cyan-500 p-[2px]">
-                                                            <div className="w-full h-full bg-[#0f172a] rounded-[10px] flex items-center justify-center overflow-hidden">
-                                                                      {formData.schoolLogo ? (
+                                                  {formData.schoolLogo && (
+                                                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-cyan-500 p-[2px]">
+                                                                      <div className="w-full h-full bg-[#0f172a] rounded-[10px] flex items-center justify-center overflow-hidden">
                                                                                 <Image src={formData.schoolLogo} alt="Logo" width={48} height={48} className="object-contain" />
-                                                                      ) : (
-                                                                                <RocketLaunchIcon className="w-8 h-8 text-white" />
-                                                                      )}
+                                                                      </div>
                                                             </div>
-                                                  </div>
+                                                  )}
                                                   <div>
                                                             <div className="flex items-center gap-2">
                                                                       <div className="w-5 h-5 relative">

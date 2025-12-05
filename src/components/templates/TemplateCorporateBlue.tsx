@@ -36,13 +36,11 @@ export default function TemplateCorporateBlue({ formData, reportTypeTitle }: Tem
                                         <div className="flex items-center justify-between">
                                                   <div className="flex items-center gap-5">
                                                             {/* School Logo */}
-                                                            <div className="w-16 h-16 relative flex items-center justify-center bg-slate-50 rounded-lg border border-slate-100 overflow-hidden">
-                                                                      {formData.schoolLogo ? (
+                                                            {formData.schoolLogo && (
+                                                                      <div className="w-16 h-16 relative flex items-center justify-center bg-slate-50 rounded-lg border border-slate-100 overflow-hidden">
                                                                                 <Image src={formData.schoolLogo} alt="الشعار" fill className="object-contain p-1" />
-                                                                      ) : (
-                                                                                <BuildingLibraryIcon className="w-8 h-8 text-slate-400" />
-                                                                      )}
-                                                            </div>
+                                                                      </div>
+                                                            )}
 
                                                             {/* Ministry Info */}
                                                             <div className="flex flex-col">

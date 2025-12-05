@@ -57,17 +57,13 @@ export default function TemplateOfficialGov({ formData, reportTypeTitle }: Templ
                                                   </div>
                                         </div>
 
-                                        <div className="text-center w-1/4">
-                                                  {formData.schoolLogo ? (
+                                        {formData.schoolLogo && (
+                                                  <div className="text-center w-1/4">
                                                             <div className="w-24 h-24 mx-auto relative">
                                                                       <Image src={formData.schoolLogo} alt="School Logo" fill className="object-contain" />
                                                             </div>
-                                                  ) : (
-                                                            <div className="w-24 h-24 bg-gray-100 rounded-full mx-auto flex items-center justify-center text-gray-400">
-                                                                      <BuildingLibraryIcon className="w-12 h-12 opacity-50" />
-                                                            </div>
-                                                  )}
-                                        </div>
+                                                  </div>
+                                        )}
                               </div>
 
                               {/* Main Content Area with Watermark */}

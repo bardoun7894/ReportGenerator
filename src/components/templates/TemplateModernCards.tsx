@@ -51,7 +51,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                   </div>
 
                                                   {/* School Logo - Left Side */}
-                                                  {formData.schoolLogo ? (
+                                                  {formData.schoolLogo && (
                                                             <div className="w-14 h-14 bg-white rounded-xl overflow-hidden shadow-lg relative">
                                                                       <Image
                                                                                 src={formData.schoolLogo}
@@ -59,10 +59,6 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                                                 fill
                                                                                 className="object-contain p-1"
                                                                       />
-                                                            </div>
-                                                  ) : (
-                                                            <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center border border-white/20">
-                                                                      <BuildingLibraryIcon className="w-8 h-8 text-white/80" />
                                                             </div>
                                                   )}
                                         </div>

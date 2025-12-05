@@ -59,18 +59,16 @@ export default function TemplateSunsetOrange({ formData, reportTypeTitle }: Temp
                                                             </div>
 
                                                             {/* School Logo */}
-                                                            <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center relative overflow-hidden">
-                                                                      {formData.schoolLogo ? (
+                                                            {formData.schoolLogo && (
+                                                                      <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center relative overflow-hidden">
                                                                                 <Image
                                                                                           src={formData.schoolLogo}
                                                                                           alt="الشعار"
                                                                                           fill
                                                                                           className="object-contain p-1"
                                                                                 />
-                                                                      ) : (
-                                                                                <BuildingLibraryIcon className="w-8 h-8 text-white/80" />
-                                                                      )}
-                                                            </div>
+                                                                      </div>
+                                                            )}
                                                   </div>
                                         </div>
 

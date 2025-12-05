@@ -58,18 +58,16 @@ export default function TemplateNavyExecutive({ formData, reportTypeTitle }: Tem
                                                             </div>
 
                                                             {/* School Logo */}
-                                                            <div className="w-14 h-14 rounded-full bg-white/15 flex items-center justify-center relative overflow-hidden">
-                                                                      {formData.schoolLogo ? (
+                                                            {formData.schoolLogo && (
+                                                                      <div className="w-14 h-14 rounded-full bg-white/15 flex items-center justify-center relative overflow-hidden">
                                                                                 <Image
                                                                                           src={formData.schoolLogo}
                                                                                           alt="الشعار"
                                                                                           fill
                                                                                           className="object-contain p-1"
                                                                                 />
-                                                                      ) : (
-                                                                                <BuildingLibraryIcon className="w-8 h-8 text-white/80" />
-                                                                      )}
-                                                            </div>
+                                                                      </div>
+                                                            )}
                                                   </div>
                                         </div>
 
