@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap');
+
+/* CSS Variables */
+@layer base {
+  :root {
+    /* Light Theme (Default) */
+    --bg-start: #F8FAFC;
+    --bg-end: #F1F5F9;
+
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
+
+    --primary: #10B981;
+    --accent: #F59E0B;
+    --ai: #8B5CF6;
+
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(226, 232, 240, 0.8);
+    --glass-blur: 12px;
+
+    --glow-green: 0 4px 20px rgba(16, 185, 129, 0.15);
+    --glow-golden: 0 4px 20px rgba(245, 158, 11, 0.15);
+    --glow-purple: 0 4px 20px rgba(139, 92, 246, 0.15);
+  }
+
+  .dark {
+    /* Dark Theme */
+    --bg-start: #0F172A;
+    --bg-end: #1E293B;
+
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-tertiary: rgba(255, 255, 255, 0.5);
+
+    --primary: #10B981;
+    --accent: #FFB300;
+    --ai: #8B5CF6;
+
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-blur: 10px;
+
+    --glow-green: 0 0 20px rgba(16, 185, 129, 0.3);
+    --glow-golden: 0 0 20px rgba(255, 179, 0, 0.3);
+    --glow-purple: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+}
+
+/* Base Styles */
+html {
+  direction: rtl;
+}
+
+body {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+  min-height: 100vh;
+  color: var(--text-primary);
+  @apply transition-colors duration-300;
+}
+
+/* Glass Card Component */
+@layer components {
+  .glass-card {
+    @apply bg-white/70 dark:bg-white/10 backdrop-blur-lg border border-slate-200 dark:border-white/20 rounded-2xl shadow-sm dark:shadow-none transition-colors duration-300;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    @apply shadow-lg dark:shadow-glow-green border-primary/30 dark:border-primary/50 -translate-y-1;
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-accent hover:bg-yellow-500 dark:hover:bg-accent-hover text-white dark:text-black font-semibold py-3 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg dark:shadow-none;
+  }
+
+  .btn-primary:hover {
+    @apply dark:shadow-glow-golden;
+  }
+
+  .btn-secondary {
+    @apply bg-primary hover:bg-emerald-600 dark:hover:bg-primary-hover text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg dark:shadow-none;
+  }
+
+  .btn-secondary:hover {
+    @apply dark:shadow-glow-green;
+  }
+
+  /* AI Suggestion Box */
+  .ai-suggestion-box {
+    @apply bg-purple-50 dark:bg-ai/15 border border-purple-200 dark:border-ai/50 rounded-xl p-4 animate-slide-up transition-colors duration-300;
+    box-shadow: var(--glow-purple);
+  }
+
+  /* Form Input */
+  .form-input {
+    @apply w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/20 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-sm dark:shadow-none;
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    @apply h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden transition-colors duration-300;
+  }
+
+  .progress-fill {
+    @apply h-full bg-primary rounded-full transition-all duration-500;
+  }
+
+  /* Floating Orbs Animation */
+  .floating-orb {
+    @apply absolute rounded-full blur-3xl opacity-20 dark:opacity-30 animate-float mix-blend-multiply dark:mix-blend-normal transition-opacity duration-300;
+  }
+
+  .orb-green {
+    @apply bg-emerald-300 dark:bg-primary;
+  }
+
+  .orb-golden {
+    @apply bg-amber-300 dark:bg-accent;
+  }
+
+  .orb-purple {
+    @apply bg-purple-300 dark:bg-ai;
+  }
+
+  /* Slow spin animation for glow ring */
+  .animate-spin-slow {
+    animation: spin 20s linear infinite;
+  }
+}
+
+/* RTL Utilities */
+@layer utilities {
+  .rtl {
+    direction: rtl;
+  }
+
+  .ltr {
+    direction: ltr;
+  }
+}
+
+/* Selection Color */
+::selection {
+  background: var(--primary);
+  color: white;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-start);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--green);
+}
