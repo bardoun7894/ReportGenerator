@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reportgenerator
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  # Optional: MongoDB if needed
+  mongodb:
+    image: mongo:7
+    container_name: reportgenerator-db
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+    profiles:
+      - with-db
+
+volumes:
+  mongodb_data:
