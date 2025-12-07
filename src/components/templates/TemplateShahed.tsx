@@ -28,7 +28,7 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                               dir="rtl"
                     >
                               {/* Header */}
-                              <header className="px-12 py-8 flex justify-between items-start border-b-2 border-[#006C35]">
+                              <header className="px-4 sm:px-8 md:px-12 py-4 sm:py-6 md:py-8 flex flex-wrap sm:flex-nowrap justify-center sm:justify-between items-start gap-4 border-b-2 border-[#006C35]">
                                         <div className="flex flex-col items-center w-32">
                                                   <div className="w-24 h-24 relative mb-2">
                                                             <Image
@@ -62,9 +62,9 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                               </header>
 
                               {/* Main Content */}
-                              <main className="flex-1 p-12 grid grid-cols-12 gap-8">
+                              <main className="flex-1 p-4 sm:p-8 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                                         {/* Right Column: Info & Stats */}
-                                        <div className="col-span-4 space-y-6">
+                                        <div className="col-span-1 md:col-span-4 space-y-6">
                                                   {/* Info Card */}
                                                   <div className="bg-[#F9FAFB] rounded-xl p-6 border border-gray-100 shadow-sm">
                                                             <h3 className="font-bold text-[#006C35] mb-4 flex items-center gap-2">
@@ -124,7 +124,7 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                         </div>
 
                                         {/* Left Column: Description, Goals, Photos */}
-                                        <div className="col-span-8 space-y-8">
+                                        <div className="col-span-1 md:col-span-8 space-y-6 md:space-y-8">
                                                   {/* Description */}
                                                   <div>
                                                             <h3 className="font-bold text-[#006C35] text-lg mb-3 flex items-center gap-2 border-b border-gray-100 pb-2">
@@ -182,7 +182,7 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                                       <CameraIcon className="w-6 h-6 text-[#006C35]" />
                                                                       التوثيق الصوري
                                                             </h3>
-                                                            <div className="grid grid-cols-2 gap-4">
+                                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                                       {formData.photos?.slice(0, 2).map((photo, idx) => (
                                                                                 <div key={idx} className="aspect-video relative rounded-xl overflow-hidden border border-gray-200 shadow-sm group">
                                                                                           <Image src={photo} alt={`Photo ${idx + 1}`} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -197,12 +197,12 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                               <footer className="mt-auto bg-[#F9FAFB] border-t border-gray-200 p-8">
                                         <div className="flex justify-around items-end max-w-3xl mx-auto">
                                                   <div className="text-center">
-                                                            <p className="text-gray-500 text-sm mb-4">رائد النشاط</p>
+                                                            <p className="text-gray-500 text-sm mb-4">{formData.activityLeaderTitle || "رائد النشاط"}</p>
                                                             <p className="font-bold text-[#006C35] text-lg">{formData.activityLeaderName}</p>
                                                   </div>
 
                                                   <div className="text-center">
-                                                            <p className="text-gray-500 text-sm mb-4">مدير المدرسة</p>
+                                                            <p className="text-gray-500 text-sm mb-4">{formData.principalTitle || "مدير المدرسة"}</p>
                                                             <p className="font-bold text-[#006C35] text-lg">{formData.principalName}</p>
                                                   </div>
                                         </div>

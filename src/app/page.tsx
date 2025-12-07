@@ -30,7 +30,7 @@ export default function LandingPage() {
                                                   </div>
                                                   <div>
                                                             <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">نماذج تعليمية</span>
-                                                            <p className="text-[10px] text-slate-500 dark:text-slate-400 -mt-1">منصة التقارير الذكية</p>
+                                                            <p className="text-[10px] text-slate-500 dark:text-slate-400 -mt-1">منصة تقاريرك</p>
                                                   </div>
                                         </div>
                                         <div className="flex items-center gap-4">
@@ -133,12 +133,31 @@ export default function LandingPage() {
                                                                                 <div className="absolute bottom-20 -left-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-4 py-2 rounded-xl animate-float shadow-lg border border-slate-100 dark:border-white/10"
                                                                                           style={{ animationDelay: '1.5s' }}>
                                                                                           <div className="flex items-center gap-2">
-                                                                                                    <div className="w-8 h-8 bg-amber-100 dark:bg-accent/20 rounded-lg flex items-center justify-center">
-                                                                                                              <ArrowDownTrayIcon className="w-4 h-4 text-amber-600 dark:text-accent" />
+                                                                                                    <div className="w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+                                                                                                              <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                                                                                                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z" />
+                                                                                                                        <path d="M8 12h8v2H8zm0 4h8v2H8z" />
+                                                                                                              </svg>
                                                                                                     </div>
                                                                                                     <div>
                                                                                                               <p className="text-xs text-slate-500 dark:text-slate-400">تصدير فوري</p>
                                                                                                               <p className="text-sm font-semibold text-slate-900 dark:text-white">PDF جاهز</p>
+                                                                                                    </div>
+                                                                                          </div>
+                                                                                </div>
+
+                                                                                <div className="absolute bottom-36 -right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-4 py-2 rounded-xl animate-float shadow-lg border border-slate-100 dark:border-white/10"
+                                                                                          style={{ animationDelay: '2s' }}>
+                                                                                          <div className="flex items-center gap-2">
+                                                                                                    <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                                                                                                              <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                                                                                                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z" />
+                                                                                                                        <path d="M8.5 13.5L10 16l1.5-2.5h1.5L11 17l2 3.5h-1.5L10 18l-1.5 2.5H7l2-3.5-2-4z" />
+                                                                                                              </svg>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                              <p className="text-xs text-slate-500 dark:text-slate-400">تصدير فوري</p>
+                                                                                                              <p className="text-sm font-semibold text-slate-900 dark:text-white">Word جاهز</p>
                                                                                                     </div>
                                                                                           </div>
                                                                                 </div>

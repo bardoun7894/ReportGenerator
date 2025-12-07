@@ -17,5 +17,14 @@ export { default as TemplateModernMinimal } from './TemplateModernMinimal';
 export { default as TemplateAcademicExcellence } from './TemplateAcademicExcellence';
 export { default as TemplateCreativeStudio } from './TemplateCreativeStudio';
 export { default as TemplateOfficialGov } from './TemplateOfficialGov';
+// Exchange Visit Template
+export { default as TemplateExchangeVisit } from './TemplateExchangeVisit';
+// Shahed Series - 5 variants
+export { default as TemplateShahedExact } from './TemplateShahedExact';
+export { default as TemplateShahedModern } from './TemplateShahedModern';
+export { default as TemplateShahedCompact } from './TemplateShahedCompact';
+export { default as TemplateShahedDark } from './TemplateShahedDark';
+export { default as TemplateShahedElegant } from './TemplateShahedElegant';
+export { default as TemplateShahedNew } from './TemplateShahedNew';
 
 

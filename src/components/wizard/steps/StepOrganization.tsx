@@ -125,17 +125,17 @@ export default function StepOrganization() {
                                         <div>
                                                   <label className="block text-sm font-medium mb-2 flex items-center gap-2 text-slate-700 dark:text-white">
                                                             <AcademicCapIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                                                            نوع المدرسة <span className="text-accent">*</span>
+                                                            المرحلة <span className="text-accent">*</span>
                                                   </label>
                                                   <select
                                                             value={formData.schoolType || ""}
                                                             onChange={(e) => handleFieldChange('schoolType', e.target.value)}
                                                             className="form-input"
                                                   >
-                                                            <option value="">اختر نوع المدرسة</option>
-                                                            <option value="ابتدائي">ابتدائي</option>
-                                                            <option value="متوسط">متوسط</option>
-                                                            <option value="ثانوي">ثانوي</option>
+                                                            <option value="">اختر المرحلة</option>
+                                                            <option value="ابتدائي"> المرحلة الابتدائية</option>
+                                                            <option value="متوسط"> المرحلة المتوسطة</option>
+                                                            <option value="ثانوي"> المرحلة الثانوية</option>
                                                   </select>
                                         </div>
 

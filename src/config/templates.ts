@@ -1,7 +1,8 @@
 // Template Configuration for Report Preview
-// 10 Professional Infographic Templates
+// Professional Infographic Templates
 
 export type TemplateId =
+          | 'exchange-visit'
           | 'shahed'
           | 'modern-cards'
           | 'professional-grid'
@@ -17,7 +18,13 @@ export type TemplateId =
           | 'modern-minimal'
           | 'academic-excellence'
           | 'creative-studio'
-          | 'official-gov';
+          | 'official-gov'
+          | 'shahed-exact'
+          | 'shahed-modern'
+          | 'shahed-compact'
+          | 'shahed-dark'
+          | 'shahed-elegant'
+          | 'shahed-new';
 
 
 export interface TemplateConfig {
@@ -26,6 +33,7 @@ export interface TemplateConfig {
           nameAr: string;
           description: string;
           icon: string;
+          featured?: boolean; // NEW: Mark as featured template
           colorScheme: {
                     primary: string;
                     secondary: string;
@@ -35,12 +43,28 @@ export interface TemplateConfig {
 }
 
 export const TEMPLATES: TemplateConfig[] = [
+          // Featured Templates (Top 5)
+          {
+                    id: 'exchange-visit',
+                    name: 'Exchange Visit',
+                    nameAr: 'الزيارة التبادلية',
+                    description: 'Template for exchange visit reports between schools',
+                    icon: '🔄',
+                    featured: true,
+                    colorScheme: {
+                              primary: '#006C35',
+                              secondary: '#008542',
+                              accent: '#C8A051',
+                              background: '#ffffff',
+                    },
+          },
           {
                     id: 'shahed',
                     name: 'Shahed Report',
                     nameAr: 'تقرير شاهد',
                     description: 'Official standard report style',
                     icon: '🇸🇦',
+                    featured: true,
                     colorScheme: {
                               primary: '#006C35',
                               secondary: '#C8A051',
@@ -54,6 +78,7 @@ export const TEMPLATES: TemplateConfig[] = [
                     nameAr: 'البطاقات الحديثة',
                     description: 'Two-column layout with data cards and photo gallery',
                     icon: '🎴',
+                    featured: true,
                     colorScheme: {
                               primary: '#0C8662',
                               secondary: '#006747',
@@ -61,6 +86,35 @@ export const TEMPLATES: TemplateConfig[] = [
                               background: '#FAFAFA',
                     },
           },
+          {
+                    id: 'shahed-elegant',
+                    name: 'Shahed Elegant',
+                    nameAr: 'شاهد الأنيق',
+                    description: 'Premium elegant design with gold borders and refined typography',
+                    icon: '👑',
+                    featured: true,
+                    colorScheme: {
+                              primary: '#006C35',
+                              secondary: '#C8A051',
+                              accent: '#E5C76B',
+                              background: '#FFFEF8',
+                    },
+          },
+          {
+                    id: 'official-gov',
+                    name: 'Official Government',
+                    nameAr: 'الحكومي الرسمي',
+                    description: 'Official Saudi green theme with watermarks',
+                    icon: '🇸🇦',
+                    featured: true,
+                    colorScheme: {
+                              primary: '#006C35',
+                              secondary: '#C8A051',
+                              accent: '#f3f4f6',
+                              background: '#ffffff',
+                    },
+          },
+          // Other Templates
           {
                     id: 'professional-grid',
                     name: 'Professional Grid',
@@ -113,7 +167,6 @@ export const TEMPLATES: TemplateConfig[] = [
                               background: '#FFFEF7',
                     },
           },
-          // New JSON-based templates
           {
                     id: 'teal-frame',
                     name: 'Teal Frame',
@@ -179,7 +232,6 @@ export const TEMPLATES: TemplateConfig[] = [
                               background: '#FFFBEB',
                     },
           },
-          // Set 3: Professional Series
           {
                     id: 'corporate-blue',
                     name: 'Corporate Blue',
@@ -232,17 +284,70 @@ export const TEMPLATES: TemplateConfig[] = [
                               background: '#0f172a',
                     },
           },
+          // Shahed Series
           {
-                    id: 'official-gov',
-                    name: 'Official Government',
-                    nameAr: 'الحكومي الرسمي',
-                    description: 'Official Saudi green theme with watermarks',
-                    icon: '🇸🇦',
+                    id: 'shahed-exact',
+                    name: 'Shahed Exact',
+                    nameAr: 'شاهد الأصلي',
+                    description: '100% accurate replica of the original Shahed PDF template',
+                    icon: '🎯',
                     colorScheme: {
                               primary: '#006C35',
                               secondary: '#C8A051',
-                              accent: '#f3f4f6',
-                              background: '#ffffff',
+                              accent: '#F9FAFB',
+                              background: '#FFFFFF',
+                    },
+          },
+          {
+                    id: 'shahed-modern',
+                    name: 'Shahed Modern',
+                    nameAr: 'شاهد العصري',
+                    description: 'Modern glassmorphism version with smooth animations',
+                    icon: '✨',
+                    colorScheme: {
+                              primary: '#059669',
+                              secondary: '#10B981',
+                              accent: '#F59E0B',
+                              background: '#ECFDF5',
+                    },
+          },
+          {
+                    id: 'shahed-compact',
+                    name: 'Shahed Compact',
+                    nameAr: 'شاهد المختصر',
+                    description: 'Single-column compact layout for simpler reports',
+                    icon: '📝',
+                    colorScheme: {
+                              primary: '#006C35',
+                              secondary: '#C8A051',
+                              accent: '#F3F4F6',
+                              background: '#FFFFFF',
+                    },
+          },
+          {
+                    id: 'shahed-dark',
+                    name: 'Shahed Dark',
+                    nameAr: 'شاهد الداكن',
+                    description: 'Dark mode version with emerald green accents',
+                    icon: '🌙',
+                    colorScheme: {
+                              primary: '#10B981',
+                              secondary: '#059669',
+                              accent: '#F59E0B',
+                              background: '#0F172A',
+                    },
+          },
+          {
+                    id: 'shahed-new',
+                    name: 'Shahed New',
+                    nameAr: 'شاهد الجديد',
+                    description: 'Gradient version of the Shahed template with premium styling',
+                    icon: '🆕',
+                    colorScheme: {
+                              primary: '#006C35',
+                              secondary: '#C8A051',
+                              accent: '#F9FAFB',
+                              background: '#FFFFFF',
                     },
           },
 ];
@@ -253,4 +358,12 @@ export function getTemplateConfig(id: TemplateId): TemplateConfig | undefined {
 
 export function getDefaultTemplate(): TemplateConfig {
           return TEMPLATES[0];
+}
+
+export function getFeaturedTemplates(): TemplateConfig[] {
+          return TEMPLATES.filter(t => t.featured);
+}
+
+export function getOtherTemplates(): TemplateConfig[] {
+          return TEMPLATES.filter(t => !t.featured);
 }

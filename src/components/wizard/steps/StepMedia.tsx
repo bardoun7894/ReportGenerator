@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import {
   ArrowUpTrayIcon,
   XMarkIcon,
@@ -22,14 +23,17 @@ export default function StepMedia() {
   const [hasLoadedProfile, setHasLoadedProfile] = useState(false);
 
   const photos = formData.photos || [];
-  const MAX_PHOTOS = 2;
+  const MIN_PHOTOS = 1;
+  const MAX_PHOTOS = 4;
 
   // Load saved profile data for personnel on first render
   useEffect(() => {
     if (!hasLoadedProfile && (profile.activityLeaderName || profile.principalName)) {
       updateFormData({
         activityLeaderName: formData.activityLeaderName || profile.activityLeaderName,
+        activityLeaderTitle: formData.activityLeaderTitle || profile.activityLeaderTitle,
         principalName: formData.principalName || profile.principalName,
+        principalTitle: formData.principalTitle || profile.principalTitle,
       });
       setHasLoadedProfile(true);
     }
@@ -74,6 +78,11 @@ export default function StepMedia() {
     updateFormData({ photos: updated });
   };
 
+  // Generate QR code URL using a free API
+  const getQRCodeUrl = (url: string) => {
+    return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`;
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-2 flex items-center gap-3 text-slate-900 dark:text-white">
@@ -88,7 +97,7 @@ export default function StepMedia() {
           <label className="block text-sm font-medium mb-4 flex items-center gap-2 text-slate-700 dark:text-white">
             <CameraIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
             صور الشواهد <span className="text-accent">*</span>
-            <span className="text-slate-400 dark:text-white/40 mr-2">(صورة واحدة كحد أدنى - صورتين كحد أقصى)</span>
+            <span className="text-slate-400 dark:text-white/40 mr-2">(صورة واحدة كحد أدنى - 4 صور كحد أقصى)</span>
           </label>
 
           {/* Upload Area */}
@@ -120,13 +129,13 @@ export default function StepMedia() {
                 <ArrowUpTrayIcon className="w-6 h-6 text-slate-400 dark:text-white/60" />
               </div>
               <p className="text-slate-700 dark:text-white mb-1">اسحب الصور هنا أو اضغط للرفع</p>
-              <p className="text-slate-400 dark:text-white/40 text-sm">PNG, JPG حتى 5MB</p>
+              <p className="text-slate-400 dark:text-white/40 text-sm">PNG, JPG حتى 5MB ({photos.length}/{MAX_PHOTOS})</p>
             </label>
           </div>
 
           {/* Photo Preview Grid */}
           {photos.length > 0 && (
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
               {photos.map((photo, index) => (
                 <div
                   key={index}
@@ -139,15 +148,26 @@ export default function StepMedia() {
                   >
                     <XMarkIcon className="w-4 h-4 text-white" />
                   </button>
-                  <div className="w-full h-full flex items-center justify-center text-slate-300 dark:text-white/30">
-                    <PhotoIcon className="w-12 h-12" />
-                  </div>
-                  <div className="absolute bottom-2 right-2 text-sm text-white/60 bg-black/50 px-2 py-1 rounded">
-                    صورة الشاهد {index === 0 ? 'الأول' : 'الثاني'}
+                  {/* Actual Image Preview */}
+                  <Image
+                    src={photo}
+                    alt={`صورة ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute bottom-2 right-2 text-sm text-white bg-black/50 px-2 py-1 rounded">
+                    صورة {index + 1}
                   </div>
                 </div>
               ))}
             </div>
+          )}
+
+          {/* Minimum photos warning */}
+          {photos.length < MIN_PHOTOS && (
+            <p className="text-amber-600 dark:text-amber-400 text-sm mt-2">
+              ⚠️ يجب رفع صورة واحدة على الأقل
+            </p>
           )}
         </div>
 
@@ -186,11 +206,29 @@ export default function StepMedia() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Activity Leader */}
-            <div>
-              <label className="block text-sm text-slate-600 dark:text-white/60 mb-2 flex items-center gap-2">
+            <div className="space-y-3">
+              <label className="block text-sm text-slate-600 dark:text-white/60 flex items-center gap-2">
                 <UserIcon className="w-4 h-4" />
-                رائد النشاط <span className="text-accent">*</span>
+                <span>رائد النشاط</span>
+                <span className="text-accent">*</span>
               </label>
+
+              {/* Title Selection */}
+              <select
+                value={formData.activityLeaderTitle || "رائد النشاط"}
+                onChange={(e) => handlePersonnelChange('activityLeaderTitle', e.target.value)}
+                className="form-input text-sm bg-slate-50 border-slate-200"
+              >
+                <option value="رائد النشاط">رائد النشاط</option>
+                <option value="الموجه الطلابي">الموجه الطلابي</option>
+                <option value="معلم المادة">معلم المادة</option>
+                <option value="وكيل المدرسة">وكيل المدرسة</option>
+                <option value="مسؤول النشاط">مسؤول النشاط</option>
+                <option value="منسق البرنامج">منسق البرنامج</option>
+                <option value="مشرف النادي">مشرف النادي</option>
+              </select>
+
+              {/* Name Input */}
               <input
                 type="text"
                 value={formData.activityLeaderName || ""}
@@ -199,12 +237,29 @@ export default function StepMedia() {
                 className="form-input"
               />
             </div>
+
             {/* Principal */}
-            <div>
-              <label className="block text-sm text-slate-600 dark:text-white/60 mb-2 flex items-center gap-2">
+            <div className="space-y-3">
+              <label className="block text-sm text-slate-600 dark:text-white/60 flex items-center gap-2">
                 <UserIcon className="w-4 h-4" />
-                مدير المدرسة <span className="text-accent">*</span>
+                <span>مدير المدرسة</span>
+                <span className="text-accent">*</span>
               </label>
+
+              {/* Title Selection */}
+              <select
+                value={formData.principalTitle || "مدير المدرسة"}
+                onChange={(e) => handlePersonnelChange('principalTitle', e.target.value)}
+                className="form-input text-sm bg-slate-50 border-slate-200"
+              >
+                <option value="مدير المدرسة">مدير المدرسة</option>
+                <option value="وكيل المدرسة">وكيل المدرسة</option>
+                <option value="المشرف التربوي">المشرف التربوي</option>
+                <option value="قائد المدرسة">قائد المدرسة</option>
+                <option value="المساعد الإداري">المساعد الإداري</option>
+              </select>
+
+              {/* Name Input */}
               <input
                 type="text"
                 value={formData.principalName || ""}
@@ -241,6 +296,33 @@ export default function StepMedia() {
               </div>
             )}
           </div>
+
+          {/* QR Code Preview */}
+          {formData.evidenceLink && (
+            <div className="mt-4 flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10">
+              <div className="w-24 h-24 relative bg-white rounded-lg overflow-hidden flex-shrink-0">
+                <Image
+                  src={getQRCodeUrl(formData.evidenceLink)}
+                  alt="QR Code"
+                  fill
+                  className="object-contain p-1"
+                />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-700 dark:text-white mb-1">باركود QR للشواهد</p>
+                <p className="text-xs text-slate-500 dark:text-white/50">امسح الباركود للوصول للشواهد الإضافية</p>
+                <a
+                  href={formData.evidenceLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-primary hover:underline mt-1 block truncate max-w-[200px]"
+                >
+                  {formData.evidenceLink}
+                </a>
+              </div>
+            </div>
+          )}
+
           <p className="text-slate-400 dark:text-white/40 text-sm mt-2">
             يمكنك وضع رابط Google Drive أو أي رابط آخر للشواهد الإضافية
           </p>

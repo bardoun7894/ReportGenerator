@@ -15,6 +15,7 @@ import {
           UserIcon,
           TagIcon,
 } from "@heroicons/react/24/solid";
+import ArabicDatePicker from "@/components/ui/ArabicDatePicker";
 
 const TARGET_AUDIENCES = [
           { id: "students", label: "الطلاب" },
@@ -107,11 +108,10 @@ export default function StepActivity() {
                                                                       <CalendarDaysIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
                                                                       تاريخ التنفيذ <span className="text-accent">*</span>
                                                             </label>
-                                                            <input
-                                                                      type="date"
+                                                            <ArabicDatePicker
                                                                       value={formData.date || ""}
-                                                                      onChange={(e) => updateFormData({ date: e.target.value })}
-                                                                      className="form-input"
+                                                                      onChange={(date) => updateFormData({ date })}
+                                                                      placeholder="اختر تاريخ التنفيذ"
                                                             />
                                                   </div>
                                                   <div>
@@ -153,7 +153,7 @@ export default function StepActivity() {
                                                             <option value="">اختر المنفذ</option>
                                                             <option value="جميع منسوبي المدرسة">جميع منسوبي المدرسة</option>
                                                             <option value="رائد النشاط">رائد النشاط</option>
-                                                            <option value="المرشد الطلابي">المرشد الطلابي</option>
+                                                            <option value="الموجه الطلابي">الموجه الطلابي</option>
                                                             <option value="معلم المادة">معلم المادة</option>
                                                             <option value="لجنة النشاط">لجنة النشاط</option>
                                                             <option value="فريق العمل التطوعي">فريق العمل التطوعي</option>
@@ -197,7 +197,7 @@ export default function StepActivity() {
                                                                       className="form-input"
                                                             >
                                                                       <option value="">اختر المكان</option>
-                                                                      <option value="فناء المدرسة">فناء المدرسة</option>
+                                                                      <option value="ساحة المدرسة">ساحة المدرسة</option>
                                                                       <option value="الملعب الرياضي">الملعب الرياضي</option>
                                                                       <option value="المسرح المدرسي">المسرح المدرسي</option>
                                                                       <option value="قاعة الاجتماعات">قاعة الاجتماعات</option>
@@ -314,7 +314,8 @@ export default function StepActivity() {
                                                   <div className="flex items-center justify-between mb-2">
                                                             <label className="text-sm font-medium flex items-center gap-2 text-slate-700 dark:text-white">
                                                                       <ListBulletIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                                                                      خطوات التنفيذ / الوصف <span className="text-accent">*</span>
+                                                                      الوصف / خطوات التنفيذ
+                                                                      <span className="text-accent">*</span>
                                                             </label>
                                                             <button
                                                                       type="button"

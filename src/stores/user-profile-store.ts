@@ -11,7 +11,9 @@ export interface UserProfile {
 
           // Personnel
           activityLeaderName?: string;
+          activityLeaderTitle?: string;
           principalName?: string;
+          principalTitle?: string;
 
           // Preferences
           preferredTemplate?: string;
@@ -81,7 +83,7 @@ export const useIsProfileComplete = () => useUserProfileStore((state) => state.i
 export const EXECUTOR_OPTIONS = [
           'جميع منسوبي المدرسة',
           'رائد النشاط',
-          'المرشد الطلابي',
+          'الموجه الطلابي',
           'معلم المادة',
           'لجنة النشاط',
           'فريق العمل التطوعي',

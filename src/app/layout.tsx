@@ -6,6 +6,11 @@ export const metadata: Metadata = {
           title: "ReportCreator - إنشاء تقارير احترافية",
           description: "حوّل بيانات فعاليتك إلى تقرير احترافي خلال ثوانٍ بمساعدة الذكاء الاصطناعي",
           keywords: ["تقارير", "مدرسة", "تعليم", "فعالية", "السعودية"],
+          icons: {
+                    icon: [
+                              { url: "/favicon.svg", type: "image/svg+xml" },
+                    ],
+          },
 };
 
 export default function RootLayout({

@@ -30,11 +30,15 @@ export interface WizardFormData {
 
           // Step 3: AI-Generated Objectives
           objectives?: EnhancedText[];
+          results?: EnhancedText[];
+          recommendations?: EnhancedText[];
 
           // Step 4: Media & Signatures
           photos?: string[];
-          activityLeaderName?: string;  // NEW: رائد النشاط
-          principalName?: string;       // NEW: مدير المدرسة
+          activityLeaderName?: string;  // NEW: اسم رائد النشاط
+          activityLeaderTitle?: string; // NEW: مسمى رائد النشاط (اختياري)
+          principalName?: string;       // NEW: اسم مدير المدرسة
+          principalTitle?: string;      // NEW: مسمى مدير المدرسة (اختياري)
           evidenceLink?: string;        // NEW: رابط الشواهد
 }
 
@@ -157,7 +161,7 @@ export const DOMAIN_OPTIONS = [
 ];
 
 export const LOCATION_OPTIONS = [
-          'فناء المدرسة',
+          'ساحة المدرسة',
           'الملعب الرياضي',
           'المسرح المدرسي',
           'قاعة الاجتماعات',
