@@ -19,8 +19,6 @@ import {
 import { ThemeToggle } from "@/components/theme-toggle";
 
 // Import libraries
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import { saveAs } from "file-saver";
 
 // Import all templates
@@ -78,6 +76,23 @@ export default function PreviewDraftPage() {
         if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
             setShowTemplateSelector(true);
         }
+
+        // Mark usage for guest
+        if (typeof window !== 'undefined') {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            if (!isLoggedIn) {
+                const hasCounted = sessionStorage.getItem("hasCountedCurrentReport");
+                if (!hasCounted) {
+                    const current = parseInt(localStorage.getItem("reportsGenerated") || "0");
+                    if (current < 1) { // Only increment if not already marked/blocked (though we block at entry)
+                        // Actually just increment.
+                        localStorage.setItem("reportsGenerated", (current + 1).toString());
+                    }
+                    // Mark as counted for this session so refresh doesn't double count
+                    sessionStorage.setItem("hasCountedCurrentReport", "true");
+                }
+            }
+        }
     }, []);
 
     const config = reportType ? getReportTypeConfig(reportType) : null;
@@ -96,41 +111,88 @@ export default function PreviewDraftPage() {
         );
     }
 
+    // Track report download to database
+    const trackReport = async (format: 'pdf' | 'word') => {
+        try {
+            const user = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+            const userId = user ? JSON.parse(user).id : null;
+
+            await fetch('/api/track-report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: formData.title,
+                    type: reportType,
+                    template: selectedTemplate,
+                    userId,
+                    data: {
+                        format,
+                        schoolName: formData.schoolName,
+                        educationRegion: formData.educationRegion,
+                    },
+                }),
+            });
+        } catch (error) {
+            console.error('Track report error:', error);
+        }
+    };
+
     const handleDownloadPDF = async () => {
         if (!reportRef.current) return;
         setIsExporting(true);
 
         try {
-            const canvas = await html2canvas(reportRef.current, {
-                scale: 2,
-                useCORS: true,
-                logging: false,
+            // Get the HTML content of the report
+            const htmlContent = reportRef.current.outerHTML;
+
+            // Get all stylesheets as inline styles
+            const styles = Array.from(document.styleSheets)
+                .map(sheet => {
+                    try {
+                        return Array.from(sheet.cssRules)
+                            .map(rule => rule.cssText)
+                            .join('\n');
+                    } catch {
+                        return '';
+                    }
+                })
+                .join('\n');
+
+            // Create full HTML with styles
+            const fullHTML = `
+                <style>${styles}</style>
+                <div style="font-family: ${currentFontFamily}; direction: rtl;">
+                    ${htmlContent}
+                </div>
+            `;
+
+            // Call server API for PDF generation
+            const response = await fetch('/api/export/pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    html: fullHTML,
+                    title: formData.title || 'تقرير',
+                }),
             });
 
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF({
-                orientation: 'portrait',
-                unit: 'mm',
-                format: 'a4',
-            });
-
-            const imgWidth = 210;
-            const pageHeight = 297;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            let heightLeft = imgHeight;
-            let position = 0;
-
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-
-            while (heightLeft >= 0) {
-                position = heightLeft - imgHeight;
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
+            if (!response.ok) {
+                throw new Error('PDF generation failed');
             }
 
-            pdf.save(`${formData.title || 'report'}.pdf`);
+            // Download the PDF
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${formData.title || 'تقرير'}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+
+            // Track the download
+            await trackReport('pdf');
         } catch (error) {
             console.error("PDF generation failed:", error);
             alert("حدث خطأ أثناء إنشاء ملف PDF");
@@ -145,24 +207,120 @@ export default function PreviewDraftPage() {
 
         try {
             const { asBlob } = await import('html-docx-js-typescript');
-            const content = reportRef.current.innerHTML;
+
+            // 1. Setup temporary container for computed style calculation
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'absolute';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.top = '0';
+            tempContainer.style.width = '794px'; // A4 width
+            document.body.appendChild(tempContainer);
+
+            // 2. Clone the report
+            const clone = reportRef.current.cloneNode(true) as HTMLElement;
+            tempContainer.appendChild(clone);
+
+            // 3. Recursive function to inline styles with more properties
+            const applyInlineStyles = (element: HTMLElement) => {
+                const computed = window.getComputedStyle(element);
+
+                // Essential properties to transfer from CSS to inline style
+                element.style.color = computed.color;
+                element.style.backgroundColor = computed.backgroundColor;
+                element.style.fontSize = computed.fontSize;
+                element.style.fontWeight = computed.fontWeight;
+                element.style.fontFamily = 'Arial, sans-serif'; // Use Word-compatible font
+                element.style.textAlign = computed.textAlign as any;
+                element.style.lineHeight = computed.lineHeight;
+                element.style.borderTop = computed.borderTop;
+                element.style.borderBottom = computed.borderBottom;
+                element.style.borderLeft = computed.borderLeft;
+                element.style.borderRight = computed.borderRight;
+                element.style.borderRadius = '0'; // Word doesn't support border-radius well
+                element.style.padding = computed.padding;
+                element.style.margin = computed.margin;
+                element.style.width = computed.width;
+                element.style.minHeight = computed.minHeight;
+                element.style.display = computed.display === 'flex' ? 'block' : computed.display;
+
+                // Convert flexbox to table-like layout for Word
+                if (computed.display === 'flex') {
+                    element.style.display = 'table';
+                    Array.from(element.children).forEach((child) => {
+                        (child as HTMLElement).style.display = 'table-cell';
+                        (child as HTMLElement).style.verticalAlign = 'top';
+                    });
+                }
+
+                // Handle grid as block
+                if (computed.display === 'grid') {
+                    element.style.display = 'block';
+                }
+
+                Array.from(element.children).forEach(child => applyInlineStyles(child as HTMLElement));
+            };
+
+            // Apply styles to the clone
+            applyInlineStyles(clone);
+
+            // 4. Get content
+            const content = clone.innerHTML;
+
+            // Cleanup
+            document.body.removeChild(tempContainer);
+
             const htmlString = `
-        <!DOCTYPE html>
-        <html dir="rtl">
-        <head>
-            <meta charset="UTF-8">
-            <style>
-                body { font-family: Arial, sans-serif; direction: rtl; }
-            </style>
-        </head>
-        <body>
-            ${content}
-        </body>
-        </html>
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+        body { 
+            font-family: 'Arial', 'Tahoma', sans-serif; 
+            direction: rtl; 
+            text-align: right;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #333;
+        }
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            margin-bottom: 10px;
+        }
+        td, th { 
+            border: 1px solid #ddd; 
+            padding: 8px; 
+            text-align: right;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        h1, h2, h3 {
+            color: #006747;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    ${content}
+</body>
+</html>
       `;
 
             const blob = await asBlob(htmlString);
-            saveAs(blob as Blob, `${formData.title || 'report'}.docx`);
+            saveAs(blob as Blob, `${formData.title || 'تقرير'}.docx`);
+
+            // Track the download
+            await trackReport('word');
 
         } catch (error) {
             console.error("Word generation failed:", error);

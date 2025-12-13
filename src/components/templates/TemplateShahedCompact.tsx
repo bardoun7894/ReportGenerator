@@ -137,7 +137,7 @@ export default function TemplateShahedCompact({ formData, reportTypeTitle }: Tem
                               {/* Compact Footer */}
                               <footer className="bg-gray-50 border-t p-4 flex justify-between text-sm">
                                         <div>
-                                                  <span className="text-gray-500">رائد النشاط: </span>
+                                                  <span className="text-gray-500">رائد/ة النشاط: </span>
                                                   <span className="font-bold text-[#006C35]">{formData.activityLeaderName || "---"}</span>
                                         </div>
                                         <div>

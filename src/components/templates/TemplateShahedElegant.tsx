@@ -24,7 +24,7 @@ interface TemplateProps {
 export default function TemplateShahedElegant({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-[#FFFEF8] max-w-4xl mx-auto shadow-2xl overflow-hidden"
+                              className="bg-[#FFFEF8] template-a4 shadow-2xl overflow-hidden"
                               style={{ fontFamily: 'Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -218,8 +218,8 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                               <footer className="border-t-4 border-[#C8A051] bg-gradient-to-b from-[#FFFEF8] to-white p-8">
                                         <div className="flex justify-around items-center max-w-3xl mx-auto">
                                                   {[
-                                                            { label: 'رائد النشاط', name: formData.activityLeaderName },
-                                                            { label: 'مدير المدرسة', name: formData.principalName },
+                                                            { label: 'رائد/ة النشاط', name: formData.activityLeaderName },
+                                                            { label: 'مدير/ة المدرسة', name: formData.principalName },
                                                   ].map((person, idx) => (
                                                             <div key={idx} className="text-center">
                                                                       <p className="text-[#8B7355] text-sm mb-4 tracking-wide">{person.label}</p>

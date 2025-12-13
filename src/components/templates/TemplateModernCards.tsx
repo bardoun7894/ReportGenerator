@@ -21,7 +21,7 @@ interface TemplateProps {
 export default function TemplateModernCards({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl mx-auto"
+                              className="bg-white rounded-2xl shadow-2xl overflow-hidden template-a4"
                               style={{ fontFamily: 'Cairo, Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -228,7 +228,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                         <div className="grid grid-cols-2 gap-8 max-w-md mx-auto">
                                                   {formData.principalName && (
                                                             <div className="text-center">
-                                                                      <p className="text-white/70 text-xs mb-2">مدير المدرسة</p>
+                                                                      <p className="text-white/70 text-xs mb-2">مدير/ة المدرسة</p>
                                                                       <p className="text-white font-semibold border-t border-white/30 pt-2">
                                                                                 {formData.principalName}
                                                                       </p>
@@ -236,7 +236,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                   )}
                                                   {formData.activityLeaderName && (
                                                             <div className="text-center">
-                                                                      <p className="text-white/70 text-xs mb-2">رائد النشاط</p>
+                                                                      <p className="text-white/70 text-xs mb-2">رائد/ة النشاط</p>
                                                                       <p className="text-white font-semibold border-t border-white/30 pt-2">
                                                                                 {formData.activityLeaderName}
                                                                       </p>

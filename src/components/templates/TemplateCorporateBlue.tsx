@@ -21,7 +21,7 @@ interface TemplateProps {
 export default function TemplateCorporateBlue({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="rounded-none overflow-hidden max-w-4xl mx-auto shadow-2xl bg-white"
+                              className="rounded-none overflow-hidden template-a4 shadow-2xl bg-white"
                               style={{
                                         fontFamily: 'Cairo, Tajawal, system-ui, sans-serif',
                                         border: '1px solid #e2e8f0'
@@ -169,11 +169,11 @@ export default function TemplateCorporateBlue({ formData, reportTypeTitle }: Tem
                                                   {/* Signatures */}
                                                   <div className="mt-12 pt-8 border-t border-slate-200 flex justify-between items-end">
                                                             <div className="text-center">
-                                                                      <p className="text-xs text-slate-400 mb-4">رائد النشاط</p>
+                                                                      <p className="text-xs text-slate-400 mb-4">رائد/ة النشاط</p>
                                                                       <p className="text-sm font-bold text-[#1e293b]">{formData.activityLeaderName}</p>
                                                             </div>
                                                             <div className="text-center">
-                                                                      <p className="text-xs text-slate-400 mb-4">مدير المدرسة</p>
+                                                                      <p className="text-xs text-slate-400 mb-4">مدير/ة المدرسة</p>
                                                                       <p className="text-sm font-bold text-[#1e293b]">{formData.principalName}</p>
                                                             </div>
                                                   </div>

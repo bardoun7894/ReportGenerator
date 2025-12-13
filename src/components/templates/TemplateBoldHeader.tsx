@@ -16,7 +16,7 @@ interface TemplateProps {
 export default function TemplateBoldHeader({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl mx-auto"
+                              className="bg-white rounded-2xl shadow-2xl overflow-hidden template-a4"
                               style={{ fontFamily: 'Cairo, Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -200,13 +200,13 @@ export default function TemplateBoldHeader({ formData, reportTypeTitle }: Templa
                                         <div className="flex justify-center gap-12">
                                                   {formData.activityLeaderName && (
                                                             <div className="text-center">
-                                                                      <p className="text-white/70 text-sm mb-2">رائد النشاط</p>
+                                                                      <p className="text-white/70 text-sm mb-2">رائد/ة النشاط</p>
                                                                       <p className="text-white font-bold text-lg">{formData.activityLeaderName}</p>
                                                             </div>
                                                   )}
                                                   {formData.principalName && (
                                                             <div className="text-center">
-                                                                      <p className="text-white/70 text-sm mb-2">مدير المدرسة</p>
+                                                                      <p className="text-white/70 text-sm mb-2">مدير/ة المدرسة</p>
                                                                       <p className="text-white font-bold text-lg">{formData.principalName}</p>
                                                             </div>
                                                   )}

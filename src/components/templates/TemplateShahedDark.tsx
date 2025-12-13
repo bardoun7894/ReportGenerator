@@ -24,7 +24,7 @@ interface TemplateProps {
 export default function TemplateShahedDark({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-slate-900 max-w-4xl mx-auto shadow-2xl overflow-hidden rounded-xl"
+                              className="bg-slate-900 template-a4 shadow-2xl overflow-hidden rounded-xl"
                               style={{ fontFamily: 'Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -204,8 +204,8 @@ export default function TemplateShahedDark({ formData, reportTypeTitle }: Templa
                               <footer className="bg-slate-800 border-t border-slate-700 p-6">
                                         <div className="flex justify-around items-end max-w-2xl mx-auto">
                                                   {[
-                                                            { label: 'رائد النشاط', name: formData.activityLeaderName },
-                                                            { label: 'مدير المدرسة', name: formData.principalName },
+                                                            { label: 'رائد/ة النشاط', name: formData.activityLeaderName },
+                                                            { label: 'مدير/ة المدرسة', name: formData.principalName },
                                                   ].map((person, idx) => (
                                                             <div key={idx} className="text-center">
                                                                       <p className="text-slate-500 text-sm mb-3">{person.label}</p>

@@ -11,6 +11,10 @@ services:
     #   - "3000:3000" 
     env_file:
       - .env
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/reportgenerator
+    depends_on:
+      - mongodb
     restart: unless-stopped
 
   nginx:
@@ -35,7 +39,7 @@ services:
       - ./nginx/ssl:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
 
-  # Optional: MongoDB if needed
+  # MongoDB Service
   mongodb:
     image: mongo:7
     container_name: reportgenerator-db
@@ -44,8 +48,7 @@ services:
     ports:
       - "27017:27017"
     restart: unless-stopped
-    profiles:
-      - with-db
+    # profiles removed to start by default
 
 volumes:
   mongodb_data:

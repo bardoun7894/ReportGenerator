@@ -49,8 +49,7 @@ const Header: React.FC<{ region?: string; school?: string; schoolType?: string; 
                                         {/* Right Side: Ministry Logo (first in RTL) */}
                                         <div className="flex items-center gap-4">
                                                   <div className="w-20 h-20 relative">
-                                                            <Image
-                                                                      src="/salogos.svg"
+                                                            <Image src="/salogos.svg"
                                                                       alt="وزارة التعليم"
                                                                       fill
                                                                       className="object-contain brightness-0 invert"
@@ -74,8 +73,9 @@ const Header: React.FC<{ region?: string; school?: string; schoolType?: string; 
                               </div>
 
                               {/* Centered Title Box */}
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-6 w-3/4 md:w-2/3">
-                                        <div className="bg-[#1f4e5f] text-white text-center py-3 rounded-xl shadow-lg border-2 border-white">
+                              {/* Centered Title Box */}
+                              <div className="absolute z-10 left-1/2 transform -translate-x-1/2 -bottom-6 w-3/4 md:w-2/3 print:w-2/3">
+                                        <div className="bg-[#1f4e5f] text-white text-center py-3 rounded-xl shadow-lg border-2 border-white print:shadow-none print:border-black">
                                                   <h1 className="text-lg md:text-xl font-bold">{title || "تقرير"}</h1>
                                         </div>
                               </div>
@@ -181,10 +181,15 @@ const PhotosSection: React.FC<{ photos?: string[] }> = ({ photos }) => {
                                                   <span className="bg-white px-4 text-teal-600 font-bold text-lg relative z-10">صور من الفعالية</span>
                                                   <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-teal-500 -z-0"></div>
                                         </div>
-                                        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                  {photos.slice(0, 4).map((photo, idx) => (
-                                                            <div key={idx} className="relative aspect-video rounded-lg overflow-hidden border border-teal-200">
-                                                                      <Image src={photo} alt={`صورة ${idx + 1}`} fill className="object-cover" />
+                                        <div className="grid grid-cols-2 gap-4">
+                                                  {(photos || []).map((photo, index) => (
+                                                            <div key={index} className="aspect-video relative rounded-xl overflow-hidden border border-slate-200 shadow-sm break-inside-avoid">
+                                                                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                      <img
+                                                                                src={photo}
+                                                                                alt={`صورة ${index + 1}`}
+                                                                                className="w-full h-full object-cover"
+                                                                      />
                                                             </div>
                                                   ))}
                                         </div>
@@ -194,21 +199,38 @@ const PhotosSection: React.FC<{ photos?: string[] }> = ({ photos }) => {
 };
 
 const Footer: React.FC<{ formData: WizardFormData }> = ({ formData }) => {
+          const getQRCodeUrl = (url: string) => {
+                    return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`;
+          };
+
           return (
-                    <div className="px-4 mt-6 mb-8">
+                    <div className="px-4 mt-6 mb-8 relative">
                               {/* Signatures */}
                               <div className="mt-12 grid grid-cols-2 gap-4 text-center">
                                         <div className="flex flex-col items-center">
-                                                  <p className="text-teal-700 font-bold mb-8">{formData.activityLeaderTitle || "رائد النشاط"}</p>
+                                                  <p className="text-teal-700 font-bold mb-8">{formData.activityLeaderTitle || "رائد/ة النشاط"}</p>
                                                   <div className="w-3/4 border-b border-gray-400"></div>
                                                   <p className="text-gray-500 mt-2 text-sm">{formData.activityLeaderName}</p>
                                         </div>
                                         <div className="flex flex-col items-center">
-                                                  <p className="text-teal-700 font-bold mb-8">{formData.principalTitle || "مدير المدرسة"}</p>
+                                                  <p className="text-teal-700 font-bold mb-8">{formData.principalTitle || "مدير/ة المدرسة"}</p>
                                                   <div className="w-3/4 border-b border-gray-400"></div>
                                                   <p className="text-gray-500 mt-2 text-sm">{formData.principalName}</p>
                                         </div>
                               </div>
+
+                              {/* QR Code if exists */}
+                              {formData.evidenceLink && (
+                                        <div className="absolute left-4 -bottom-4 flex flex-col items-center bg-white p-1 rounded-lg">
+                                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                  <img
+                                                            src={getQRCodeUrl(formData.evidenceLink)}
+                                                            alt="QR Code"
+                                                            className="w-16 h-16 object-contain"
+                                                  />
+                                                  <span className="text-[8px] text-teal-600 font-bold mt-1">امسح للكاميرا</span>
+                                        </div>
+                              )}
 
                               {/* Bottom Banner - Date stamp instead of website */}
                               <div className="mt-12 bg-[#1f4e5f] text-white text-center py-2 rounded-b-xl text-sm flex items-center justify-center gap-4">
@@ -224,7 +246,7 @@ const Footer: React.FC<{ formData: WizardFormData }> = ({ formData }) => {
 
 export default function TemplateExchangeVisit({ formData, reportTypeTitle }: TemplateProps) {
           return (
-                    <div className="min-h-screen py-8 px-2 sm:px-4 md:px-8 flex justify-center bg-gray-50/50">
+                    <div className="min-h-screen py-8 px-2 sm:px-4 md:px-8 flex justify-center bg-gray-50/50 print:p-0 print:m-0 print:bg-white print:block">
                               {/* A4 Paper Container */}
                               <div
                                         className="w-full max-w-[210mm] bg-white shadow-2xl rounded-xl print:shadow-none print:w-full print:max-w-none print:rounded-none overflow-hidden"

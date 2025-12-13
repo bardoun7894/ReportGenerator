@@ -25,7 +25,7 @@ interface TemplateProps {
 export default function TemplateShahedModern({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-gradient-to-br from-emerald-50 via-white to-amber-50 max-w-4xl mx-auto shadow-2xl overflow-hidden rounded-2xl"
+                              className="bg-gradient-to-br from-emerald-50 via-white to-amber-50 template-a4 shadow-2xl overflow-hidden rounded-2xl"
                               style={{ fontFamily: 'Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -220,8 +220,8 @@ export default function TemplateShahedModern({ formData, reportTypeTitle }: Temp
                               <footer className="bg-gradient-to-r from-emerald-50 via-white to-amber-50 border-t border-emerald-100 p-6">
                                         <div className="flex justify-around items-end max-w-2xl mx-auto">
                                                   {[
-                                                            { label: 'رائد النشاط', name: formData.activityLeaderName },
-                                                            { label: 'مدير المدرسة', name: formData.principalName },
+                                                            { label: 'رائد/ة النشاط', name: formData.activityLeaderName },
+                                                            { label: 'مدير/ة المدرسة', name: formData.principalName },
                                                   ].map((person, idx) => (
                                                             <div key={idx} className="text-center group">
                                                                       <p className="text-emerald-600/70 text-sm mb-3">{person.label}</p>

@@ -12,7 +12,7 @@ interface TemplateProps {
 export default function TemplateClassicReport({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-[#FFFEF7] rounded-xl shadow-2xl overflow-hidden max-w-4xl mx-auto border-2 border-[#C9A050]"
+                              className="bg-[#FFFEF7] rounded-xl shadow-2xl overflow-hidden template-a4 border-2 border-[#C9A050]"
                               style={{ fontFamily: 'Cairo, Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -187,7 +187,7 @@ export default function TemplateClassicReport({ formData, reportTypeTitle }: Tem
                                                   {formData.activityLeaderName && (
                                                             <div className="text-center">
                                                                       <div className="border-2 border-[#006747] rounded-lg p-4">
-                                                                                <p className="text-[#006747] font-bold text-sm mb-8">رائد النشاط</p>
+                                                                                <p className="text-[#006747] font-bold text-sm mb-8">رائد/ة النشاط</p>
                                                                                 <div className="border-b-2 border-slate-300 mb-2"></div>
                                                                                 <p className="text-slate-800 font-semibold">{formData.activityLeaderName}</p>
                                                                       </div>
@@ -196,7 +196,7 @@ export default function TemplateClassicReport({ formData, reportTypeTitle }: Tem
                                                   {formData.principalName && (
                                                             <div className="text-center">
                                                                       <div className="border-2 border-[#006747] rounded-lg p-4">
-                                                                                <p className="text-[#006747] font-bold text-sm mb-8">مدير المدرسة</p>
+                                                                                <p className="text-[#006747] font-bold text-sm mb-8">مدير/ة المدرسة</p>
                                                                                 <div className="border-b-2 border-slate-300 mb-2"></div>
                                                                                 <p className="text-slate-800 font-semibold">{formData.principalName}</p>
                                                                       </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
           DocumentTextIcon,
           SparklesIcon,
@@ -42,9 +43,13 @@ export default function SelectReportType() {
                                         </Link>
                                         <div className="flex items-center gap-4">
                                                   <ThemeToggle />
-                                                  <div className="w-10 h-10 bg-white dark:bg-white/10 rounded-full flex items-center justify-center shadow-sm">
-                                                            <span className="font-bold text-primary">RC</span>
-                                                  </div>
+                                                  <Image
+                                                            src="/logo.svg"
+                                                            alt="Logo"
+                                                            width={40}
+                                                            height={40}
+                                                            className="w-10 h-10 rounded-xl"
+                                                  />
                                         </div>
                               </header>
 

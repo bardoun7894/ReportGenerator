@@ -179,13 +179,13 @@ export default function TemplateMinimalClean({ formData, reportTypeTitle }: Temp
                                         <div className="flex justify-center gap-12">
                                                   {formData.activityLeaderName && (
                                                             <div className="text-center">
-                                                                      <p className="text-slate-400 text-xs mb-2">رائد النشاط</p>
+                                                                      <p className="text-slate-400 text-xs mb-2">رائد/ة النشاط</p>
                                                                       <p className="text-slate-700 font-medium text-sm">{formData.activityLeaderName}</p>
                                                             </div>
                                                   )}
                                                   {formData.principalName && (
                                                             <div className="text-center">
-                                                                      <p className="text-slate-400 text-xs mb-2">مدير المدرسة</p>
+                                                                      <p className="text-slate-400 text-xs mb-2">مدير/ة المدرسة</p>
                                                                       <p className="text-slate-700 font-medium text-sm">{formData.principalName}</p>
                                                             </div>
                                                   )}

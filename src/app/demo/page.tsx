@@ -10,6 +10,32 @@ import {
           SparklesIcon,
 } from "@heroicons/react/24/outline";
 import { ThemeToggle } from "@/components/theme-toggle";
+import TemplateExchangeVisit from "@/components/templates/TemplateExchangeVisit";
+import { WizardFormData } from "@/stores/wizard-store";
+
+const mockFormData: WizardFormData = {
+          title: "زيارة تبادلية لمدرسة الملك فهد",
+          educationRegion: "المنطقة الشرقية",
+          schoolName: "مدرسة اليرموك الثانوية",
+          schoolType: "ثانوية",
+          date: "2024-12-08",
+          executors: "أحمد العتيبي",
+          duration: "يوم واحد",
+          domain: "النمو المهني",
+          executionSteps: "1. استقبال المعلمين\n2. حضور الحصة الدراسية\n3. مناقشة استراتيجيات التدريس",
+          objectives: [
+                    { original: "تحسين الأداء", enhanced: "تبادل الخبرات التربوية والتعليمية بين المعلمين", isAIEnhanced: true },
+                    { original: "تطوير المهارات", enhanced: "الاطلاع على أساليب تدريس حديثة ومبتكرة", isAIEnhanced: true },
+          ],
+          results: [
+                    { original: "نجاح الزيارة", enhanced: "اكتساب مهارات جديدة في إدارة الصف", isAIEnhanced: true },
+          ],
+          recommendations: [
+                    { original: "تكرار الزيارة", enhanced: "تطبيق الاستراتيجيات المكتسبة في الغرفة الصفية", isAIEnhanced: true },
+          ],
+          activityLeaderName: "محمد الصالح",
+          principalName: "علي الدوسري",
+};
 
 export default function DemoPage() {
           return (
@@ -24,9 +50,13 @@ export default function DemoPage() {
                               {/* Header */}
                               <header className="relative z-10 flex justify-between items-center px-6 lg:px-12 py-5">
                                         <Link href="/" className="flex items-center gap-3">
-                                                  <div className="w-11 h-11 bg-gradient-to-br from-primary to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 dark:shadow-none">
-                                                            <DocumentTextIcon className="w-6 h-6 text-white" />
-                                                  </div>
+                                                  <Image
+                                                            src="/logo.svg"
+                                                            alt="Logo"
+                                                            width={44}
+                                                            height={44}
+                                                            className="w-11 h-11 hover:scale-105 transition-transform duration-300"
+                                                  />
                                                   <div>
                                                             <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">نماذج تعليمية</span>
                                                             <p className="text-[10px] text-slate-500 dark:text-slate-400 -mt-1">منصة تقاريرك</p>
@@ -62,70 +92,15 @@ export default function DemoPage() {
                                                   </div>
 
                                                   {/* Demo Report Preview */}
-                                                  <div className="glass-card p-6 md:p-8 border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 mb-8">
-                                                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-8 max-w-3xl mx-auto" dir="rtl">
-                                                                      {/* Report Header */}
-                                                                      <div className="text-center border-b-2 border-primary pb-6 mb-6">
-                                                                                <h2 className="text-2xl font-bold text-primary mb-2">تقرير فعالية</h2>
-                                                                                <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
-                                                                                          الاحتفاء باليوم الوطني السعودي ٩٤
-                                                                                </h3>
-                                                                                <p className="text-slate-500 dark:text-slate-400 mt-2">مدرسة الملك فهد الثانوية</p>
-                                                                      </div>
-
-                                                                      {/* Report Details */}
-                                                                      <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                                                                                <div className="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
-                                                                                          <span className="text-slate-500 dark:text-slate-400">التاريخ:</span>
-                                                                                          <span className="font-medium text-slate-900 dark:text-white mr-2">٢٣/٠٩/١٤٤٦</span>
-                                                                                </div>
-                                                                                <div className="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
-                                                                                          <span className="text-slate-500 dark:text-slate-400">المدة:</span>
-                                                                                          <span className="font-medium text-slate-900 dark:text-white mr-2">يوم واحد</span>
-                                                                                </div>
-                                                                                <div className="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
-                                                                                          <span className="text-slate-500 dark:text-slate-400">المكان:</span>
-                                                                                          <span className="font-medium text-slate-900 dark:text-white mr-2">ساحة المدرسة</span>
-                                                                                </div>
-                                                                                <div className="bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
-                                                                                          <span className="text-slate-500 dark:text-slate-400">المستفيدون:</span>
-                                                                                          <span className="font-medium text-slate-900 dark:text-white mr-2">٣٥٠ طالب</span>
-                                                                                </div>
-                                                                      </div>
-
-                                                                      {/* Report Content */}
-                                                                      <div className="space-y-4 text-slate-700 dark:text-slate-300">
-                                                                                <div>
-                                                                                          <h4 className="font-bold text-slate-900 dark:text-white mb-2">الأهداف:</h4>
-                                                                                          <ul className="list-disc list-inside space-y-1 pr-4">
-                                                                                                    <li>تعزيز قيم الانتماء والولاء للوطن</li>
-                                                                                                    <li>إبراز منجزات المملكة العربية السعودية</li>
-                                                                                                    <li>غرس حب الوطن في نفوس الطلاب</li>
-                                                                                          </ul>
-                                                                                </div>
-                                                                                <div>
-                                                                                          <h4 className="font-bold text-slate-900 dark:text-white mb-2">خطوات التنفيذ:</h4>
-                                                                                          <ol className="list-decimal list-inside space-y-1 pr-4">
-                                                                                                    <li>إذاعة صباحية عن اليوم الوطني</li>
-                                                                                                    <li>عروض وطنية من الطلاب</li>
-                                                                                                    <li>مسابقات ثقافية عن تاريخ المملكة</li>
-                                                                                                    <li>تكريم المشاركين وتوزيع الهدايا</li>
-                                                                                          </ol>
-                                                                                </div>
-                                                                      </div>
-
-                                                                      {/* Signatures */}
-                                                                      <div className="grid grid-cols-2 gap-8 mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
-                                                                                <div className="text-center">
-                                                                                          <p className="text-slate-500 dark:text-slate-400 text-sm">رائد النشاط</p>
-                                                                                          <p className="font-medium text-slate-900 dark:text-white">أحمد محمد العتيبي</p>
-                                                                                </div>
-                                                                                <div className="text-center">
-                                                                                          <p className="text-slate-500 dark:text-slate-400 text-sm">مدير المدرسة</p>
-                                                                                          <p className="font-medium text-slate-900 dark:text-white">خالد عبدالله السعيد</p>
-                                                                                </div>
+                                                  <div className="mb-8">
+                                                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-1 max-w-4xl mx-auto overflow-hidden border border-slate-200 dark:border-slate-700" dir="rtl">
+                                                                      <div className="scale-[0.85] origin-top transform-gpu">
+                                                                                <TemplateExchangeVisit formData={mockFormData} reportTypeTitle="تقرير زيارة تبادلية" />
                                                                       </div>
                                                             </div>
+                                                            <p className="text-center text-slate-500 dark:text-slate-400 mt-4 text-sm">
+                                                                      * هذا مجرد مثال، هناك المزيد من النماذج الأخرى المتاحة عند استخدام المنصة
+                                                            </p>
                                                   </div>
 
                                                   {/* Features Section */}

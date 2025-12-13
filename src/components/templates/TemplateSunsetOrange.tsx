@@ -30,7 +30,7 @@ export default function TemplateSunsetOrange({ formData, reportTypeTitle }: Temp
 
           return (
                     <div
-                              className="rounded-3xl overflow-hidden max-w-4xl mx-auto shadow-2xl"
+                              className="rounded-3xl overflow-hidden template-a4 shadow-2xl"
                               style={{
                                         fontFamily: 'Cairo, Tajawal, system-ui, sans-serif',
                                         background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`,
@@ -195,8 +195,8 @@ export default function TemplateSunsetOrange({ formData, reportTypeTitle }: Temp
                                         <div style={{ background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.secondary} 100%)`, padding: '24px 32px' }}>
                                                   <div className="text-center mb-4"><p className="text-white font-bold text-lg">{formData.schoolName || 'اسم المدرسة'}</p></div>
                                                   <div className="flex justify-center gap-16">
-                                                            {formData.principalName && <div className="text-center"><p className="text-white/60 text-xs mb-1">مدير المدرسة</p><p className="text-white font-semibold">{formData.principalName}</p></div>}
-                                                            {formData.activityLeaderName && <div className="text-center"><p className="text-white/60 text-xs mb-1">رائد النشاط</p><p className="text-white font-semibold">{formData.activityLeaderName}</p></div>}
+                                                            {formData.principalName && <div className="text-center"><p className="text-white/60 text-xs mb-1">مدير/ة المدرسة</p><p className="text-white font-semibold">{formData.principalName}</p></div>}
+                                                            {formData.activityLeaderName && <div className="text-center"><p className="text-white/60 text-xs mb-1">رائد/ة النشاط</p><p className="text-white font-semibold">{formData.activityLeaderName}</p></div>}
                                                   </div>
                                         </div>
                               </div>

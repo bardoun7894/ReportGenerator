@@ -20,6 +20,7 @@ import ArabicDatePicker from "@/components/ui/ArabicDatePicker";
 const TARGET_AUDIENCES = [
           { id: "students", label: "الطلاب" },
           { id: "teachers", label: "المعلمين" },
+          { id: "female_teachers", label: "المعلمات" },
           { id: "parents", label: "أولياء الأمور" },
           { id: "admin", label: "الإدارة" },
           { id: "community", label: "المجتمع" },
@@ -150,16 +151,19 @@ export default function StepActivity() {
                                                             onChange={(e) => updateFormData({ executors: e.target.value })}
                                                             className="form-input"
                                                   >
-                                                            <option value="">اختر المنفذ</option>
-                                                            <option value="جميع منسوبي المدرسة">جميع منسوبي المدرسة</option>
-                                                            <option value="رائد النشاط">رائد النشاط</option>
-                                                            <option value="الموجه الطلابي">الموجه الطلابي</option>
-                                                            <option value="معلم المادة">معلم المادة</option>
+                                                            <option value="">اختر المنفذ/ة</option>
+                                                            <option value="جميع منسوبي/ات المدرسة">جميع منسوبي/ات المدرسة</option>
+                                                            <option value="رائد/ة النشاط">رائد/ة النشاط</option>
+                                                            <option value="منسق/ة موهبة">منسق/ة موهبة</option>
+                                                            <option value="وكيل/ة المدرسة">وكيل/ة المدرسة</option>
+                                                            <option value="مدير/ة المدرسة">مدير/ة المدرسة</option>
+                                                            <option value="الموجه/ة الطلابي/ة">الموجه/ة الطلابي/ة</option>
+                                                            <option value="معلم/ة المادة">معلم/ة المادة</option>
                                                             <option value="لجنة النشاط">لجنة النشاط</option>
                                                             <option value="فريق العمل التطوعي">فريق العمل التطوعي</option>
                                                             <option value="الإدارة المدرسية">الإدارة المدرسية</option>
-                                                            <option value="مجموعة من المعلمين">مجموعة من المعلمين</option>
-                                                            <option value="الطلاب المتميزين">الطلاب المتميزين</option>
+                                                            <option value="مجموعة من المعلمين/ات">مجموعة من المعلمين/ات</option>
+                                                            <option value="الطلاب/الطالبات المتميزين/ات">الطلاب/الطالبات المتميزين/ات</option>
                                                             <option value="اللجنة الثقافية">اللجنة الثقافية</option>
                                                             <option value="اللجنة الرياضية">اللجنة الرياضية</option>
                                                             <option value="اللجنة الاجتماعية">اللجنة الاجتماعية</option>
@@ -206,7 +210,6 @@ export default function StepActivity() {
                                                                       <option value="الفصول الدراسية">الفصول الدراسية</option>
                                                                       <option value="غرفة مصادر التعلم">غرفة مصادر التعلم</option>
                                                                       <option value="المصلى">المصلى</option>
-                                                                      <option value="ساحة المدرسة">ساحة المدرسة</option>
                                                                       <option value="قاعة النشاط">قاعة النشاط</option>
                                                             </select>
                                                   </div>
@@ -216,7 +219,7 @@ export default function StepActivity() {
                                         <div>
                                                   <label className="block text-sm font-medium mb-3 flex items-center gap-2 text-slate-700 dark:text-white">
                                                             <UserGroupIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
-                                                            المستفيدون <span className="text-accent">*</span>
+                                                            المستفيدون
                                                   </label>
                                                   <div className="flex flex-wrap gap-3">
                                                             {TARGET_AUDIENCES.map((audience) => (
@@ -246,62 +249,14 @@ export default function StepActivity() {
                                                   <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-white">
                                                             عدد المستفيدين <span className="text-accent">*</span>
                                                   </label>
-                                                  <select
+                                                  <input
+                                                            type="number"
+                                                            min="1"
                                                             value={formData.participantsCount || ""}
                                                             onChange={(e) => updateFormData({ participantsCount: parseInt(e.target.value) || undefined })}
                                                             className="form-input"
-                                                  >
-                                                            <option value="">اختر عدد المستفيدين</option>
-                                                            {/* Filter options based on school type */}
-                                                            {formData.schoolType === 'ابتدائي' && (
-                                                                      <>
-                                                                                <option value="100">100 طالب</option>
-                                                                                <option value="150">150 طالب</option>
-                                                                                <option value="200">200 طالب</option>
-                                                                                <option value="250">250 طالب</option>
-                                                                                <option value="300">300 طالب</option>
-                                                                                <option value="350">350 طالب</option>
-                                                                                <option value="400">400 طالب</option>
-                                                                                <option value="450">450 طالب</option>
-                                                                      </>
-                                                            )}
-                                                            {formData.schoolType === 'متوسط' && (
-                                                                      <>
-                                                                                <option value="75">75 طالب</option>
-                                                                                <option value="100">100 طالب</option>
-                                                                                <option value="150">150 طالب</option>
-                                                                                <option value="200">200 طالب</option>
-                                                                                <option value="250">250 طالب</option>
-                                                                                <option value="300">300 طالب</option>
-                                                                                <option value="350">350 طالب</option>
-                                                                      </>
-                                                            )}
-                                                            {formData.schoolType === 'ثانوي' && (
-                                                                      <>
-                                                                                <option value="100">100 طالب</option>
-                                                                                <option value="150">150 طالب</option>
-                                                                                <option value="200">200 طالب</option>
-                                                                                <option value="250">250 طالب</option>
-                                                                                <option value="300">300 طالب</option>
-                                                                                <option value="400">400 طالب</option>
-                                                                                <option value="500">500 طالب</option>
-                                                                                <option value="600">600 طالب</option>
-                                                                      </>
-                                                            )}
-                                                            {/* Default options if no school type selected */}
-                                                            {!formData.schoolType && (
-                                                                      <>
-                                                                                <option value="50">50</option>
-                                                                                <option value="100">100</option>
-                                                                                <option value="150">150</option>
-                                                                                <option value="200">200</option>
-                                                                                <option value="250">250</option>
-                                                                                <option value="300">300</option>
-                                                                                <option value="400">400</option>
-                                                                                <option value="500">500</option>
-                                                                      </>
-                                                            )}
-                                                  </select>
+                                                            placeholder="أدخل عدد المستفيدين"
+                                                  />
                                                   {!formData.schoolType && (
                                                             <p className="text-amber-600 dark:text-amber-400 text-xs mt-1">
                                                                       💡 اختر نوع المدرسة في الخطوة السابقة لعرض الأعداد المناسبة
@@ -328,7 +283,7 @@ export default function StepActivity() {
                                                                       ) : (
                                                                                 <SparklesIcon className="w-4 h-4" />
                                                                       )}
-                                                                      <span>توليد تلقائي</span>
+                                                                      <span>استخدام الذكاء الاصطناعي</span>
                                                             </button>
                                                   </div>
                                                   <textarea
@@ -340,7 +295,7 @@ export default function StepActivity() {
                                                   />
                                                   <p className="text-slate-500 dark:text-white/40 text-sm mt-2 flex items-center gap-2">
                                                             <SparklesIcon className="w-4 h-4 text-ai" />
-                                                            اضغط "توليد تلقائي" لإنشاء الخطوات بناءً على بيانات الفعالية
+                                                            اضغط "استخدام الذكاء الاصطناعي" لإنشاء الخطوات بناءً على بيانات الفعالية
                                                   </p>
                                         </div>
                               </div>

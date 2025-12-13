@@ -20,7 +20,7 @@ interface TemplateProps {
 export default function TemplateProfessionalGrid({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl mx-auto"
+                              className="bg-white rounded-2xl shadow-2xl overflow-hidden template-a4"
                               style={{ fontFamily: 'Cairo, Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -194,7 +194,7 @@ export default function TemplateProfessionalGrid({ formData, reportTypeTitle }: 
                                         <div className="flex justify-center items-center gap-12">
                                                   {formData.activityLeaderName && (
                                                             <div className="text-center">
-                                                                      <p className="text-white/70 text-sm mb-2">رائد النشاط</p>
+                                                                      <p className="text-white/70 text-sm mb-2">رائد/ة النشاط</p>
                                                                       <div className="bg-white/20 rounded-lg px-6 py-2">
                                                                                 <p className="text-white font-semibold">{formData.activityLeaderName}</p>
                                                                       </div>
@@ -202,7 +202,7 @@ export default function TemplateProfessionalGrid({ formData, reportTypeTitle }: 
                                                   )}
                                                   {formData.principalName && (
                                                             <div className="text-center">
-                                                                      <p className="text-white/70 text-sm mb-2">مدير المدرسة</p>
+                                                                      <p className="text-white/70 text-sm mb-2">مدير/ة المدرسة</p>
                                                                       <div className="bg-white/20 rounded-lg px-6 py-2">
                                                                                 <p className="text-white font-semibold">{formData.principalName}</p>
                                                                       </div>

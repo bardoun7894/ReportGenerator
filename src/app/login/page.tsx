@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
           DocumentTextIcon,
           EnvelopeIcon,
@@ -14,15 +15,39 @@ export default function LoginPage() {
           const [email, setEmail] = useState("");
           const [password, setPassword] = useState("");
           const [isLoading, setIsLoading] = useState(false);
+          const [error, setError] = useState("");
 
           const handleSubmit = async (e: React.FormEvent) => {
                     e.preventDefault();
                     setIsLoading(true);
-                    // Placeholder for login logic
-                    setTimeout(() => {
+                    setError("");
+
+                    try {
+                              const res = await fetch("/api/login", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ email, password }),
+                              });
+
+                              const data = await res.json();
+
+                              if (!res.ok) {
+                                        throw new Error(data.message || "فشل تسجيل الدخول");
+                              }
+
+                              // Login success
+                              localStorage.setItem("isLoggedIn", "true");
+                              // Save user info for profile display
+                              if (data.user) {
+                                        localStorage.setItem("user", JSON.stringify(data.user));
+                                        // Also update the store if possible, or just rely on localStorage
+                              }
+                              window.location.href = "/"; // Or dashboard
+                    } catch (err: any) {
+                              setError(err.message);
+                    } finally {
                               setIsLoading(false);
-                              alert("تم تسجيل الدخول بنجاح!");
-                    }, 1500);
+                    }
           };
 
           return (
@@ -36,9 +61,13 @@ export default function LoginPage() {
                               {/* Header */}
                               <header className="relative z-10 flex justify-between items-center px-6 lg:px-12 py-5">
                                         <Link href="/" className="flex items-center gap-3">
-                                                  <div className="w-11 h-11 bg-gradient-to-br from-primary to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 dark:shadow-none">
-                                                            <DocumentTextIcon className="w-6 h-6 text-white" />
-                                                  </div>
+                                                  <Image
+                                                            src="/logo.svg"
+                                                            alt="Logo"
+                                                            width={44}
+                                                            height={44}
+                                                            className="w-11 h-11 hover:scale-105 transition-transform duration-300"
+                                                  />
                                                   <div>
                                                             <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">نماذج تعليمية</span>
                                                             <p className="text-[10px] text-slate-500 dark:text-slate-400 -mt-1">منصة تقاريرك</p>
@@ -61,6 +90,12 @@ export default function LoginPage() {
                                                             </div>
 
                                                             <form onSubmit={handleSubmit} className="space-y-6">
+                                                                      {error && (
+                                                                                <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm text-center">
+                                                                                          {error}
+                                                                                </div>
+                                                                      )}
+
                                                                       <div>
                                                                                 <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-white">
                                                                                           البريد الإلكتروني
@@ -123,9 +158,9 @@ export default function LoginPage() {
 
                                                             <div className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
                                                                       ليس لديك حساب؟{" "}
-                                                                      <a href="#" className="text-primary font-medium hover:underline">
+                                                                      <Link href="/register" className="text-primary font-medium hover:underline">
                                                                                 إنشاء حساب جديد
-                                                                      </a>
+                                                                      </Link>
                                                             </div>
                                                   </div>
                                         </div>

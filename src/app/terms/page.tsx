@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { DocumentTextIcon, ScaleIcon } from "@heroicons/react/24/outline";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -14,9 +15,13 @@ export default function TermsPage() {
                               {/* Header */}
                               <header className="relative z-10 flex justify-between items-center px-6 lg:px-12 py-5">
                                         <Link href="/" className="flex items-center gap-3">
-                                                  <div className="w-11 h-11 bg-gradient-to-br from-primary to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 dark:shadow-none">
-                                                            <DocumentTextIcon className="w-6 h-6 text-white" />
-                                                  </div>
+                                                  <Image
+                                                            src="/logo.svg"
+                                                            alt="Logo"
+                                                            width={44}
+                                                            height={44}
+                                                            className="w-11 h-11 hover:scale-105 transition-transform duration-300"
+                                                  />
                                                   <div>
                                                             <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">نماذج تعليمية</span>
                                                             <p className="text-[10px] text-slate-500 dark:text-slate-400 -mt-1">منصة تقاريرك</p>

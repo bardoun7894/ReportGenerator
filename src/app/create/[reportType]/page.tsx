@@ -32,6 +32,14 @@ export default function CreateReportPage() {
                     if (reportType !== reportTypeId) {
                               setReportType(reportTypeId);
                     }
+
+                    // Check usage limit for guest users
+                    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+                    const reportsGenerated = parseInt(localStorage.getItem("reportsGenerated") || "0");
+
+                    if (!isLoggedIn && reportsGenerated >= 10) {
+                              router.push("/login?error=limit_reached");
+                    }
           }, [config, reportTypeId, reportType, setReportType, router]);
 
           if (!config || !config.enabled) {

@@ -2,43 +2,44 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-          apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 interface GenerateRequest {
-          title: string;
-          domain?: string;
-          targetAudience?: string[];
-          location?: string;
-          participantsCount?: number;
-          executors?: string;
-          duration?: string;
-          schoolName?: string;
+  title: string;
+  domain?: string;
+  targetAudience?: string[];
+  location?: string;
+  participantsCount?: number;
+  executors?: string;
+  duration?: string;
+  schoolName?: string;
 }
 
 export async function POST(request: NextRequest) {
-          try {
-                    const body: GenerateRequest = await request.json();
+  try {
+    const body: GenerateRequest = await request.json();
 
-                    if (!body.title) {
-                              return NextResponse.json(
-                                        { error: 'Title is required' },
-                                        { status: 400 }
-                              );
-                    }
+    if (!body.title) {
+      return NextResponse.json(
+        { error: 'Title is required' },
+        { status: 400 }
+      );
+    }
 
-                    // Map audience IDs to Arabic labels
-                    const audienceMap: Record<string, string> = {
-                              students: 'الطلاب',
-                              teachers: 'المعلمين',
-                              parents: 'أولياء الأمور',
-                              admin: 'الإدارة',
-                              community: 'المجتمع',
-                    };
+    // Map audience IDs to Arabic labels
+    const audienceMap: Record<string, string> = {
+      students: 'الطلاب',
+      teachers: 'المعلمين',
+      female_teachers: 'المعلمات',
+      parents: 'أولياء الأمور',
+      admin: 'الإدارة',
+      community: 'المجتمع',
+    };
 
-                    const audienceLabels = body.targetAudience?.map(a => audienceMap[a] || a).join('، ') || '';
+    const audienceLabels = body.targetAudience?.map(a => audienceMap[a] || a).join('، ') || '';
 
-                    const prompt = `أنت مساعد تربوي متخصص في كتابة تقارير الأنشطة المدرسية باللغة العربية الفصحى.
+    const prompt = `أنت مساعد تربوي متخصص في كتابة تقارير الأنشطة المدرسية باللغة العربية الفصحى.
 
 بيانات الفعالية:
 - اسم الفعالية: ${body.title}
@@ -65,54 +66,54 @@ export async function POST(request: NextRequest) {
   "objectives": ["الهدف الأول", "الهدف الثاني", "الهدف الثالث"]
 }`;
 
-                    const completion = await openai.chat.completions.create({
-                              model: 'gpt-4o-mini',
-                              messages: [
-                                        {
-                                                  role: 'system',
-                                                  content: 'أنت مساعد تربوي متخصص في كتابة التقارير المدرسية باللغة العربية. أجب دائمًا بصيغة JSON صحيحة فقط.',
-                                        },
-                                        {
-                                                  role: 'user',
-                                                  content: prompt,
-                                        },
-                              ],
-                              temperature: 0.7,
-                              max_tokens: 1000,
-                    });
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'system',
+          content: 'أنت مساعد تربوي متخصص في كتابة التقارير المدرسية باللغة العربية. أجب دائمًا بصيغة JSON صحيحة فقط.',
+        },
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 1000,
+    });
 
-                    const content = completion.choices[0]?.message?.content || '';
+    const content = completion.choices[0]?.message?.content || '';
 
-                    // Parse the JSON response
-                    let parsed;
-                    try {
-                              // Remove markdown code blocks if present
-                              const jsonContent = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-                              parsed = JSON.parse(jsonContent);
-                    } catch {
-                              // If parsing fails, return a fallback
-                              console.error('Failed to parse AI response:', content);
-                              return NextResponse.json({
-                                        description: 'فعالية تربوية متميزة تهدف إلى إثراء البيئة التعليمية وتعزيز مهارات المشاركين.',
-                                        executionSteps: '١. التخطيط والإعداد للفعالية.\n٢. تنفيذ الأنشطة المتنوعة.\n٣. تكريم المشاركين والمتميزين.',
-                                        objectives: [
-                                                  'تعزيز مهارات المشاركين',
-                                                  'إثراء البيئة التعليمية',
-                                                  'تحقيق التفاعل الإيجابي',
-                                        ],
-                              });
-                    }
+    // Parse the JSON response
+    let parsed;
+    try {
+      // Remove markdown code blocks if present
+      const jsonContent = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      parsed = JSON.parse(jsonContent);
+    } catch {
+      // If parsing fails, return a fallback
+      console.error('Failed to parse AI response:', content);
+      return NextResponse.json({
+        description: 'فعالية تربوية متميزة تهدف إلى إثراء البيئة التعليمية وتعزيز مهارات المشاركين.',
+        executionSteps: '١. التخطيط والإعداد للفعالية.\n٢. تنفيذ الأنشطة المتنوعة.\n٣. تكريم المشاركين والمتميزين.',
+        objectives: [
+          'تعزيز مهارات المشاركين',
+          'إثراء البيئة التعليمية',
+          'تحقيق التفاعل الإيجابي',
+        ],
+      });
+    }
 
-                    return NextResponse.json({
-                              description: parsed.description || '',
-                              executionSteps: parsed.executionSteps || '',
-                              objectives: parsed.objectives || [],
-                    });
-          } catch (error) {
-                    console.error('Generate API error:', error);
-                    return NextResponse.json(
-                              { error: 'Failed to generate content' },
-                              { status: 500 }
-                    );
-          }
+    return NextResponse.json({
+      description: parsed.description || '',
+      executionSteps: parsed.executionSteps || '',
+      objectives: parsed.objectives || [],
+    });
+  } catch (error) {
+    console.error('Generate API error:', error);
+    return NextResponse.json(
+      { error: 'Failed to generate content' },
+      { status: 500 }
+    );
+  }
 }

@@ -21,7 +21,7 @@ interface TemplateProps {
 export default function TemplateOfficialGov({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-white max-w-4xl mx-auto shadow-2xl relative overflow-hidden"
+                              className="bg-white template-a4 shadow-2xl relative overflow-hidden"
                               style={{
                                         fontFamily: 'Tajawal, sans-serif',
                                         padding: '0',
@@ -180,11 +180,11 @@ export default function TemplateOfficialGov({ formData, reportTypeTitle }: Templ
                               <div className="bg-[#f3f4f6] border-t border-gray-200 p-8 mt-auto">
                                         <div className="flex justify-between items-center max-w-2xl mx-auto">
                                                   <div className="text-center">
-                                                            <p className="text-gray-500 text-sm mb-8">رائد النشاط</p>
+                                                            <p className="text-gray-500 text-sm mb-8">رائد/ة النشاط</p>
                                                             <p className="font-bold text-[#1f2937]">{formData.activityLeaderName}</p>
                                                   </div>
                                                   <div className="text-center">
-                                                            <p className="text-gray-500 text-sm mb-8">مدير المدرسة</p>
+                                                            <p className="text-gray-500 text-sm mb-8">مدير/ة المدرسة</p>
                                                             <p className="font-bold text-[#1f2937]">{formData.principalName}</p>
                                                   </div>
                                         </div>

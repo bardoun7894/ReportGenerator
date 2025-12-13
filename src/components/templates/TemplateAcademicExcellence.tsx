@@ -21,7 +21,7 @@ interface TemplateProps {
 export default function TemplateAcademicExcellence({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-[#fdfbf7] max-w-4xl mx-auto shadow-2xl relative overflow-hidden"
+                              className="bg-[#fdfbf7] template-a4 shadow-2xl relative overflow-hidden"
                               style={{
                                         fontFamily: '"Times New Roman", "Traditional Arabic", serif',
                                         padding: '40px',
@@ -144,7 +144,7 @@ export default function TemplateAcademicExcellence({ formData, reportTypeTitle }
                               {/* Signatures */}
                               <div className="mt-12 flex justify-around items-center pt-8 border-t-2 border-[#881337]">
                                         <div className="text-center">
-                                                  <p className="font-serif text-lg text-slate-800 mb-8">رائد النشاط</p>
+                                                  <p className="font-serif text-lg text-slate-800 mb-8">رائد/ة النشاط</p>
                                                   <p className="font-bold text-[#881337] text-xl border-t border-slate-300 pt-2 px-8">{formData.activityLeaderName}</p>
                                         </div>
 
@@ -154,7 +154,7 @@ export default function TemplateAcademicExcellence({ formData, reportTypeTitle }
                                         </div>
 
                                         <div className="text-center">
-                                                  <p className="font-serif text-lg text-slate-800 mb-8">مدير المدرسة</p>
+                                                  <p className="font-serif text-lg text-slate-800 mb-8">مدير/ة المدرسة</p>
                                                   <p className="font-bold text-[#881337] text-xl border-t border-slate-300 pt-2 px-8">{formData.principalName}</p>
                                         </div>
                               </div>

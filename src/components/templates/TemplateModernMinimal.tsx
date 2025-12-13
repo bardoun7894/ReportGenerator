@@ -23,7 +23,7 @@ interface TemplateProps {
 export default function TemplateModernMinimal({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-white max-w-4xl mx-auto shadow-xl"
+                              className="bg-white template-a4 shadow-xl"
                               style={{
                                         fontFamily: 'Tajawal, sans-serif',
                                         padding: '40px'

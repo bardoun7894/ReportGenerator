@@ -22,7 +22,7 @@ interface TemplateProps {
 export default function TemplateCreativeStudio({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-[#0f172a] max-w-4xl mx-auto shadow-2xl relative overflow-hidden text-white"
+                              className="bg-[#0f172a] template-a4 shadow-2xl relative overflow-hidden text-white"
                               style={{
                                         fontFamily: 'Cairo, sans-serif',
                                         padding: '32px'
@@ -156,11 +156,11 @@ export default function TemplateCreativeStudio({ formData, reportTypeTitle }: Te
                                         </div>
                                         <div className="flex gap-8">
                                                   <div className="text-right">
-                                                            <p className="text-xs text-slate-500">مدير المدرسة</p>
+                                                            <p className="text-xs text-slate-500">مدير/ة المدرسة</p>
                                                             <p className="text-sm font-medium text-slate-200">{formData.principalName}</p>
                                                   </div>
                                                   <div className="text-right">
-                                                            <p className="text-xs text-slate-500">رائد النشاط</p>
+                                                            <p className="text-xs text-slate-500">رائد/ة النشاط</p>
                                                             <p className="text-sm font-medium text-slate-200">{formData.activityLeaderName}</p>
                                                   </div>
                                         </div>

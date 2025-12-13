@@ -23,7 +23,7 @@ interface TemplateProps {
 export default function TemplateShahed({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="bg-white max-w-4xl mx-auto shadow-2xl overflow-hidden flex flex-col min-h-[1100px]"
+                              className="bg-white template-a4 shadow-2xl overflow-hidden flex flex-col min-h-[1100px]"
                               style={{ fontFamily: 'Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -182,10 +182,15 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                                       <CameraIcon className="w-6 h-6 text-[#006C35]" />
                                                                       التوثيق الصوري
                                                             </h3>
-                                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                            <div className="grid grid-cols-2 gap-4">
                                                                       {formData.photos?.slice(0, 2).map((photo, idx) => (
-                                                                                <div key={idx} className="aspect-video relative rounded-xl overflow-hidden border border-gray-200 shadow-sm group">
-                                                                                          <Image src={photo} alt={`Photo ${idx + 1}`} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                                                                                <div key={idx} className="aspect-video relative rounded-xl overflow-hidden border border-gray-200 shadow-sm group break-inside-avoid">
+                                                                                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                                          <img
+                                                                                                    src={photo}
+                                                                                                    alt={`Photo ${idx + 1}`}
+                                                                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                                                          />
                                                                                 </div>
                                                                       ))}
                                                             </div>
@@ -197,12 +202,12 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                               <footer className="mt-auto bg-[#F9FAFB] border-t border-gray-200 p-8">
                                         <div className="flex justify-around items-end max-w-3xl mx-auto">
                                                   <div className="text-center">
-                                                            <p className="text-gray-500 text-sm mb-4">{formData.activityLeaderTitle || "رائد النشاط"}</p>
+                                                            <p className="text-gray-500 text-sm mb-4">{formData.activityLeaderTitle || "رائد/ة النشاط"}</p>
                                                             <p className="font-bold text-[#006C35] text-lg">{formData.activityLeaderName}</p>
                                                   </div>
 
                                                   <div className="text-center">
-                                                            <p className="text-gray-500 text-sm mb-4">{formData.principalTitle || "مدير المدرسة"}</p>
+                                                            <p className="text-gray-500 text-sm mb-4">{formData.principalTitle || "مدير/ة المدرسة"}</p>
                                                             <p className="font-bold text-[#006C35] text-lg">{formData.principalName}</p>
                                                   </div>
                                         </div>

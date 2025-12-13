@@ -29,7 +29,7 @@ export default function TemplateShahedNew({ formData, reportTypeTitle }: Templat
 
           return (
                     <div
-                              className="bg-white max-w-4xl mx-auto shadow-2xl overflow-hidden"
+                              className="bg-white template-a4 shadow-2xl overflow-hidden"
                               style={{ fontFamily: 'Tajawal, sans-serif' }}
                               dir="rtl"
                     >
@@ -272,11 +272,11 @@ export default function TemplateShahedNew({ formData, reportTypeTitle }: Templat
                               >
                                         <div className="flex justify-around items-end max-w-2xl mx-auto">
                                                   <div className="text-center">
-                                                            <p className="text-gray-500 text-sm mb-3">رائد النشاط</p>
+                                                            <p className="text-gray-500 text-sm mb-3">رائد/ة النشاط</p>
                                                             <p className="font-bold text-[#006C35]">{formData.activityLeaderName || "___________"}</p>
                                                   </div>
                                                   <div className="text-center">
-                                                            <p className="text-gray-500 text-sm mb-3">مدير المدرسة</p>
+                                                            <p className="text-gray-500 text-sm mb-3">مدير/ة المدرسة</p>
                                                             <p className="font-bold text-[#006C35]">{formData.principalName || "___________"}</p>
                                                   </div>
                                         </div>

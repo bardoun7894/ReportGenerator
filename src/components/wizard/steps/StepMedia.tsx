@@ -198,9 +198,7 @@ export default function StepMedia() {
                 onChange={(e) => setSaveToProfile(e.target.checked)}
                 className="w-4 h-4 accent-primary"
               />
-              <span className="text-sm text-slate-600 dark:text-white/70">
-                حفظ الأسماء للاستخدام في التقارير القادمة
-              </span>
+
             </label>
           </div>
 
@@ -209,23 +207,22 @@ export default function StepMedia() {
             <div className="space-y-3">
               <label className="block text-sm text-slate-600 dark:text-white/60 flex items-center gap-2">
                 <UserIcon className="w-4 h-4" />
-                <span>رائد النشاط</span>
-                <span className="text-accent">*</span>
               </label>
 
+              {/* Title Selection */}
               {/* Title Selection */}
               <select
                 value={formData.activityLeaderTitle || "رائد النشاط"}
                 onChange={(e) => handlePersonnelChange('activityLeaderTitle', e.target.value)}
                 className="form-input text-sm bg-slate-50 border-slate-200"
               >
-                <option value="رائد النشاط">رائد النشاط</option>
-                <option value="الموجه الطلابي">الموجه الطلابي</option>
-                <option value="معلم المادة">معلم المادة</option>
-                <option value="وكيل المدرسة">وكيل المدرسة</option>
-                <option value="مسؤول النشاط">مسؤول النشاط</option>
-                <option value="منسق البرنامج">منسق البرنامج</option>
-                <option value="مشرف النادي">مشرف النادي</option>
+                <option value="رائد النشاط">رائد/ة النشاط</option>
+                <option value="الموجه الطلابي">الموجه/ة الطلابي/ة</option>
+                <option value="معلم المادة">معلم/ة المادة</option>
+                <option value="وكيل المدرسة">وكيل/ة المدرسة</option>
+                <option value="مسؤول النشاط">مسؤول/ة النشاط</option>
+                <option value="منسق البرنامج">منسق/ة البرنامج</option>
+                <option value="مشرف النادي">مشرف/ة النادي</option>
               </select>
 
               {/* Name Input */}
@@ -233,7 +230,7 @@ export default function StepMedia() {
                 type="text"
                 value={formData.activityLeaderName || ""}
                 onChange={(e) => handlePersonnelChange('activityLeaderName', e.target.value)}
-                placeholder="اسم رائد النشاط"
+                placeholder="اسم رائد/ة النشاط"
                 className="form-input"
               />
             </div>
@@ -242,7 +239,7 @@ export default function StepMedia() {
             <div className="space-y-3">
               <label className="block text-sm text-slate-600 dark:text-white/60 flex items-center gap-2">
                 <UserIcon className="w-4 h-4" />
-                <span>مدير المدرسة</span>
+                <span>مدير/ة المدرسة</span>
                 <span className="text-accent">*</span>
               </label>
 
@@ -252,11 +249,11 @@ export default function StepMedia() {
                 onChange={(e) => handlePersonnelChange('principalTitle', e.target.value)}
                 className="form-input text-sm bg-slate-50 border-slate-200"
               >
-                <option value="مدير المدرسة">مدير المدرسة</option>
-                <option value="وكيل المدرسة">وكيل المدرسة</option>
-                <option value="المشرف التربوي">المشرف التربوي</option>
-                <option value="قائد المدرسة">قائد المدرسة</option>
-                <option value="المساعد الإداري">المساعد الإداري</option>
+                <option value="مدير المدرسة">مدير/ة المدرسة</option>
+                <option value="وكيل المدرسة">وكيل/ة المدرسة</option>
+                <option value="المشرف التربوي">المشرف/ة التربوي/ة</option>
+                <option value="قائد المدرسة">قائد/ة المدرسة</option>
+                <option value="المساعد الإداري">المساعد/ة الإداري/ة</option>
               </select>
 
               {/* Name Input */}

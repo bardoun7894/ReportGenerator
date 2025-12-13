@@ -11,6 +11,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { ThemeToggle } from "@/components/theme-toggle";
+import VisitorCounter from "@/components/VisitorCounter";
+import HeaderAuth from "@/components/HeaderAuth";
 
 export default function LandingPage() {
           return (
@@ -25,9 +27,13 @@ export default function LandingPage() {
                               {/* Header */}
                               <header className="relative z-10 flex justify-between items-center px-6 lg:px-12 py-5">
                                         <div className="flex items-center gap-3">
-                                                  <div className="w-11 h-11 bg-gradient-to-br from-primary to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 dark:shadow-none">
-                                                            <DocumentTextIcon className="w-6 h-6 text-white" />
-                                                  </div>
+                                                  <Image
+                                                            src="/logo.svg"
+                                                            alt="Logo"
+                                                            width={44}
+                                                            height={44}
+                                                            className="w-11 h-11 hover:scale-105 transition-transform duration-300"
+                                                  />
                                                   <div>
                                                             <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">نماذج تعليمية</span>
                                                             <p className="text-[10px] text-slate-500 dark:text-slate-400 -mt-1">منصة تقاريرك</p>
@@ -40,13 +46,7 @@ export default function LandingPage() {
                                                   >
                                                             عن المنصة
                                                   </Link>
-                                                  <ThemeToggle />
-                                                  <Link
-                                                            href="/login"
-                                                            className="glass-card px-5 py-2 text-sm font-medium hover:bg-white dark:hover:bg-white/10 transition-all text-slate-700 dark:text-white"
-                                                  >
-                                                            تسجيل الدخول
-                                                  </Link>
+                                                  <HeaderAuth />
                                         </div>
                               </header>
 
@@ -96,6 +96,7 @@ export default function LandingPage() {
                                                                                           <CheckCircleIcon className="w-4 h-4 text-primary" />
                                                                                           مجاني 100%
                                                                                 </div>
+                                                                                <VisitorCounter />
                                                                       </div>
                                                             </div>
 

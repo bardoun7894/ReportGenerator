@@ -21,7 +21,7 @@ interface TemplateProps {
 export default function TemplateTealFrame({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div
-                              className="rounded-3xl overflow-hidden max-w-4xl mx-auto shadow-2xl"
+                              className="rounded-3xl overflow-hidden template-a4 shadow-2xl"
                               style={{
                                         fontFamily: 'Cairo, Tajawal, system-ui, sans-serif',
                                         backgroundColor: '#0F3A3F',
@@ -227,13 +227,13 @@ export default function TemplateTealFrame({ formData, reportTypeTitle }: Templat
                                                   <div className="flex justify-center gap-12">
                                                             {formData.principalName && (
                                                                       <div className="text-center">
-                                                                                <p className="text-white/60 text-xs mb-1">مدير المدرسة</p>
+                                                                                <p className="text-white/60 text-xs mb-1">مدير/ة المدرسة</p>
                                                                                 <p className="text-white font-medium text-sm">{formData.principalName}</p>
                                                                       </div>
                                                             )}
                                                             {formData.activityLeaderName && (
                                                                       <div className="text-center">
-                                                                                <p className="text-white/60 text-xs mb-1">رائد النشاط</p>
+                                                                                <p className="text-white/60 text-xs mb-1">رائد/ة النشاط</p>
                                                                                 <p className="text-white font-medium text-sm">{formData.activityLeaderName}</p>
                                                                       </div>
                                                             )}
