@@ -1,35 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generatePDFFromHTML } from '@/lib/pdf-generator';
 
+/**
+ * PDF Export API Route
+ * 
+ * @deprecated This endpoint is deprecated. PDF generation is now handled client-side.
+ * 
+ * The client-side approach uses html2canvas and jsPDF directly in the browser,
+ * eliminating the need for server-side Puppeteer and Chromium dependencies.
+ * 
+ * See: src/app/preview/draft/page.tsx - handleDownloadPDF function
+ */
 export async function POST(req: NextRequest) {
-    try {
-        const { html, title } = await req.json();
-
-        if (!html) {
-            return NextResponse.json(
-                { error: 'HTML content is required' },
-                { status: 400 }
-            );
-        }
-
-        const pdfBuffer = await generatePDFFromHTML({ html, title });
-
-        // Convert Buffer to Uint8Array for NextResponse
-        const uint8Array = new Uint8Array(pdfBuffer);
-
-        return new NextResponse(uint8Array, {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/pdf',
-                'Content-Disposition': `attachment; filename="${encodeURIComponent(title || 'تقرير')}.pdf"`,
-                'Content-Length': pdfBuffer.length.toString(),
-            },
-        });
-    } catch (error) {
-        console.error('PDF generation error:', error);
-        return NextResponse.json(
-            { error: 'Failed to generate PDF' },
-            { status: 500 }
-        );
-    }
+    return NextResponse.json(
+        {
+            error: 'This API endpoint is deprecated. PDF generation is now handled client-side.',
+            message: 'Please use the client-side PDF download feature in the preview page.'
+        },
+        { status: 410 } // 410 Gone - Resource is no longer available
+    );
 }

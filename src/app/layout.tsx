@@ -19,8 +19,8 @@ export default function RootLayout({
           children: React.ReactNode;
 }) {
           return (
-                    <html lang="ar" dir="rtl">
-                              <body className="font-cairo antialiased">
+                    <html lang="ar" dir="rtl" suppressHydrationWarning>
+                              <body className="font-cairo antialiased" suppressHydrationWarning>
                                         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                                                   {children}
                                         </ThemeProvider>

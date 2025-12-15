@@ -142,54 +142,86 @@ export default function PreviewDraftPage() {
         setIsExporting(true);
 
         try {
-            // Get the HTML content of the report
-            const htmlContent = reportRef.current.outerHTML;
+            // Dynamically import libraries for client-side PDF generation
+            const html2canvas = (await import('html2canvas')).default;
+            const { jsPDF } = await import('jspdf');
+            // Note: saveAs is imported at file top from 'file-saver'
 
-            // Get all stylesheets as inline styles
-            const styles = Array.from(document.styleSheets)
-                .map(sheet => {
-                    try {
-                        return Array.from(sheet.cssRules)
-                            .map(rule => rule.cssText)
-                            .join('\n');
-                    } catch {
-                        return '';
-                    }
-                })
-                .join('\n');
+            // Create a temporary container with A4 width for print-quality rendering
+            // A4 at 96 DPI = 794px width
+            const A4_WIDTH = 794;
 
-            // Create full HTML with styles
-            const fullHTML = `
-                <style>${styles}</style>
-                <div style="font-family: ${currentFontFamily}; direction: rtl;">
-                    ${htmlContent}
-                </div>
+            const tempContainer = document.createElement('div');
+            tempContainer.style.cssText = `
+                position: absolute;
+                left: -9999px;
+                top: 0;
+                width: ${A4_WIDTH}px;
+                background: white;
             `;
+            document.body.appendChild(tempContainer);
 
-            // Call server API for PDF generation
-            const response = await fetch('/api/export/pdf', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    html: fullHTML,
-                    title: formData.title || 'تقرير',
-                }),
+            // Clone the report element into the fixed-width container
+            const clone = reportRef.current.cloneNode(true) as HTMLElement;
+            clone.style.width = `${A4_WIDTH}px`;
+            clone.style.maxWidth = `${A4_WIDTH}px`;
+            tempContainer.appendChild(clone);
+
+            // Wait for fonts and images to load in the clone
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            // Use html2canvas to capture the element at A4 width
+            const canvas = await html2canvas(clone, {
+                scale: 2, // Higher quality
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                width: A4_WIDTH,
+                windowWidth: A4_WIDTH,
             });
 
-            if (!response.ok) {
-                throw new Error('PDF generation failed');
+            // Cleanup temporary container
+            document.body.removeChild(tempContainer);
+
+            // Calculate PDF dimensions (A4 size in mm: 210 x 297)
+            const imgWidth = 210;
+            const pageHeight = 297;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            // Create PDF
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgData = canvas.toDataURL('image/png', 1.0);
+
+            // Add image to PDF - handle multi-page
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            // Add first page
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // Add additional pages if content is longer than one page
+            while (heightLeft > 0) {
+                position -= pageHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
             }
 
-            // Download the PDF
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${formData.title || 'تقرير'}.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+            // Download the PDF using native approach
+            const pdfBlob = pdf.output('blob');
+            const blobUrl = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf' }));
+            const downloadLink = document.createElement('a');
+            downloadLink.href = blobUrl;
+            downloadLink.download = `${formData.title || 'report'}.pdf`;
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            // Cleanup after a short delay
+            setTimeout(() => {
+                document.body.removeChild(downloadLink);
+                URL.revokeObjectURL(blobUrl);
+            }, 100);
 
             // Track the download
             await trackReport('pdf');

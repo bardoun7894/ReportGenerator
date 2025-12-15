@@ -89,21 +89,21 @@ const InfoSection: React.FC<{ formData: WizardFormData }> = ({ formData }) => {
           return (
                     <div className="mt-10 px-4 space-y-2">
                               {/* Row 1: Basic Info */}
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                              <div className="grid grid-cols-3 gap-4">
                                         <InputBox label="عنوان التقرير:" value={formData.title} />
                                         <InputBox label="التاريخ:" value={formData.date} />
+                                        <InputBox label="المكان:" value={formData.location} />
                               </div>
 
                               {/* Row 2: Details */}
-                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                        <InputBox label="المكان:" value={formData.location} />
+                              <div className="grid grid-cols-3 gap-4">
                                         <InputBox label="عدد المشاركين:" value={formData.participantsCount} />
                                         <InputBox label="المدة:" value={formData.duration} />
+                                        <InputBox label="المجال:" value={formData.domain} />
                               </div>
 
                               {/* Row 3: More Details */}
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <InputBox label="المجال:" value={formData.domain} />
+                              <div className="grid grid-cols-1 gap-4">
                                         <InputBox label="الفئة المستهدفة:" value={audience} />
                               </div>
                     </div>
@@ -181,8 +181,8 @@ const PhotosSection: React.FC<{ photos?: string[] }> = ({ photos }) => {
                                                   <span className="bg-white px-4 text-teal-600 font-bold text-lg relative z-10">صور من الفعالية</span>
                                                   <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-teal-500 -z-0"></div>
                                         </div>
-                                        <div className="grid grid-cols-2 gap-4">
-                                                  {(photos || []).map((photo, index) => (
+                                        <div className="grid grid-cols-3 gap-4">
+                                                  {(photos || []).slice(0, 3).map((photo, index) => (
                                                             <div key={index} className="aspect-video relative rounded-xl overflow-hidden border border-slate-200 shadow-sm break-inside-avoid">
                                                                       {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                       <img
@@ -247,9 +247,9 @@ const Footer: React.FC<{ formData: WizardFormData }> = ({ formData }) => {
 export default function TemplateExchangeVisit({ formData, reportTypeTitle }: TemplateProps) {
           return (
                     <div className="min-h-screen py-8 px-2 sm:px-4 md:px-8 flex justify-center bg-gray-50/50 print:p-0 print:m-0 print:bg-white print:block">
-                              {/* A4 Paper Container */}
+                              {/* A4 Paper Container - Fixed width for print */}
                               <div
-                                        className="w-full max-w-[210mm] bg-white shadow-2xl rounded-xl print:shadow-none print:w-full print:max-w-none print:rounded-none overflow-hidden"
+                                        className="w-full max-w-[210mm] min-w-[700px] bg-white shadow-2xl rounded-xl print:shadow-none print:w-full print:max-w-none print:rounded-none overflow-hidden"
                                         style={{ minHeight: '297mm', direction: 'rtl' }}
                               >
                                         <div className="flex flex-col h-full relative">
