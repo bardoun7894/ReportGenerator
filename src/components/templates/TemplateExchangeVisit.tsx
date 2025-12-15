@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { WizardFormData, EnhancedText } from "@/stores/wizard-store";
-import Image from "next/image";
+import { MinistryLogo } from "@/components/MinistryLogo";
 import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
 
 interface TemplateProps {
@@ -15,6 +15,15 @@ const getText = (item: EnhancedText | string | undefined): string => {
           if (!item) return "";
           if (typeof item === 'string') return item;
           return item.enhanced || item.original || "";
+};
+
+// Helper for Unicode Circled Digits (Solid) ❶ ❷ ❸
+// Range: 1-20 supported by standard fonts
+const getCircledDigit = (n: number): string => {
+          if (n >= 1 && n <= 20) {
+                    return String.fromCodePoint(10101 + n); // 10102 is ❶
+          }
+          return `${n}.`; // Fallback
 };
 
 // --- Sub-components ---
@@ -48,12 +57,8 @@ const Header: React.FC<{ region?: string; school?: string; schoolType?: string; 
 
                                         {/* Right Side: Ministry Logo (first in RTL) */}
                                         <div className="flex items-center gap-4">
-                                                  <div className="w-20 h-20 relative">
-                                                            <Image src="/salogos.svg"
-                                                                      alt="وزارة التعليم"
-                                                                      fill
-                                                                      className="object-contain brightness-0 invert"
-                                                            />
+                                                  <div className="w-32 h-24 flex items-center justify-center bg-white rounded-lg p-2 filter-none">
+                                                            <MinistryLogo className="w-full h-full object-contain" />
                                                   </div>
                                                   <div className="border-r border-white/30 h-16"></div>
                                                   <div className="text-right">
@@ -131,11 +136,12 @@ const DescriptionSection: React.FC<{ executionSteps?: string }> = ({ executionSt
                                                             <div className="space-y-2">
                                                                       <h4 className="font-bold text-teal-700 text-sm mb-2">خطوات التنفيذ</h4>
                                                                       {steps.map((step, idx) => (
-                                                                                <div key={idx} className="flex gap-2 items-start">
-                                                                                          <span className="w-5 h-5 bg-teal-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                                                                                                    {idx + 1}
+                                                                                <div key={idx} className="flex gap-3 items-start opacity-90">
+                                                                                          {/* Unicode Circled Glyph - Looks like a graphic, behaves like text */}
+                                                                                          <span className="text-teal-600 text-2xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
-                                                                                          <p className="text-gray-700 text-sm leading-relaxed">{step}</p>
+                                                                                          <p className="text-gray-700 text-sm leading-relaxed pt-1">{step}</p>
                                                                                 </div>
                                                                       ))}
                                                             </div>
@@ -159,10 +165,10 @@ const ObjectivesSection: React.FC<{ objectives?: EnhancedText[] }> = ({ objectiv
                                         <div className="bg-gray-50/50 p-4 space-y-2">
                                                   {objectives.map((obj, idx) => (
                                                             <div key={idx} className="flex items-start gap-3 text-gray-700">
-                                                                      <span className="flex-shrink-0 w-6 h-6 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-sm font-bold">
-                                                                                {idx + 1}
+                                                                      <span className="text-teal-600 text-2xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                {getCircledDigit(idx + 1)}
                                                                       </span>
-                                                                      <p className="text-sm leading-relaxed">{getText(obj)}</p>
+                                                                      <p className="text-sm leading-relaxed pt-1">{getText(obj)}</p>
                                                             </div>
                                                   ))}
                                         </div>

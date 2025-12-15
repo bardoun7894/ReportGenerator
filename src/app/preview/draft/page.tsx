@@ -167,46 +167,66 @@ export default function PreviewDraftPage() {
             clone.style.maxWidth = `${A4_WIDTH}px`;
             tempContainer.appendChild(clone);
 
-            // Wait for fonts and images to load in the clone
+            // Helper to convert image URL to Base64
+            const toDataURL = async (url: string): Promise<string> => {
+                try {
+                    const response = await fetch(url);
+                    const blob = await response.blob();
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result as string);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    });
+                } catch (e) {
+                    console.warn('Failed to convert image:', url, e);
+                    return url;
+                }
+            };
+
+            // Process all images in the clone to use Base64
+            // This bypasses CORS and loading issues during capture
+            const images = clone.getElementsByTagName('img');
+            await Promise.all(Array.from(images).map(async (img) => {
+                if (img.src && !img.src.startsWith('data:')) {
+                    // Handle Next.js transparent placeholder or actual src
+                    const src = img.currentSrc || img.src;
+                    if (src) {
+                        const base64 = await toDataURL(src);
+                        img.src = base64;
+                        img.srcset = ''; // Clear srcset to force base64 usage
+                    }
+                }
+            }));
+
+            // Wait a moment for the base64 replacements to render
             await new Promise(resolve => setTimeout(resolve, 500));
 
             // Use html2canvas to capture the element at A4 width
             const canvas = await html2canvas(clone, {
                 scale: 2, // Higher quality
                 useCORS: true,
-                allowTaint: true,
                 backgroundColor: '#ffffff',
                 width: A4_WIDTH,
                 windowWidth: A4_WIDTH,
+                logging: false, // Disable verbose logging
             });
 
             // Cleanup temporary container
             document.body.removeChild(tempContainer);
 
-            // Calculate PDF dimensions (A4 size in mm: 210 x 297)
+            // Calculate PDF dimensions (A4 width in mm: 210)
             const imgWidth = 210;
-            const pageHeight = 297;
+            // Calculate height based on aspect ratio of the captured canvas
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-            // Create PDF
-            const pdf = new jsPDF('p', 'mm', 'a4');
+            // Create PDF with dynamic height (one long page)
+            // 'p' = portrait, 'mm' = units, [width, height] = custom size
+            const pdf = new jsPDF('p', 'mm', [imgWidth, imgHeight]);
             const imgData = canvas.toDataURL('image/png', 1.0);
 
-            // Add image to PDF - handle multi-page
-            let heightLeft = imgHeight;
-            let position = 0;
-
-            // Add first page
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-
-            // Add additional pages if content is longer than one page
-            while (heightLeft > 0) {
-                position -= pageHeight;
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-            }
+            // Add image to the single long PDF page
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
 
             // Download the PDF using native approach
             const pdfBlob = pdf.output('blob');
