@@ -11,7 +11,8 @@ import {
           CameraIcon,
           ListBulletIcon
 } from "@heroicons/react/24/outline";
-import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
+import { getAudienceLabel, extractDescription, extractSteps, getCircledDigit } from "./template-helpers";
+import { MinistryLogo } from "@/components/MinistryLogo";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -39,13 +40,8 @@ export default function TemplateShahedNew({ formData, reportTypeTitle }: Templat
                                         <div className="flex justify-between items-start px-8 pt-6 pb-4">
                                                   {/* Ministry Logo - Right Side */}
                                                   <div className="flex flex-col items-center" style={{ width: '100px' }}>
-                                                            <div className="w-20 h-20 relative">
-                                                                      <Image
-                                                                                src="/salogos.svg"
-                                                                                alt="وزارة التعليم"
-                                                                                fill
-                                                                                className="object-contain"
-                                                                      />
+                                                            <div className="w-20 h-20 relative bg-white rounded-lg p-1 flex items-center justify-center">
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             <p className="text-[#006C35] font-bold text-[11px] mt-1">وزارة التعليم</p>
                                                             <p className="text-[#006C35] text-[9px]">Ministry of Education</p>
@@ -136,7 +132,7 @@ export default function TemplateShahedNew({ formData, reportTypeTitle }: Templat
                                                                       {formData.targetAudience?.map((audience, idx) => (
                                                                                 <span
                                                                                           key={idx}
-                                                                                          className="px-3 py-1 bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 shadow-sm"
+                                                                                          className="inline-flex items-center justify-center px-3 py-1 bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 shadow-sm whitespace-nowrap"
                                                                                 >
                                                                                           {getAudienceLabel(audience)}
                                                                                 </span>
@@ -190,13 +186,10 @@ export default function TemplateShahedNew({ formData, reportTypeTitle }: Templat
                                                                                           <div className="space-y-2">
                                                                                                     {extractSteps(formData.executionSteps).map((step, idx) => (
                                                                                                               <div key={idx} className="flex gap-2 items-start group">
-                                                                                                                        <span
-                                                                                                                                  className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 shadow-sm"
-                                                                                                                                  style={{ background: mainGradient }}
-                                                                                                                        >
-                                                                                                                                  {idx + 1}
+                                                                                                                        <span className="text-[#006C35] text-2xl leading-none flex-shrink-0 pt-0.5 select-none">
+                                                                                                                                  {getCircledDigit(idx + 1)}
                                                                                                                         </span>
-                                                                                                                        <p className="text-gray-700 text-sm leading-relaxed group-hover:text-gray-900 transition-colors">{step}</p>
+                                                                                                                        <p className="text-gray-700 text-sm leading-relaxed group-hover:text-gray-900 transition-colors pt-1">{step}</p>
                                                                                                               </div>
                                                                                                     ))}
                                                                                           </div>
@@ -220,13 +213,10 @@ export default function TemplateShahedNew({ formData, reportTypeTitle }: Templat
                                                                                           className="flex gap-3 items-start p-3 rounded-lg border border-gray-50 hover:border-gray-200 transition-all hover:shadow-sm"
                                                                                           style={{ backgroundColor: '#F9FAFB' }}
                                                                                 >
-                                                                                          <span
-                                                                                                    className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 mt-0.5"
-                                                                                                    style={{ background: mainGradient }}
-                                                                                          >
-                                                                                                    {idx + 1}
+                                                                                          <span className="text-[#006C35] text-2xl leading-none flex-shrink-0 pt-0.5 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
-                                                                                          <p className="text-gray-700 text-sm">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
+                                                                                          <p className="text-gray-700 text-sm pt-1">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
                                                                                 </div>
                                                                       )) || <p className="text-gray-400 text-center text-sm py-4">لم يتم إضافة أهداف</p>}
                                                             </div>

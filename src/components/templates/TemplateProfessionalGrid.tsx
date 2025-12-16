@@ -11,6 +11,8 @@ import {
           UserIcon,
           BuildingLibraryIcon
 } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "@/components/MinistryLogo";
+import { getCircledDigit, getAudienceLabel } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -52,13 +54,8 @@ export default function TemplateProfessionalGrid({ formData, reportTypeTitle }: 
                                                   </div>
 
                                                   {/* Ministry Badge */}
-                                                  <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center border-2 border-white/30 relative p-2">
-                                                            <Image
-                                                                      src="/salogos.svg"
-                                                                      alt="Ministry Logo"
-                                                                      fill
-                                                                      className="object-contain p-2 invert brightness-0"
-                                                            />
+                                                  <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center border-2 border-white/30 relative p-2">
+                                                            <MinistryLogo className="w-full h-full object-contain" />
                                                   </div>
                                         </div>
                               </div>
@@ -141,9 +138,9 @@ export default function TemplateProfessionalGrid({ formData, reportTypeTitle }: 
                                                                       {formData.targetAudience.map((audience, idx) => (
                                                                                 <span
                                                                                           key={idx}
-                                                                                          className="px-4 py-2 bg-[#1E40AF] text-white rounded-full text-sm font-medium"
+                                                                                          className="inline-flex items-center justify-center px-4 py-2 bg-[#1E40AF] text-white rounded-full text-sm font-medium whitespace-nowrap"
                                                                                 >
-                                                                                          {audience}
+                                                                                          {getAudienceLabel(audience)}
                                                                                 </span>
                                                                       ))}
                                                             </div>
@@ -157,8 +154,8 @@ export default function TemplateProfessionalGrid({ formData, reportTypeTitle }: 
                                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                                       {formData.objectives.map((obj, idx) => (
                                                                                 <div key={idx} className="flex items-start gap-3 bg-white rounded-lg p-3 shadow-sm">
-                                                                                          <span className="w-8 h-8 bg-[#1E40AF] text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">
-                                                                                                    {idx + 1}
+                                                                                          <span className="text-[#1E40AF] text-xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
                                                                                           <p className="text-slate-700 text-sm leading-relaxed">
                                                                                                     {obj.isAIEnhanced ? obj.enhanced : obj.original}

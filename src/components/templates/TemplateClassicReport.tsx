@@ -3,6 +3,8 @@
 import { WizardFormData } from "@/stores/wizard-store";
 import Image from "next/image";
 import { BuildingLibraryIcon } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "@/components/MinistryLogo";
+import { getCircledDigit, getAudienceLabel } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -22,12 +24,7 @@ export default function TemplateClassicReport({ formData, reportTypeTitle }: Tem
                                                   {/* Ministry Logo - Right */}
                                                   <div className="flex items-center gap-4">
                                                             <div className="w-20 h-20 border-2 border-[#006747] rounded-lg flex items-center justify-center bg-white relative p-2">
-                                                                      <Image
-                                                                                src="/salogos.svg"
-                                                                                alt="Ministry Logo"
-                                                                                fill
-                                                                                className="object-contain p-2"
-                                                                      />
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             <div className="text-right">
                                                                       <p className="text-[#006747] font-bold text-lg">المملكة العربية السعودية</p>
@@ -114,7 +111,15 @@ export default function TemplateClassicReport({ formData, reportTypeTitle }: Tem
                                                                       {formData.targetAudience && formData.targetAudience.length > 0 && (
                                                                                 <tr>
                                                                                           <td className="bg-[#006747]/10 px-4 py-3 font-bold text-[#006747] border-l-2 border-[#006747]">الفئة المستهدفة</td>
-                                                                                          <td className="px-4 py-3 text-slate-800">{formData.targetAudience.join('، ')}</td>
+                                                                                          <td className="px-4 py-3 text-slate-800">
+                                                                                                    <div className="flex flex-wrap gap-2">
+                                                                                                              {formData.targetAudience.map((a, i) => (
+                                                                                                                        <span key={i} className="inline-flex items-center justify-center px-2 py-1 bg-[#006747]/10 text-[#006747] rounded text-xs whitespace-nowrap">
+                                                                                                                                  {getAudienceLabel(a)}
+                                                                                                                        </span>
+                                                                                                              ))}
+                                                                                                    </div>
+                                                                                          </td>
                                                                                 </tr>
                                                                       )}
                                                             </tbody>
@@ -140,13 +145,18 @@ export default function TemplateClassicReport({ formData, reportTypeTitle }: Tem
                                                                       <h3 className="font-bold text-[#006747]">أهداف الفعالية</h3>
                                                             </div>
                                                             <div className="p-4">
-                                                                      <ol className="list-decimal list-inside space-y-2 pr-2">
+                                                                      <div className="space-y-4">
                                                                                 {formData.objectives.map((obj, idx) => (
-                                                                                          <li key={idx} className="text-slate-700 leading-relaxed">
-                                                                                                    {obj.isAIEnhanced ? obj.enhanced : obj.original}
-                                                                                          </li>
+                                                                                          <div key={idx} className="flex gap-2 items-start">
+                                                                                                    <span className="text-[#006747] text-xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                              {getCircledDigit(idx + 1)}
+                                                                                                    </span>
+                                                                                                    <p className="text-slate-700 leading-relaxed pt-0.5">
+                                                                                                              {obj.isAIEnhanced ? obj.enhanced : obj.original}
+                                                                                                    </p>
+                                                                                          </div>
                                                                                 ))}
-                                                                      </ol>
+                                                                      </div>
                                                             </div>
                                                   </div>
                                         )}

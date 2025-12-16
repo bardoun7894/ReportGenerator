@@ -14,6 +14,13 @@ import {
 import { PhotoIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useWizardStore } from "@/stores/wizard-store";
 import { useUserProfileStore } from "@/stores/user-profile-store";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function StepMedia() {
   const { formData, updateFormData } = useWizardStore();
@@ -24,7 +31,7 @@ export default function StepMedia() {
 
   const photos = formData.photos || [];
   const MIN_PHOTOS = 1;
-  const MAX_PHOTOS = 4;
+  const MAX_PHOTOS = 3;
 
   // Load saved profile data for personnel on first render
   useEffect(() => {
@@ -97,7 +104,7 @@ export default function StepMedia() {
           <label className="block text-sm font-medium mb-4 flex items-center gap-2 text-slate-700 dark:text-white">
             <CameraIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
             صور الشواهد <span className="text-accent">*</span>
-            <span className="text-slate-400 dark:text-white/40 mr-2">(صورة واحدة كحد أدنى - 4 صور كحد أقصى)</span>
+            <span className="text-slate-400 dark:text-white/40 mr-2">(صورة واحدة كحد أدنى - 3 صور كحد أقصى)</span>
           </label>
 
           {/* Upload Area */}
@@ -205,63 +212,71 @@ export default function StepMedia() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Activity Leader */}
             <div className="space-y-3">
-              <label className="block text-sm text-slate-600 dark:text-white/60 flex items-center gap-2">
-                <UserIcon className="w-4 h-4" />
+              <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-white">
+                <UserIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
+                <span>المسؤول عن التنفيذ</span>
               </label>
 
               {/* Title Selection */}
-              {/* Title Selection */}
-              <select
+              <Select
                 value={formData.activityLeaderTitle || "رائد النشاط"}
-                onChange={(e) => handlePersonnelChange('activityLeaderTitle', e.target.value)}
-                className="form-input text-sm bg-slate-50 border-slate-200"
+                onValueChange={(value) => handlePersonnelChange('activityLeaderTitle', value)}
               >
-                <option value="رائد النشاط">رائد/ة النشاط</option>
-                <option value="الموجه الطلابي">الموجه/ة الطلابي/ة</option>
-                <option value="معلم المادة">معلم/ة المادة</option>
-                <option value="وكيل المدرسة">وكيل/ة المدرسة</option>
-                <option value="مسؤول النشاط">مسؤول/ة النشاط</option>
-                <option value="منسق البرنامج">منسق/ة البرنامج</option>
-                <option value="مشرف النادي">مشرف/ة النادي</option>
-              </select>
+                <SelectTrigger className="text-sm bg-slate-50 dark:bg-slate-800 border-slate-200">
+                  <SelectValue placeholder="اختر المسمى" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="رائد النشاط">رائد/ة النشاط</SelectItem>
+                  <SelectItem value="الموجه الطلابي">الموجه/ة الطلابي/ة</SelectItem>
+                  <SelectItem value="معلم المادة">معلم/ة المادة</SelectItem>
+                  <SelectItem value="وكيل المدرسة">وكيل/ة المدرسة</SelectItem>
+                  <SelectItem value="مسؤول النشاط">مسؤول/ة النشاط</SelectItem>
+                  <SelectItem value="منسق البرنامج">منسق/ة البرنامج</SelectItem>
+                  <SelectItem value="مشرف النادي">مشرف/ة النادي</SelectItem>
+                </SelectContent>
+              </Select>
 
               {/* Name Input */}
               <input
                 type="text"
                 value={formData.activityLeaderName || ""}
                 onChange={(e) => handlePersonnelChange('activityLeaderName', e.target.value)}
-                placeholder="اسم رائد/ة النشاط"
+                placeholder="الاسم"
                 className="form-input"
               />
             </div>
 
             {/* Principal */}
             <div className="space-y-3">
-              <label className="block text-sm text-slate-600 dark:text-white/60 flex items-center gap-2">
-                <UserIcon className="w-4 h-4" />
-                <span>مدير/ة المدرسة</span>
+              <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-white">
+                <UserIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
+                <span>قائد المنشأة / المعتمد</span>
                 <span className="text-accent">*</span>
               </label>
 
               {/* Title Selection */}
-              <select
+              <Select
                 value={formData.principalTitle || "مدير المدرسة"}
-                onChange={(e) => handlePersonnelChange('principalTitle', e.target.value)}
-                className="form-input text-sm bg-slate-50 border-slate-200"
+                onValueChange={(value) => handlePersonnelChange('principalTitle', value)}
               >
-                <option value="مدير المدرسة">مدير/ة المدرسة</option>
-                <option value="وكيل المدرسة">وكيل/ة المدرسة</option>
-                <option value="المشرف التربوي">المشرف/ة التربوي/ة</option>
-                <option value="قائد المدرسة">قائد/ة المدرسة</option>
-                <option value="المساعد الإداري">المساعد/ة الإداري/ة</option>
-              </select>
+                <SelectTrigger className="text-sm bg-slate-50 dark:bg-slate-800 border-slate-200">
+                  <SelectValue placeholder="اختر المسمى" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="مدير المدرسة">مدير/ة المدرسة</SelectItem>
+                  <SelectItem value="وكيل المدرسة">وكيل/ة المدرسة</SelectItem>
+                  <SelectItem value="المشرف التربوي">المشرف/ة التربوي/ة</SelectItem>
+                  <SelectItem value="قائد المدرسة">قائد/ة المدرسة</SelectItem>
+                  <SelectItem value="المساعد الإداري">المساعد/ة الإداري/ة</SelectItem>
+                </SelectContent>
+              </Select>
 
               {/* Name Input */}
               <input
                 type="text"
                 value={formData.principalName || ""}
                 onChange={(e) => handlePersonnelChange('principalName', e.target.value)}
-                placeholder="اسم مدير المدرسة"
+                placeholder="الاسم"
                 className="form-input"
               />
             </div>

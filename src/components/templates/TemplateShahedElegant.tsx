@@ -11,7 +11,8 @@ import {
           CameraIcon,
           ListBulletIcon
 } from "@heroicons/react/24/outline";
-import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
+import { getAudienceLabel, extractDescription, extractSteps, getCircledDigit } from "./template-helpers";
+import { MinistryLogo } from "@/components/MinistryLogo";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -37,8 +38,8 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                         <div className="flex justify-between items-start px-10 pt-8 pb-6">
                                                   {/* Ministry Logo */}
                                                   <div className="flex flex-col items-center">
-                                                            <div className="w-24 h-24 relative p-3 border-2 border-[#C8A051] rounded-full bg-white shadow-md">
-                                                                      <Image src="/salogos.svg" alt="وزارة التعليم" fill className="object-contain p-1" />
+                                                            <div className="w-24 h-24 relative p-3 border-2 border-[#C8A051] rounded-full bg-white shadow-md flex items-center justify-center">
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             <p className="text-[#006C35] font-bold text-xs mt-2">وزارة التعليم</p>
                                                             <p className="text-[#C8A051] text-[10px]">Ministry of Education</p>
@@ -47,7 +48,7 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                   {/* Center Info */}
                                                   <div className="flex-1 text-center px-6">
                                                             <div className="inline-block">
-                                                                      <h2 className="text-[#006C35] font-bold text-2xl tracking-wide">{formData.schoolName || "اسم المدرسة"}</h2>
+                                                                      <h2 className="text-[#006C35] font-bold text-2xl">{formData.schoolName || "اسم المدرسة"}</h2>
                                                                       <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-[#C8A051] to-transparent mt-1"></div>
                                                             </div>
                                                             <p className="text-[#8B7355] text-sm mt-2">{formData.educationRegion || "إدارة التعليم"}</p>
@@ -73,7 +74,7 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                   <div className="relative py-5 px-10 text-center">
                                                             <div className="absolute top-0 left-6 w-16 h-0.5 bg-[#C8A051]"></div>
                                                             <div className="absolute top-0 right-6 w-16 h-0.5 bg-[#C8A051]"></div>
-                                                            <h1 className="text-white font-bold text-2xl tracking-wider">{formData.title || "تقرير برنامج"}</h1>
+                                                            <h1 className="text-white font-bold text-2xl">{formData.title || "تقرير برنامج"}</h1>
                                                             <div className="absolute bottom-0 left-6 w-16 h-0.5 bg-[#C8A051]"></div>
                                                             <div className="absolute bottom-0 right-6 w-16 h-0.5 bg-[#C8A051]"></div>
                                                   </div>
@@ -102,7 +103,7 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                                                                     <item.icon className="w-5 h-5 text-[#C8A051]" />
                                                                                           </div>
                                                                                           <div>
-                                                                                                    <p className="text-[11px] text-[#8B7355] uppercase tracking-wide">{item.label}</p>
+                                                                                                    <p className="text-[11px] text-[#8B7355]">{item.label}</p>
                                                                                                     <p className="text-sm font-semibold text-gray-800">{item.value || "---"}</p>
                                                                                           </div>
                                                                                 </div>
@@ -118,7 +119,7 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                             </div>
                                                             <div className="flex flex-wrap gap-2">
                                                                       {formData.targetAudience?.map((audience, idx) => (
-                                                                                <span key={idx} className="px-4 py-1.5 bg-[#C8A051]/10 border border-[#C8A051]/30 rounded text-xs text-[#8B7355] font-medium">
+                                                                                <span key={idx} className="inline-flex items-center justify-center px-4 py-1.5 bg-[#C8A051]/10 border border-[#C8A051]/30 rounded text-xs text-[#8B7355] font-medium whitespace-nowrap">
                                                                                           {getAudienceLabel(audience)}
                                                                                 </span>
                                                                       )) || <span className="text-[#8B7355] text-xs">---</span>}
@@ -128,7 +129,7 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                   {/* Domain - Elegant Gold */}
                                                   {formData.domain && (
                                                             <div className="rounded-lg p-6 bg-gradient-to-br from-[#C8A051] to-[#B8944A] text-white shadow-lg">
-                                                                      <p className="text-xs opacity-80 mb-1 tracking-wide">مجال النشاط</p>
+                                                                      <p className="text-xs opacity-80 mb-1">مجال النشاط</p>
                                                                       <p className="font-bold text-lg">{formData.domain}</p>
                                                             </div>
                                                   )}
@@ -140,7 +141,7 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                   <div className="bg-white rounded-lg border border-[#C8A051]/30 shadow-md overflow-hidden">
                                                             <div className="px-6 py-4 bg-gradient-to-l from-[#006C35] to-[#007A3D] flex items-center gap-3">
                                                                       <DocumentTextIcon className="w-6 h-6 text-[#C8A051]" />
-                                                                      <h3 className="font-bold text-white tracking-wide">وصف البرنامج</h3>
+                                                                      <h3 className="font-bold text-white">وصف البرنامج</h3>
                                                             </div>
                                                             <div className="p-6">
                                                                       {extractDescription(formData.executionSteps) && (
@@ -158,8 +159,8 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                                                           <div className="space-y-3">
                                                                                                     {extractSteps(formData.executionSteps).map((step, idx) => (
                                                                                                               <div key={idx} className="flex gap-3 items-start">
-                                                                                                                        <span className="w-7 h-7 rounded border-2 border-[#006C35] bg-[#006C35] text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
-                                                                                                                                  {idx + 1}
+                                                                                                                        <span className="text-[#006C35] text-2xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                                                  {getCircledDigit(idx + 1)}
                                                                                                                         </span>
                                                                                                                         <p className="text-gray-700 text-sm leading-relaxed pt-1">{step}</p>
                                                                                                               </div>
@@ -174,13 +175,13 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                   <div className="bg-white rounded-lg border border-[#C8A051]/30 shadow-md overflow-hidden">
                                                             <div className="px-6 py-4 bg-gradient-to-l from-[#C8A051] to-[#D4AF61] flex items-center gap-3">
                                                                       <FlagIcon className="w-6 h-6 text-white" />
-                                                                      <h3 className="font-bold text-white tracking-wide">الأهداف المحققة</h3>
+                                                                      <h3 className="font-bold text-white">الأهداف المحققة</h3>
                                                             </div>
                                                             <div className="p-6 space-y-3">
                                                                       {formData.objectives?.map((obj, idx) => (
                                                                                 <div key={idx} className="flex gap-4 items-start p-4 rounded-lg bg-[#FFFEF8] border border-[#C8A051]/20">
-                                                                                          <span className="w-8 h-8 rounded-full border-2 border-[#006C35] bg-[#006C35] text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
-                                                                                                    {idx + 1}
+                                                                                          <span className="text-[#006C35] text-2xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
                                                                                           <p className="text-gray-700 text-sm pt-1.5">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
                                                                                 </div>
@@ -193,7 +194,7 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                             <div className="bg-white rounded-lg border border-[#C8A051]/30 shadow-md overflow-hidden">
                                                                       <div className="px-6 py-4 bg-gradient-to-l from-[#006C35] to-[#007A3D] flex items-center gap-3">
                                                                                 <CameraIcon className="w-6 h-6 text-[#C8A051]" />
-                                                                                <h3 className="font-bold text-white tracking-wide">التوثيق الصوري</h3>
+                                                                                <h3 className="font-bold text-white">التوثيق الصوري</h3>
                                                                       </div>
                                                                       <div className="p-6">
                                                                                 <div className="grid grid-cols-2 gap-4">
@@ -222,7 +223,7 @@ export default function TemplateShahedElegant({ formData, reportTypeTitle }: Tem
                                                             { label: 'مدير/ة المدرسة', name: formData.principalName },
                                                   ].map((person, idx) => (
                                                             <div key={idx} className="text-center">
-                                                                      <p className="text-[#8B7355] text-sm mb-4 tracking-wide">{person.label}</p>
+                                                                      <p className="text-[#8B7355] text-sm mb-4">{person.label}</p>
                                                                       <div className="relative">
                                                                                 <div className="absolute -top-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C8A051] to-transparent"></div>
                                                                                 <p className="font-bold text-[#006C35] text-lg pt-2">{person.name || "___________"}</p>

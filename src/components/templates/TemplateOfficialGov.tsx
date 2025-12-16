@@ -12,6 +12,8 @@ import {
           BuildingLibraryIcon,
           PhotoIcon
 } from "@heroicons/react/24/outline";
+import { getAudienceLabel, extractSteps, getCircledDigit } from "./template-helpers";
+import { MinistryLogo } from "@/components/MinistryLogo";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -37,13 +39,8 @@ export default function TemplateOfficialGov({ formData, reportTypeTitle }: Templ
                               {/* Official Header */}
                               <div className="px-10 py-8 flex justify-between items-center border-b border-gray-200">
                                         <div className="text-center w-1/4">
-                                                  <div className="w-20 h-20 mx-auto mb-2 relative">
-                                                            <Image
-                                                                      src="/salogos.svg"
-                                                                      alt="Ministry Logo"
-                                                                      fill
-                                                                      className="object-contain"
-                                                            />
+                                                  <div className="w-20 h-20 mx-auto mb-2 relative flex items-center justify-center">
+                                                            <MinistryLogo className="w-full h-full object-contain" />
                                                   </div>
                                                   <p className="text-[#006C35] font-bold text-sm">المملكة العربية السعودية</p>
                                                   <p className="text-[#006C35] text-sm">وزارة التعليم</p>
@@ -117,11 +114,13 @@ export default function TemplateOfficialGov({ formData, reportTypeTitle }: Templ
 
                                                             <div className="mt-8">
                                                                       <h3 className="font-bold text-[#006C35] mb-3 border-b border-gray-200 pb-2">الفئات المستهدفة</h3>
-                                                                      <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                                                      <div className="flex flex-wrap gap-2">
                                                                                 {formData.targetAudience?.map((a, i) => (
-                                                                                          <li key={i}>{a}</li>
+                                                                                          <span key={i} className="inline-flex items-center justify-center px-3 py-1 bg-[#006C35]/10 text-[#006C35] rounded-full text-xs font-medium border border-[#006C35]/20 whitespace-nowrap">
+                                                                                                    {getAudienceLabel(a)}
+                                                                                          </span>
                                                                                 ))}
-                                                                      </ul>
+                                                                      </div>
                                                             </div>
                                                   </div>
 
@@ -147,8 +146,10 @@ export default function TemplateOfficialGov({ formData, reportTypeTitle }: Templ
                                                                       <div className="grid grid-cols-1 gap-2">
                                                                                 {formData.objectives?.map((obj, idx) => (
                                                                                           <div key={idx} className="flex gap-3 items-start p-2 hover:bg-gray-50 rounded transition-colors">
-                                                                                                    <span className="w-6 h-6 bg-[#006C35] text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-1">{idx + 1}</span>
-                                                                                                    <p className="text-gray-700">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
+                                                                                                    <span className="text-[#006C35] text-xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                              {getCircledDigit(idx + 1)}
+                                                                                                    </span>
+                                                                                                    <p className="text-gray-700 pt-0.5">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
                                                                                           </div>
                                                                                 ))}
                                                                       </div>

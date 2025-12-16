@@ -11,7 +11,8 @@ import {
           CameraIcon,
           ListBulletIcon
 } from "@heroicons/react/24/outline";
-import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
+import { getAudienceLabel, extractDescription, extractSteps, getCircledDigit } from "./template-helpers";
+import { MinistryLogo } from "@/components/MinistryLogo";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -35,13 +36,8 @@ export default function TemplateShahedExact({ formData, reportTypeTitle }: Templ
                                         <div className="flex justify-between items-center px-8 pt-6 pb-4">
                                                   {/* Ministry Logo - Right Side (first in RTL) */}
                                                   <div className="flex items-center gap-4">
-                                                            <div className="w-24 h-24 relative">
-                                                                      <Image
-                                                                                src="/salogos.svg"
-                                                                                alt="وزارة التعليم"
-                                                                                fill
-                                                                                className="object-contain"
-                                                                      />
+                                                            <div className="w-24 h-24 relative flex items-center justify-center">
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             <div className="border-r border-[#006C35]/30 h-16 mx-2"></div>
                                                             <div className="text-right">
@@ -118,7 +114,7 @@ export default function TemplateShahedExact({ formData, reportTypeTitle }: Templ
                                                                       {formData.targetAudience?.map((audience, idx) => (
                                                                                 <span
                                                                                           key={idx}
-                                                                                          className="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs text-gray-700"
+                                                                                          className="inline-flex items-center justify-center px-3 py-1 bg-white border border-gray-200 rounded-full text-xs text-gray-700 whitespace-nowrap"
                                                                                 >
                                                                                           {getAudienceLabel(audience)}
                                                                                 </span>
@@ -164,13 +160,10 @@ export default function TemplateShahedExact({ formData, reportTypeTitle }: Templ
                                                                                           <div className="space-y-2">
                                                                                                     {extractSteps(formData.executionSteps).map((step, idx) => (
                                                                                                               <div key={idx} className="flex gap-2 items-start">
-                                                                                                                        <span
-                                                                                                                                  className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
-                                                                                                                                  style={{ backgroundColor: '#006C35' }}
-                                                                                                                        >
-                                                                                                                                  {idx + 1}
+                                                                                                                        <span className="text-[#006C35] text-2xl leading-none flex-shrink-0 pt-0.5 select-none">
+                                                                                                                                  {getCircledDigit(idx + 1)}
                                                                                                                         </span>
-                                                                                                                        <p className="text-gray-700 text-sm leading-relaxed">{step}</p>
+                                                                                                                        <p className="text-gray-700 text-sm leading-relaxed pt-1">{step}</p>
                                                                                                               </div>
                                                                                                     ))}
                                                                                           </div>
@@ -194,13 +187,10 @@ export default function TemplateShahedExact({ formData, reportTypeTitle }: Templ
                                                                                           className="flex gap-3 items-start p-3 rounded-lg border border-gray-50"
                                                                                           style={{ backgroundColor: '#F9FAFB' }}
                                                                                 >
-                                                                                          <span
-                                                                                                    className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 mt-0.5"
-                                                                                                    style={{ backgroundColor: '#006C35' }}
-                                                                                          >
-                                                                                                    {idx + 1}
+                                                                                          <span className="text-[#006C35] text-2xl leading-none flex-shrink-0 pt-0.5 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
-                                                                                          <p className="text-gray-700 text-sm">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
+                                                                                          <p className="text-gray-700 text-sm pt-1">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
                                                                                 </div>
                                                                       )) || <p className="text-gray-400 text-center text-sm py-4">لم يتم إضافة أهداف</p>}
                                                             </div>

@@ -14,16 +14,27 @@ import {
           ClockIcon,
           UserIcon,
           TagIcon,
-} from "@heroicons/react/24/solid";
+          AcademicCapIcon,
+          BuildingLibraryIcon,
+          BriefcaseIcon,
+          GlobeAsiaAustraliaIcon,
+} from "@heroicons/react/24/outline";
 import ArabicDatePicker from "@/components/ui/ArabicDatePicker";
+import {
+          Select,
+          SelectContent,
+          SelectItem,
+          SelectTrigger,
+          SelectValue,
+} from "@/components/ui/select";
 
 const TARGET_AUDIENCES = [
-          { id: "students", label: "الطلاب" },
-          { id: "teachers", label: "المعلمين" },
-          { id: "female_teachers", label: "المعلمات" },
-          { id: "parents", label: "أولياء الأمور" },
-          { id: "admin", label: "الإدارة" },
-          { id: "community", label: "المجتمع" },
+          { id: "students", label: "الطلاب", icon: AcademicCapIcon },
+          { id: "teachers", label: "المعلمين", icon: UserIcon },
+          { id: "female_teachers", label: "المعلمات", icon: UserIcon },
+          { id: "parents", label: "أولياء الأمور", icon: UserGroupIcon },
+          { id: "admin", label: "الإدارة", icon: BriefcaseIcon },
+          { id: "community", label: "المجتمع", icon: GlobeAsiaAustraliaIcon },
 ];
 
 export default function StepActivity() {
@@ -120,23 +131,26 @@ export default function StepActivity() {
                                                                       <ClockIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
                                                                       مدة التنفيذ <span className="text-accent">*</span>
                                                             </label>
-                                                            <select
-                                                                      value={formData.duration || ""}
-                                                                      onChange={(e) => updateFormData({ duration: e.target.value })}
-                                                                      className="form-input"
+                                                            <Select
+                                                                      value={formData.duration}
+                                                                      onValueChange={(value) => updateFormData({ duration: value })}
                                                             >
-                                                                      <option value="">اختر المدة</option>
-                                                                      <option value="ساعة واحدة">ساعة واحدة</option>
-                                                                      <option value="ساعتان">ساعتان</option>
-                                                                      <option value="نصف يوم">نصف يوم</option>
-                                                                      <option value="يوم واحد">يوم واحد</option>
-                                                                      <option value="يومان">يومان</option>
-                                                                      <option value="ثلاثة أيام">ثلاثة أيام</option>
-                                                                      <option value="أسبوع">أسبوع</option>
-                                                                      <option value="أسبوعان">أسبوعان</option>
-                                                                      <option value="شهر">شهر</option>
-                                                                      <option value="فصل دراسي">فصل دراسي</option>
-                                                            </select>
+                                                                      <SelectTrigger>
+                                                                                <SelectValue placeholder="اختر المدة" />
+                                                                      </SelectTrigger>
+                                                                      <SelectContent>
+                                                                                <SelectItem value="ساعة واحدة">ساعة واحدة</SelectItem>
+                                                                                <SelectItem value="ساعتان">ساعتان</SelectItem>
+                                                                                <SelectItem value="نصف يوم">نصف يوم</SelectItem>
+                                                                                <SelectItem value="يوم واحد">يوم واحد</SelectItem>
+                                                                                <SelectItem value="يومان">يومان</SelectItem>
+                                                                                <SelectItem value="ثلاثة أيام">ثلاثة أيام</SelectItem>
+                                                                                <SelectItem value="أسبوع">أسبوع</SelectItem>
+                                                                                <SelectItem value="أسبوعان">أسبوعان</SelectItem>
+                                                                                <SelectItem value="شهر">شهر</SelectItem>
+                                                                                <SelectItem value="فصل دراسي">فصل دراسي</SelectItem>
+                                                                      </SelectContent>
+                                                            </Select>
                                                   </div>
                                         </div>
 
@@ -146,28 +160,31 @@ export default function StepActivity() {
                                                             <UserIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
                                                             المنفذ/ون <span className="text-accent">*</span>
                                                   </label>
-                                                  <select
-                                                            value={formData.executors || ""}
-                                                            onChange={(e) => updateFormData({ executors: e.target.value })}
-                                                            className="form-input"
+                                                  <Select
+                                                            value={formData.executors}
+                                                            onValueChange={(value) => updateFormData({ executors: value })}
                                                   >
-                                                            <option value="">اختر المنفذ/ة</option>
-                                                            <option value="جميع منسوبي/ات المدرسة">جميع منسوبي/ات المدرسة</option>
-                                                            <option value="رائد/ة النشاط">رائد/ة النشاط</option>
-                                                            <option value="منسق/ة موهبة">منسق/ة موهبة</option>
-                                                            <option value="وكيل/ة المدرسة">وكيل/ة المدرسة</option>
-                                                            <option value="مدير/ة المدرسة">مدير/ة المدرسة</option>
-                                                            <option value="الموجه/ة الطلابي/ة">الموجه/ة الطلابي/ة</option>
-                                                            <option value="معلم/ة المادة">معلم/ة المادة</option>
-                                                            <option value="لجنة النشاط">لجنة النشاط</option>
-                                                            <option value="فريق العمل التطوعي">فريق العمل التطوعي</option>
-                                                            <option value="الإدارة المدرسية">الإدارة المدرسية</option>
-                                                            <option value="مجموعة من المعلمين/ات">مجموعة من المعلمين/ات</option>
-                                                            <option value="الطلاب/الطالبات المتميزين/ات">الطلاب/الطالبات المتميزين/ات</option>
-                                                            <option value="اللجنة الثقافية">اللجنة الثقافية</option>
-                                                            <option value="اللجنة الرياضية">اللجنة الرياضية</option>
-                                                            <option value="اللجنة الاجتماعية">اللجنة الاجتماعية</option>
-                                                  </select>
+                                                            <SelectTrigger>
+                                                                      <SelectValue placeholder="اختر المنفذ/ة" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                      <SelectItem value="جميع منسوبي/ات المدرسة">جميع منسوبي/ات المدرسة</SelectItem>
+                                                                      <SelectItem value="رائد/ة النشاط">رائد/ة النشاط</SelectItem>
+                                                                      <SelectItem value="منسق/ة موهبة">منسق/ة موهبة</SelectItem>
+                                                                      <SelectItem value="وكيل/ة المدرسة">وكيل/ة المدرسة</SelectItem>
+                                                                      <SelectItem value="مدير/ة المدرسة">مدير/ة المدرسة</SelectItem>
+                                                                      <SelectItem value="الموجه/ة الطلابي/ة">الموجه/ة الطلابي/ة</SelectItem>
+                                                                      <SelectItem value="معلم/ة المادة">معلم/ة المادة</SelectItem>
+                                                                      <SelectItem value="لجنة النشاط">لجنة النشاط</SelectItem>
+                                                                      <SelectItem value="فريق العمل التطوعي">فريق العمل التطوعي</SelectItem>
+                                                                      <SelectItem value="الإدارة المدرسية">الإدارة المدرسية</SelectItem>
+                                                                      <SelectItem value="مجموعة من المعلمين/ات">مجموعة من المعلمين/ات</SelectItem>
+                                                                      <SelectItem value="الطلاب/الطالبات المتميزين/ات">الطلاب/الطالبات المتميزين/ات</SelectItem>
+                                                                      <SelectItem value="اللجنة الثقافية">اللجنة الثقافية</SelectItem>
+                                                                      <SelectItem value="اللجنة الرياضية">اللجنة الرياضية</SelectItem>
+                                                                      <SelectItem value="اللجنة الاجتماعية">اللجنة الاجتماعية</SelectItem>
+                                                            </SelectContent>
+                                                  </Select>
                                         </div>
 
                                         {/* Domain & Location Row */}
@@ -177,41 +194,47 @@ export default function StepActivity() {
                                                                       <TagIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
                                                                       المجال <span className="text-accent">*</span>
                                                             </label>
-                                                            <select
-                                                                      value={formData.domain || ""}
-                                                                      onChange={(e) => updateFormData({ domain: e.target.value })}
-                                                                      className="form-input"
+                                                            <Select
+                                                                      value={formData.domain}
+                                                                      onValueChange={(value) => updateFormData({ domain: value })}
                                                             >
-                                                                      <option value="">اختر المجال</option>
-                                                                      {DOMAIN_OPTIONS.map((domain) => (
-                                                                                <option key={domain} value={domain}>
-                                                                                          {domain}
-                                                                                </option>
-                                                                      ))}
-                                                            </select>
+                                                                      <SelectTrigger>
+                                                                                <SelectValue placeholder="اختر المجال" />
+                                                                      </SelectTrigger>
+                                                                      <SelectContent>
+                                                                                {DOMAIN_OPTIONS.map((domain) => (
+                                                                                          <SelectItem key={domain} value={domain}>
+                                                                                                    {domain}
+                                                                                          </SelectItem>
+                                                                                ))}
+                                                                      </SelectContent>
+                                                            </Select>
                                                   </div>
                                                   <div>
                                                             <label className="block text-sm font-medium mb-2 flex items-center gap-2 text-slate-700 dark:text-white">
                                                                       <MapPinIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
                                                                       مكان التنفيذ <span className="text-accent">*</span>
                                                             </label>
-                                                            <select
-                                                                      value={formData.location || ""}
-                                                                      onChange={(e) => updateFormData({ location: e.target.value })}
-                                                                      className="form-input"
+                                                            <Select
+                                                                      value={formData.location}
+                                                                      onValueChange={(value) => updateFormData({ location: value })}
                                                             >
-                                                                      <option value="">اختر المكان</option>
-                                                                      <option value="ساحة المدرسة">ساحة المدرسة</option>
-                                                                      <option value="الملعب الرياضي">الملعب الرياضي</option>
-                                                                      <option value="المسرح المدرسي">المسرح المدرسي</option>
-                                                                      <option value="قاعة الاجتماعات">قاعة الاجتماعات</option>
-                                                                      <option value="المختبر">المختبر</option>
-                                                                      <option value="المكتبة">المكتبة</option>
-                                                                      <option value="الفصول الدراسية">الفصول الدراسية</option>
-                                                                      <option value="غرفة مصادر التعلم">غرفة مصادر التعلم</option>
-                                                                      <option value="المصلى">المصلى</option>
-                                                                      <option value="قاعة النشاط">قاعة النشاط</option>
-                                                            </select>
+                                                                      <SelectTrigger>
+                                                                                <SelectValue placeholder="اختر المكان" />
+                                                                      </SelectTrigger>
+                                                                      <SelectContent>
+                                                                                <SelectItem value="ساحة المدرسة">ساحة المدرسة</SelectItem>
+                                                                                <SelectItem value="الملعب الرياضي">الملعب الرياضي</SelectItem>
+                                                                                <SelectItem value="المسرح المدرسي">المسرح المدرسي</SelectItem>
+                                                                                <SelectItem value="قاعة الاجتماعات">قاعة الاجتماعات</SelectItem>
+                                                                                <SelectItem value="المختبر">المختبر</SelectItem>
+                                                                                <SelectItem value="المكتبة">المكتبة</SelectItem>
+                                                                                <SelectItem value="الفصول الدراسية">الفصول الدراسية</SelectItem>
+                                                                                <SelectItem value="غرفة مصادر التعلم">غرفة مصادر التعلم</SelectItem>
+                                                                                <SelectItem value="المصلى">المصلى</SelectItem>
+                                                                                <SelectItem value="قاعة النشاط">قاعة النشاط</SelectItem>
+                                                                      </SelectContent>
+                                                            </Select>
                                                   </div>
                                         </div>
 
@@ -221,26 +244,39 @@ export default function StepActivity() {
                                                             <UserGroupIcon className="w-4 h-4 text-slate-400 dark:text-white/50" />
                                                             المستفيدون
                                                   </label>
-                                                  <div className="flex flex-wrap gap-3">
-                                                            {TARGET_AUDIENCES.map((audience) => (
-                                                                      <button
-                                                                                key={audience.id}
-                                                                                type="button"
-                                                                                onClick={() => toggleAudience(audience.id)}
-                                                                                className={`
-                  px-4 py-2 rounded-xl border transition-all
-                  ${formData.targetAudience?.includes(audience.id)
-                                                                                                    ? "bg-primary/20 border-primary text-primary"
-                                                                                                    : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/20 text-slate-600 dark:text-white/70 hover:border-slate-300 dark:hover:border-white/40"
-                                                                                          }
-                `}
-                                                                      >
-                                                                                {formData.targetAudience?.includes(audience.id) && (
-                                                                                          <span className="ml-2">✓</span>
-                                                                                )}
-                                                                                {audience.label}
-                                                                      </button>
-                                                            ))}
+                                                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                                            {TARGET_AUDIENCES.map((audience) => {
+                                                                      const isSelected = formData.targetAudience?.includes(audience.id);
+                                                                      const Icon = audience.icon;
+                                                                      return (
+                                                                                <button
+                                                                                          key={audience.id}
+                                                                                          type="button"
+                                                                                          onClick={() => toggleAudience(audience.id)}
+                                                                                          className={`
+                                                                                                    relative group p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center gap-3
+                                                                                                    ${isSelected
+                                                                                                              ? "border-primary bg-primary/5 text-primary ring-1 ring-primary/50"
+                                                                                                              : "border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-600 dark:text-white/70 hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-white/10"
+                                                                                                    }
+                                                                                          `}
+                                                                                >
+                                                                                          {/* Checkbox Indicator */}
+                                                                                          <div className={`
+                                                                                                    absolute top-3 right-3 w-5 h-5 rounded-md border flex items-center justify-center transition-colors
+                                                                                                    ${isSelected
+                                                                                                              ? "bg-primary border-primary text-white"
+                                                                                                              : "border-slate-300 dark:border-white/30 group-hover:border-primary/50"
+                                                                                                    }
+                                                                                          `}>
+                                                                                                    {isSelected && <svg className="w-3.5 h-3.5" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                                                                                          </div>
+
+                                                                                          <Icon className={`w-8 h-8 ${isSelected ? 'text-primary' : 'text-slate-400 dark:text-white/40 group-hover:text-primary/70'}`} />
+                                                                                          <span className="font-medium">{audience.label}</span>
+                                                                                </button>
+                                                                      );
+                                                            })}
                                                   </div>
                                         </div>
 

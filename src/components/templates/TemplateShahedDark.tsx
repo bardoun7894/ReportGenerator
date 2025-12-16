@@ -11,7 +11,8 @@ import {
           CameraIcon,
           ListBulletIcon
 } from "@heroicons/react/24/outline";
-import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
+import { getAudienceLabel, extractDescription, extractSteps, getCircledDigit } from "./template-helpers";
+import { MinistryLogo } from "@/components/MinistryLogo";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -35,8 +36,8 @@ export default function TemplateShahedDark({ formData, reportTypeTitle }: Templa
                                         {/* Logo Row */}
                                         <div className="relative flex justify-between items-center px-8 pt-6 pb-4">
                                                   <div className="flex flex-col items-center">
-                                                            <div className="w-20 h-20 relative bg-white/10 rounded-xl p-2">
-                                                                      <Image src="/salogos.svg" alt="وزارة التعليم" fill className="object-contain invert brightness-200" />
+                                                            <div className="w-20 h-20 relative bg-white rounded-xl p-2 flex items-center justify-center">
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             <p className="text-emerald-400 font-bold text-[11px] mt-2">وزارة التعليم</p>
                                                   </div>
@@ -103,7 +104,7 @@ export default function TemplateShahedDark({ formData, reportTypeTitle }: Templa
                                                             </h3>
                                                             <div className="flex flex-wrap gap-2">
                                                                       {formData.targetAudience?.map((audience, idx) => (
-                                                                                <span key={idx} className="px-3 py-1.5 bg-slate-700 border border-slate-600 rounded-full text-xs text-slate-300">
+                                                                                <span key={idx} className="inline-flex items-center justify-center px-3 py-1.5 bg-slate-700 border border-slate-600 rounded-full text-xs text-slate-300 whitespace-nowrap">
                                                                                           {getAudienceLabel(audience)}
                                                                                 </span>
                                                                       )) || <span className="text-slate-500 text-xs">---</span>}
@@ -145,10 +146,10 @@ export default function TemplateShahedDark({ formData, reportTypeTitle }: Templa
                                                                                           <div className="space-y-2">
                                                                                                     {extractSteps(formData.executionSteps).map((step, idx) => (
                                                                                                               <div key={idx} className="flex gap-2 items-start">
-                                                                                                                        <span className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">
-                                                                                                                                  {idx + 1}
+                                                                                                                        <span className="text-emerald-500 text-2xl leading-none flex-shrink-0 pt-0.5 select-none">
+                                                                                                                                  {getCircledDigit(idx + 1)}
                                                                                                                         </span>
-                                                                                                                        <p className="text-slate-300 text-sm">{step}</p>
+                                                                                                                        <p className="text-slate-300 text-sm pt-1">{step}</p>
                                                                                                               </div>
                                                                                                     ))}
                                                                                           </div>
@@ -168,10 +169,10 @@ export default function TemplateShahedDark({ formData, reportTypeTitle }: Templa
                                                             <div className="p-5 space-y-2">
                                                                       {formData.objectives?.map((obj, idx) => (
                                                                                 <div key={idx} className="flex gap-3 items-start p-3 rounded-lg bg-slate-700/50 border border-slate-600">
-                                                                                          <span className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5">
-                                                                                                    {idx + 1}
+                                                                                          <span className="text-emerald-500 text-2xl leading-none flex-shrink-0 pt-0.5 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
-                                                                                          <p className="text-slate-300 text-sm">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
+                                                                                          <p className="text-slate-300 text-sm pt-1">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
                                                                                 </div>
                                                                       )) || <p className="text-slate-500 text-center text-sm py-4">لم يتم إضافة أهداف</p>}
                                                             </div>

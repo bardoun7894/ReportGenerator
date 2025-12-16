@@ -2,6 +2,8 @@
 
 import { WizardFormData } from "@/stores/wizard-store";
 import Image from "next/image";
+import { MinistryLogo } from "@/components/MinistryLogo";
+import { getCircledDigit, getAudienceLabel } from "./template-helpers";
 import {
           CalendarDaysIcon,
           MapPinIcon,
@@ -31,13 +33,8 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                   {/* Ministry Info - Right Side */}
                                                   <div className="flex items-center gap-4">
                                                             {/* Ministry Logo */}
-                                                            <div className="w-16 h-16 relative bg-white/10 rounded-xl flex items-center justify-center border-2 border-white/30 p-1">
-                                                                      <Image
-                                                                                src="/salogos.svg"
-                                                                                alt="Ministry Logo"
-                                                                                fill
-                                                                                className="object-contain p-1 invert brightness-0"
-                                                                      />
+                                                            <div className="w-16 h-16 relative bg-white rounded-xl flex items-center justify-center p-1">
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             <div className="text-white">
                                                                       <p className="text-sm opacity-80">وزارة التعليم</p>
@@ -81,7 +78,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                                       <CalendarDaysIcon className="w-6 h-6" />
                                                             </div>
                                                             <div>
-                                                                      <p className="text-xs text-[#006747] font-bold mb-1 uppercase tracking-wide">اليوم والتاريخ</p>
+                                                                      <p className="text-xs text-[#006747] font-bold mb-1">اليوم والتاريخ</p>
                                                                       <p className="text-slate-800 font-medium">{formData.date || '---'}</p>
                                                             </div>
                                                   </div>
@@ -93,7 +90,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                                                 <MapPinIcon className="w-6 h-6" />
                                                                       </div>
                                                                       <div>
-                                                                                <p className="text-xs text-[#006747] font-bold mb-1 uppercase tracking-wide">مكان التنفيذ</p>
+                                                                                <p className="text-xs text-[#006747] font-bold mb-1">مكان التنفيذ</p>
                                                                                 <p className="text-slate-800 font-medium">{formData.location}</p>
                                                                       </div>
                                                             </div>
@@ -106,7 +103,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                                                 <UsersIcon className="w-6 h-6" />
                                                                       </div>
                                                                       <div>
-                                                                                <p className="text-xs text-[#006747] font-bold mb-1 uppercase tracking-wide">عدد المشاركين</p>
+                                                                                <p className="text-xs text-[#006747] font-bold mb-1">عدد المشاركين</p>
                                                                                 <p className="text-slate-800 font-medium text-xl">{formData.participantsCount}</p>
                                                                       </div>
                                                             </div>
@@ -115,7 +112,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                   {/* Target Group Card */}
                                                   {formData.targetAudience && formData.targetAudience.length > 0 && (
                                                             <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                                                                      <p className="text-xs text-[#006747] font-bold mb-2 uppercase tracking-wide flex items-center gap-2">
+                                                                      <p className="text-xs text-[#006747] font-bold mb-2 flex items-center gap-2">
                                                                                 <UsersIcon className="w-4 h-4" />
                                                                                 الفئة المستهدفة
                                                                       </p>
@@ -123,9 +120,9 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                                                 {formData.targetAudience.map((audience, idx) => (
                                                                                           <span
                                                                                                     key={idx}
-                                                                                                    className="px-3 py-1 bg-[#006747]/10 text-[#006747] rounded-full text-sm font-medium"
+                                                                                                    className="inline-flex items-center justify-center px-3 py-1 bg-[#006747]/10 text-[#006747] rounded-full text-sm font-medium whitespace-nowrap border border-[#006747]/10"
                                                                                           >
-                                                                                                    {audience}
+                                                                                                    {getAudienceLabel(audience)}
                                                                                           </span>
                                                                                 ))}
                                                                       </div>
@@ -135,7 +132,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                   {/* Description Card */}
                                                   {formData.executionSteps && (
                                                             <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                                                                      <p className="text-xs text-[#006747] font-bold mb-2 uppercase tracking-wide">وصف الفعالية</p>
+                                                                      <p className="text-xs text-[#006747] font-bold mb-2">وصف الفعالية</p>
                                                                       <p className="text-slate-700 leading-relaxed text-sm whitespace-pre-wrap">
                                                                                 {formData.executionSteps}
                                                                       </p>
@@ -145,12 +142,12 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                   {/* Goals Card */}
                                                   {formData.objectives && formData.objectives.length > 0 && (
                                                             <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                                                                      <p className="text-xs text-[#006747] font-bold mb-3 uppercase tracking-wide">الأهداف</p>
+                                                                      <p className="text-xs text-[#006747] font-bold mb-3">الأهداف</p>
                                                                       <ul className="space-y-2">
                                                                                 {formData.objectives.map((obj, idx) => (
                                                                                           <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
-                                                                                                    <span className="w-5 h-5 bg-[#006747] text-white rounded-full flex items-center justify-center text-xs flex-shrink-0">
-                                                                                                              {idx + 1}
+                                                                                                    <span className="text-[#006747] text-lg font-bold">
+                                                                                                              {getCircledDigit(idx + 1)}
                                                                                                     </span>
                                                                                                     <span>{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
                                                                                           </li>
@@ -166,7 +163,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                                                 <ClockIcon className="w-6 h-6" />
                                                                       </div>
                                                                       <div>
-                                                                                <p className="text-xs text-[#006747] font-bold mb-1 uppercase tracking-wide">مدة التنفيذ</p>
+                                                                                <p className="text-xs text-[#006747] font-bold mb-1">مدة التنفيذ</p>
                                                                                 <p className="text-slate-800 font-medium">{formData.duration}</p>
                                                                       </div>
                                                             </div>
@@ -179,7 +176,7 @@ export default function TemplateModernCards({ formData, reportTypeTitle }: Templ
                                                                                 <UserIcon className="w-6 h-6" />
                                                                       </div>
                                                                       <div>
-                                                                                <p className="text-xs text-[#006747] font-bold mb-1 uppercase tracking-wide">المنفذ/ون</p>
+                                                                                <p className="text-xs text-[#006747] font-bold mb-1">المنفذ/ون</p>
                                                                                 <p className="text-slate-800 font-medium">{formData.executors}</p>
                                                                       </div>
                                                             </div>

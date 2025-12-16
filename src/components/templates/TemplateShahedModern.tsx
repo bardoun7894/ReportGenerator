@@ -12,7 +12,8 @@ import {
           ListBulletIcon,
           SparklesIcon
 } from "@heroicons/react/24/outline";
-import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
+import { getAudienceLabel, extractDescription, extractSteps, getCircledDigit } from "./template-helpers";
+import { MinistryLogo } from "@/components/MinistryLogo";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -41,8 +42,8 @@ export default function TemplateShahedModern({ formData, reportTypeTitle }: Temp
                                         <div className="relative flex justify-between items-center px-8 pt-6 pb-4 backdrop-blur-sm">
                                                   {/* Ministry Logo */}
                                                   <div className="flex flex-col items-center group">
-                                                            <div className="w-20 h-20 relative p-2 bg-white/80 rounded-2xl shadow-lg backdrop-blur-sm transition-transform group-hover:scale-105">
-                                                                      <Image src="/salogos.svg" alt="وزارة التعليم" fill className="object-contain p-2" />
+                                                            <div className="w-20 h-20 relative p-2 bg-white/80 rounded-2xl shadow-lg backdrop-blur-sm transition-transform group-hover:scale-105 flex items-center justify-center">
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             <p className="text-emerald-700 font-bold text-[11px] mt-2">وزارة التعليم</p>
                                                   </div>
@@ -117,7 +118,7 @@ export default function TemplateShahedModern({ formData, reportTypeTitle }: Temp
                                                                       {formData.targetAudience?.map((audience, idx) => (
                                                                                 <span
                                                                                           key={idx}
-                                                                                          className="px-3 py-1.5 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-full text-xs text-emerald-700 font-medium hover:shadow-md transition-shadow"
+                                                                                          className="inline-flex items-center justify-center px-3 py-1.5 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-full text-xs text-emerald-700 font-medium hover:shadow-md transition-shadow whitespace-nowrap"
                                                                                 >
                                                                                           {getAudienceLabel(audience)}
                                                                                 </span>
@@ -160,10 +161,10 @@ export default function TemplateShahedModern({ formData, reportTypeTitle }: Temp
                                                                                           <div className="space-y-2">
                                                                                                     {extractSteps(formData.executionSteps).map((step, idx) => (
                                                                                                               <div key={idx} className="flex gap-2 items-start group">
-                                                                                                                        <span className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 group-hover:scale-110 transition-transform shadow-md">
-                                                                                                                                  {idx + 1}
+                                                                                                                        <span className="text-emerald-500 text-2xl leading-none flex-shrink-0 pt-0.5 select-none">
+                                                                                                                                  {getCircledDigit(idx + 1)}
                                                                                                                         </span>
-                                                                                                                        <p className="text-gray-700 text-sm leading-relaxed">{step}</p>
+                                                                                                                        <p className="text-gray-700 text-sm leading-relaxed pt-1">{step}</p>
                                                                                                               </div>
                                                                                                     ))}
                                                                                           </div>
@@ -183,12 +184,11 @@ export default function TemplateShahedModern({ formData, reportTypeTitle }: Temp
                                                             <div className="p-5 space-y-2">
                                                                       {formData.objectives?.map((obj, idx) => (
                                                                                 <div key={idx} className="flex gap-3 items-start p-3 rounded-xl bg-gradient-to-l from-amber-50/50 to-transparent border border-amber-100/50 hover:border-amber-200 transition-colors">
-                                                                                          <span className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 mt-0.5 shadow-md">
-                                                                                                    {idx + 1}
+                                                                                          <span className="text-emerald-500 text-2xl leading-none flex-shrink-0 pt-0.5 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
-                                                                                          <p className="text-gray-700 text-sm">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
-                                                                                </div>
-                                                                      )) || <p className="text-gray-400 text-center text-sm py-4">لم يتم إضافة أهداف</p>}
+                                                                                          <p className="text-gray-700 text-sm pt-1">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
+                                                                                </div>)) || <p className="text-gray-400 text-center text-sm py-4">لم يتم إضافة أهداف</p>}
                                                             </div>
                                                   </div>
 

@@ -10,7 +10,8 @@ import {
           FlagIcon,
           CameraIcon
 } from "@heroicons/react/24/outline";
-import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
+import { getAudienceLabel, extractDescription, extractSteps, getCircledDigit } from "./template-helpers";
+import { MinistryLogo } from "@/components/MinistryLogo";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -30,8 +31,8 @@ export default function TemplateShahedCompact({ formData, reportTypeTitle }: Tem
                               {/* Compact Header */}
                               <header className="bg-[#006C35] text-white p-4">
                                         <div className="flex items-center gap-4">
-                                                  <div className="w-12 h-12 relative bg-white/10 rounded-lg p-1">
-                                                            <Image src="/salogos.svg" alt="وزارة التعليم" fill className="object-contain" />
+                                                  <div className="w-12 h-12 relative bg-white rounded-lg flex items-center justify-center">
+                                                            <MinistryLogo className="w-full h-full object-contain" />
                                                   </div>
                                                   <div className="flex-1">
                                                             <h1 className="font-bold text-lg">{formData.title || "تقرير برنامج"}</h1>
@@ -67,7 +68,7 @@ export default function TemplateShahedCompact({ formData, reportTypeTitle }: Tem
                                         {formData.targetAudience && formData.targetAudience.length > 0 && (
                                                   <div className="flex flex-wrap gap-2">
                                                             {formData.targetAudience.map((audience, idx) => (
-                                                                      <span key={idx} className="px-2 py-1 bg-[#006C35]/10 text-[#006C35] rounded text-xs font-medium">
+                                                                      <span key={idx} className="inline-flex items-center justify-center px-2 py-1 bg-[#006C35]/10 text-[#006C35] rounded text-xs font-medium whitespace-nowrap">
                                                                                 {getAudienceLabel(audience)}
                                                                       </span>
                                                             ))}
@@ -94,10 +95,10 @@ export default function TemplateShahedCompact({ formData, reportTypeTitle }: Tem
                                                             <div className="flex flex-wrap gap-2">
                                                                       {extractSteps(formData.executionSteps).map((step, idx) => (
                                                                                 <div key={idx} className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
-                                                                                          <span className="w-5 h-5 bg-[#006C35] text-white rounded-full text-xs flex items-center justify-center font-bold">
-                                                                                                    {idx + 1}
+                                                                                          <span className="text-[#006C35] text-xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
-                                                                                          <span className="text-gray-700 text-sm">{step}</span>
+                                                                                          <span className="text-gray-700 text-sm pt-0.5">{step}</span>
                                                                                 </div>
                                                                       ))}
                                                             </div>
@@ -114,8 +115,10 @@ export default function TemplateShahedCompact({ formData, reportTypeTitle }: Tem
                                                             <ul className="space-y-1">
                                                                       {formData.objectives.map((obj, idx) => (
                                                                                 <li key={idx} className="text-gray-700 text-sm flex items-start gap-2">
-                                                                                          <span className="text-[#C8A051] font-bold">•</span>
-                                                                                          {obj.isAIEnhanced ? obj.enhanced : obj.original}
+                                                                                          <span className="text-[#C8A051] text-lg leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
+                                                                                          </span>
+                                                                                          <span className="pt-0.5">{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
                                                                                 </li>
                                                                       ))}
                                                             </ul>
