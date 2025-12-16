@@ -13,7 +13,8 @@ import {
           PhotoIcon,
           ListBulletIcon
 } from "@heroicons/react/24/outline";
-import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
+import { getAudienceLabel, extractDescription, extractSteps, getCircledDigit } from "./template-helpers";
+import { MinistryLogo } from "../MinistryLogo";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -42,12 +43,7 @@ export default function TemplateModernMinimal({ formData, reportTypeTitle }: Tem
                                                   <div className="flex items-center gap-4 mb-4">
                                                             {/* Ministry Logo */}
                                                             <div className="w-12 h-12 relative opacity-80">
-                                                                      <Image
-                                                                                src="/salogos.svg"
-                                                                                alt="Ministry Logo"
-                                                                                fill
-                                                                                className="object-contain"
-                                                                      />
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             {/* School Logo */}
                                                             {formData.schoolLogo && (
@@ -109,8 +105,8 @@ export default function TemplateModernMinimal({ formData, reportTypeTitle }: Tem
                                                                                 </p>
                                                                                 {extractSteps(formData.executionSteps).map((step, idx) => (
                                                                                           <div key={idx} className="flex gap-3 items-start border-b border-gray-100 pb-2">
-                                                                                                    <span className="w-6 h-6 bg-gray-800 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                                                                                                              {idx + 1}
+                                                                                                    <span className="w-6 h-6 flex items-center justify-center text-lg font-bold flex-shrink-0 font-sans leading-[0]">
+                                                                                                              {getCircledDigit(idx + 1)}
                                                                                                     </span>
                                                                                                     <p className="text-gray-700">{step}</p>
                                                                                           </div>
@@ -142,7 +138,7 @@ export default function TemplateModernMinimal({ formData, reportTypeTitle }: Tem
                                                             <div className="space-y-4">
                                                                       {formData.objectives?.map((obj, idx) => (
                                                                                 <div key={idx} className="flex gap-4 items-baseline group">
-                                                                                          <span className="text-xs font-bold text-gray-300 group-hover:text-black transition-colors">0{idx + 1}</span>
+                                                                                          <span className="text-lg font-bold text-gray-300 group-hover:text-black transition-colors font-sans">{getCircledDigit(idx + 1)}</span>
                                                                                           <p className="text-gray-600 group-hover:text-gray-900 transition-colors">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
                                                                                 </div>
                                                                       ))}

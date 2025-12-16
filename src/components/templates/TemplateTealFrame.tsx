@@ -12,6 +12,8 @@ import {
           PhotoIcon,
           BuildingLibraryIcon
 } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "../MinistryLogo";
+import { getAudienceLabel, getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -37,15 +39,9 @@ export default function TemplateTealFrame({ formData, reportTypeTitle }: Templat
                                                             {/* Ministry Logo & Info - Right */}
                                                             <div className="flex items-center gap-4">
                                                                       <div
-                                                                                className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden relative"
-                                                                                style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+                                                                                className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden relative bg-white"
                                                                       >
-                                                                                <Image
-                                                                                          src="/salogos.svg"
-                                                                                          alt="Ministry Logo"
-                                                                                          fill
-                                                                                          className="object-contain p-2 invert brightness-0"
-                                                                                />
+                                                                                <MinistryLogo className="w-3/4 h-3/4 object-contain" />
                                                                       </div>
                                                                       <div className="text-white">
                                                                                 <p className="font-medium text-sm opacity-90">وزارة التعليم</p>
@@ -134,10 +130,10 @@ export default function TemplateTealFrame({ formData, reportTypeTitle }: Templat
                                                                                           {formData.targetAudience.map((audience, idx) => (
                                                                                                     <span
                                                                                                               key={idx}
-                                                                                                              className="px-3 py-1 rounded-full text-sm"
+                                                                                                              className="inline-flex items-center justify-center px-3 py-1 rounded-full text-sm whitespace-nowrap"
                                                                                                               style={{ backgroundColor: '#E3F5FF', color: '#0F3A3F' }}
                                                                                                     >
-                                                                                                              {audience}
+                                                                                                              {getAudienceLabel(audience)}
                                                                                                     </span>
                                                                                           ))}
                                                                                 </div>
@@ -172,12 +168,12 @@ export default function TemplateTealFrame({ formData, reportTypeTitle }: Templat
                                                                                           {formData.objectives.map((obj, idx) => (
                                                                                                     <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
                                                                                                               <span
-                                                                                                                        className="w-5 h-5 rounded-full flex items-center justify-center text-xs text-white flex-shrink-0 mt-0.5"
+                                                                                                                        className="w-6 h-6 rounded-full flex items-center justify-center text-sm text-white flex-shrink-0 mt-0.5"
                                                                                                                         style={{ backgroundColor: '#00A88F' }}
                                                                                                               >
-                                                                                                                        {idx + 1}
+                                                                                                                        <span className="font-sans leading-[0] pt-[2px]">{getCircledDigit(idx + 1)}</span>
                                                                                                               </span>
-                                                                                                              <span>{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
+                                                                                                              <span className="mt-[2px]">{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
                                                                                                     </li>
                                                                                           ))}
                                                                                 </ul>

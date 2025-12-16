@@ -2,6 +2,8 @@
 
 import { WizardFormData } from "@/stores/wizard-store";
 import Image from "next/image";
+import { MinistryLogo } from "../MinistryLogo";
+import { getAudienceLabel, getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -19,12 +21,7 @@ export default function TemplateMinimalClean({ formData, reportTypeTitle }: Temp
                               <div className="p-8 text-center border-b border-slate-100 relative">
                                         {/* Ministry Logo - Absolute Top Right */}
                                         <div className="absolute top-4 right-4 w-12 h-12 opacity-80">
-                                                  <Image
-                                                            src="/salogos.svg"
-                                                            alt="Ministry Logo"
-                                                            fill
-                                                            className="object-contain"
-                                                  />
+                                                  <MinistryLogo className="w-full h-full object-contain" />
                                         </div>
 
                                         {formData.schoolLogo && (
@@ -99,9 +96,9 @@ export default function TemplateMinimalClean({ formData, reportTypeTitle }: Temp
                                                                       {formData.targetAudience.map((audience, idx) => (
                                                                                 <span
                                                                                           key={idx}
-                                                                                          className="px-4 py-1.5 bg-slate-100 text-slate-600 rounded-full text-sm"
+                                                                                          className="inline-flex items-center justify-center px-4 py-1.5 bg-slate-100 text-slate-600 rounded-full text-sm whitespace-nowrap"
                                                                                 >
-                                                                                          {audience}
+                                                                                          {getAudienceLabel(audience)}
                                                                                 </span>
                                                                       ))}
                                                             </div>
@@ -128,8 +125,8 @@ export default function TemplateMinimalClean({ formData, reportTypeTitle }: Temp
                                                             <div className="space-y-3">
                                                                       {formData.objectives.map((obj, idx) => (
                                                                                 <div key={idx} className="flex items-start gap-4">
-                                                                                          <span className="w-6 h-6 rounded-full bg-[#10B981]/10 text-[#10B981] flex items-center justify-center text-sm font-medium flex-shrink-0">
-                                                                                                    {idx + 1}
+                                                                                          <span className="w-6 h-6 text-[#10B981] flex items-center justify-center text-lg font-medium flex-shrink-0 font-sans">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
                                                                                           <p className="text-slate-600 leading-relaxed">
                                                                                                     {obj.isAIEnhanced ? obj.enhanced : obj.original}

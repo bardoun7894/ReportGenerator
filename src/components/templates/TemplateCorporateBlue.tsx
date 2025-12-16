@@ -12,6 +12,8 @@ import {
           BuildingLibraryIcon,
           PhotoIcon
 } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "../MinistryLogo";
+import { getAudienceLabel, getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -46,15 +48,10 @@ export default function TemplateCorporateBlue({ formData, reportTypeTitle }: Tem
                                                             <div className="flex flex-col">
                                                                       <div className="flex items-center gap-2 mb-1">
                                                                                 <div className="w-8 h-8 relative">
-                                                                                          <Image
-                                                                                                    src="/salogos.svg"
-                                                                                                    alt="Ministry Logo"
-                                                                                                    fill
-                                                                                                    className="object-contain"
-                                                                                          />
+                                                                                          <MinistryLogo className="w-full h-full object-contain" />
                                                                                 </div>
                                                                                 <div>
-                                                                                          <p className="text-xs text-slate-500 uppercase tracking-wider">المملكة العربية السعودية</p>
+                                                                                          <p className="text-xs text-slate-500">المملكة العربية السعودية</p>
                                                                                           <p className="text-sm text-slate-600 font-medium">وزارة التعليم</p>
                                                                                 </div>
                                                                       </div>
@@ -75,7 +72,6 @@ export default function TemplateCorporateBlue({ formData, reportTypeTitle }: Tem
                               <div className="bg-[#f8fafc] py-8 px-8 border-b border-slate-200 relative overflow-hidden">
                                         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#1e293b 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
                                         <div className="relative z-10 text-center">
-                                                  <span className="inline-block px-3 py-1 bg-[#1e293b] text-white text-xs font-bold uppercase tracking-widest mb-3 rounded-sm">تقرير فعالية</span>
                                                   <h1 className="text-3xl md:text-4xl font-black text-[#1e293b] mb-2">{formData.title || 'عنوان الفعالية'}</h1>
                                                   {formData.domain && <p className="text-slate-500 font-medium">{formData.domain}</p>}
                                         </div>
@@ -145,7 +141,7 @@ export default function TemplateCorporateBlue({ formData, reportTypeTitle }: Tem
                                                             <div className="grid grid-cols-1 gap-3">
                                                                       {formData.objectives && formData.objectives.map((obj, idx) => (
                                                                                 <div key={idx} className="flex items-start gap-3 bg-slate-50 p-3 rounded-r-lg border-r-4 border-[#1e293b]">
-                                                                                          <span className="font-bold text-[#3b82f6] text-sm mt-0.5">{String(idx + 1).padStart(2, '0')}</span>
+                                                                                          <span className="font-bold text-[#3b82f6] text-lg font-sans leading-[1.2]">{getCircledDigit(idx + 1)}</span>
                                                                                           <p className="text-sm text-slate-700">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
                                                                                 </div>
                                                                       ))}
@@ -158,8 +154,8 @@ export default function TemplateCorporateBlue({ formData, reportTypeTitle }: Tem
                                                                       <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">الفئة المستهدفة</h3>
                                                                       <div className="flex flex-wrap gap-2">
                                                                                 {formData.targetAudience.map((a, i) => (
-                                                                                          <span key={i} className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-sm border border-slate-200">
-                                                                                                    {a}
+                                                                                          <span key={i} className="inline-flex items-center justify-center px-3 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-sm border border-slate-200 whitespace-nowrap">
+                                                                                                    {getAudienceLabel(a)}
                                                                                           </span>
                                                                                 ))}
                                                                       </div>

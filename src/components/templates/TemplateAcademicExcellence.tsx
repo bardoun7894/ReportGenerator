@@ -12,6 +12,8 @@ import {
           BuildingLibraryIcon,
           PhotoIcon
 } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "../MinistryLogo";
+import { getAudienceLabel, getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -40,12 +42,7 @@ export default function TemplateAcademicExcellence({ formData, reportTypeTitle }
                                         <div className="flex justify-between items-center absolute w-full top-0">
                                                   <div className="text-right flex items-center gap-2">
                                                             <div className="w-10 h-10 relative">
-                                                                      <Image
-                                                                                src="/salogos.svg"
-                                                                                alt="Ministry Logo"
-                                                                                fill
-                                                                                className="object-contain"
-                                                                      />
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
                                                             </div>
                                                             <div>
                                                                       <p className="text-[#881337] font-bold text-sm">المملكة العربية السعودية</p>
@@ -82,11 +79,14 @@ export default function TemplateAcademicExcellence({ formData, reportTypeTitle }
                                                   {/* Objectives */}
                                                   <div className="bg-white p-6 border border-[#e5e7eb] shadow-sm">
                                                             <h3 className="text-[#881337] font-bold text-lg border-b border-[#881337] pb-2 mb-3">الأهداف التعليمية</h3>
-                                                            <ul className="list-disc list-inside space-y-2 text-slate-700 font-serif text-lg">
+                                                            <div className="flex flex-col gap-2">
                                                                       {formData.objectives?.map((obj, idx) => (
-                                                                                <li key={idx}>{obj.isAIEnhanced ? obj.enhanced : obj.original}</li>
+                                                                                <div key={idx} className="flex items-start gap-2">
+                                                                                          <span className="font-sans font-medium text-lg leading-[1.7rem]">{getCircledDigit(idx + 1)}</span>
+                                                                                          <p className="text-slate-700 font-serif text-lg pt-[2px]">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
+                                                                                </div>
                                                                       ))}
-                                                            </ul>
+                                                            </div>
                                                   </div>
                                         </div>
 
@@ -110,7 +110,15 @@ export default function TemplateAcademicExcellence({ formData, reportTypeTitle }
                                                                                 </tr>
                                                                                 <tr>
                                                                                           <td className="p-3 bg-[#fdf2f8] text-[#881337] font-bold">الفئة المستهدفة</td>
-                                                                                          <td className="p-3 text-slate-700">{formData.targetAudience?.join('، ')}</td>
+                                                                                          <td className="p-3">
+                                                                                                    <div className="flex flex-wrap gap-1">
+                                                                                                              {formData.targetAudience?.map((audience, idx) => (
+                                                                                                                        <span key={idx} className="inline-flex items-center justify-center bg-slate-100 px-2 py-0.5 rounded text-sm text-slate-700 whitespace-nowrap">
+                                                                                                                                  {getAudienceLabel(audience)}
+                                                                                                                        </span>
+                                                                                                              ))}
+                                                                                                    </div>
+                                                                                          </td>
                                                                                 </tr>
                                                                       </tbody>
                                                             </table>

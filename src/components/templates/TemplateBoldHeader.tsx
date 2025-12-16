@@ -7,6 +7,8 @@ import {
           UserIcon,
           BuildingLibraryIcon
 } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "../MinistryLogo";
+import { getAudienceLabel, getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -47,12 +49,9 @@ export default function TemplateBoldHeader({ formData, reportTypeTitle }: Templa
 
                                                   {/* Ministry Logo Top Left */}
                                                   <div className="w-16 h-16 relative opacity-80">
-                                                            <Image
-                                                                      src="/salogos.svg"
-                                                                      alt="Ministry Logo"
-                                                                      fill
-                                                                      className="object-contain invert brightness-0"
-                                                            />
+                                                            <div className="bg-white rounded-full p-1 shadow-md w-full h-full overflow-hidden">
+                                                                      <MinistryLogo className="w-full h-full object-contain" />
+                                                            </div>
                                                   </div>
                                         </div>
 
@@ -130,9 +129,9 @@ export default function TemplateBoldHeader({ formData, reportTypeTitle }: Templa
                                                                                 {formData.targetAudience.map((audience, idx) => (
                                                                                           <span
                                                                                                     key={idx}
-                                                                                                    className="px-3 py-1 bg-[#7C3AED]/10 text-[#7C3AED] rounded-full text-sm font-medium"
+                                                                                                    className="inline-flex items-center justify-center px-3 py-1 bg-[#7C3AED]/10 text-[#7C3AED] rounded-full text-sm font-medium whitespace-nowrap"
                                                                                           >
-                                                                                                    {audience}
+                                                                                                    {getAudienceLabel(audience)}
                                                                                           </span>
                                                                                 ))}
                                                                       </div>
@@ -159,8 +158,8 @@ export default function TemplateBoldHeader({ formData, reportTypeTitle }: Templa
                                                                       <div className="space-y-4">
                                                                                 {formData.objectives.map((obj, idx) => (
                                                                                           <div key={idx} className="flex items-start gap-4 pr-2">
-                                                                                                    <div className="w-8 h-8 bg-gradient-to-br from-[#7C3AED] to-[#A78BFA] rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-lg z-10">
-                                                                                                              {idx + 1}
+                                                                                                    <div className="w-8 h-8 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 z-10">
+                                                                                                              <span className="font-sans leading-[0]">{getCircledDigit(idx + 1)}</span>
                                                                                                     </div>
                                                                                                     <div className="bg-white rounded-xl p-4 shadow-sm border border-[#7C3AED]/10 flex-1">
                                                                                                               <p className="text-slate-700">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>

@@ -12,6 +12,8 @@ import {
           PhotoIcon,
           BuildingLibraryIcon
 } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "../MinistryLogo";
+import { getAudienceLabel, getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -42,13 +44,8 @@ export default function TemplateNavyExecutive({ formData, reportTypeTitle }: Tem
                                         <div style={{ backgroundColor: colors.primary, padding: '24px 32px' }}>
                                                   <div className="flex items-center justify-between">
                                                             <div className="flex items-center gap-4">
-                                                                      <div className="w-14 h-14 rounded-full flex items-center justify-center bg-white/15 relative">
-                                                                                <Image
-                                                                                          src="/salogos.svg"
-                                                                                          alt="Ministry Logo"
-                                                                                          fill
-                                                                                          className="object-contain p-2 invert brightness-0"
-                                                                                />
+                                                                      <div className="w-14 h-14 rounded-full flex items-center justify-center bg-white relative overflow-hidden">
+                                                                                <MinistryLogo className="w-3/4 h-3/4 object-contain" />
                                                                       </div>
                                                                       <div className="text-white">
                                                                                 <p className="font-medium text-sm opacity-90">وزارة التعليم</p>
@@ -124,7 +121,7 @@ export default function TemplateNavyExecutive({ formData, reportTypeTitle }: Tem
                                                                                 </div>
                                                                                 <div className="flex flex-wrap gap-2 pr-11">
                                                                                           {formData.targetAudience.map((a, i) => (
-                                                                                                    <span key={i} className="px-3 py-1 rounded-lg text-sm font-medium" style={{ backgroundColor: colors.secondary, color: 'white' }}>{a}</span>
+                                                                                                    <span key={i} className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium whitespace-nowrap" style={{ backgroundColor: colors.secondary, color: 'white' }}>{getAudienceLabel(a)}</span>
                                                                                           ))}
                                                                                 </div>
                                                                       </div>
@@ -153,8 +150,10 @@ export default function TemplateNavyExecutive({ formData, reportTypeTitle }: Tem
                                                                                 <ul className="space-y-2 pr-11">
                                                                                           {formData.objectives.map((obj, idx) => (
                                                                                                     <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                                                                                                              <span className="w-5 h-5 rounded-lg flex items-center justify-center text-xs text-white flex-shrink-0 mt-0.5" style={{ backgroundColor: colors.secondary }}>{idx + 1}</span>
-                                                                                                              <span>{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
+                                                                                                              <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs text-white flex-shrink-0 mt-0.5" style={{ backgroundColor: colors.secondary }}>
+                                                                                                                        <span className="font-sans leading-[0] pt-[2px]">{getCircledDigit(idx + 1)}</span>
+                                                                                                              </span>
+                                                                                                              <span className="mt-[2px]">{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
                                                                                                     </li>
                                                                                           ))}
                                                                                 </ul>

@@ -13,6 +13,8 @@ import {
           StarIcon,
           BuildingLibraryIcon
 } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "../MinistryLogo";
+import { getAudienceLabel, getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -47,13 +49,8 @@ export default function TemplateRoyalPurple({ formData, reportTypeTitle }: Templ
 
                                                   <div className="flex items-center justify-between relative z-10">
                                                             <div className="flex items-center gap-4">
-                                                                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white/15 backdrop-blur-sm relative">
-                                                                                <Image
-                                                                                          src="/salogos.svg"
-                                                                                          alt="Ministry Logo"
-                                                                                          fill
-                                                                                          className="object-contain p-2 invert brightness-0"
-                                                                                />
+                                                                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white relative overflow-hidden">
+                                                                                <MinistryLogo className="w-3/4 h-3/4 object-contain" />
                                                                       </div>
                                                                       <div className="text-white">
                                                                                 <p className="font-medium text-sm opacity-90">وزارة التعليم</p>
@@ -113,7 +110,7 @@ export default function TemplateRoyalPurple({ formData, reportTypeTitle }: Templ
                                                                                 </div>
                                                                                 <div className="flex flex-wrap gap-2 pr-12">
                                                                                           {formData.targetAudience.map((a, i) => (
-                                                                                                    <span key={i} className="px-3 py-1.5 rounded-xl text-sm font-medium text-white" style={{ background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})` }}>{a}</span>
+                                                                                                    <span key={i} className="inline-flex items-center justify-center px-3 py-1.5 rounded-xl text-sm font-medium text-white whitespace-nowrap" style={{ background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})` }}>{getAudienceLabel(a)}</span>
                                                                                           ))}
                                                                                 </div>
                                                                       </div>
@@ -142,8 +139,10 @@ export default function TemplateRoyalPurple({ formData, reportTypeTitle }: Templ
                                                                                 <ul className="space-y-2 pr-12">
                                                                                           {formData.objectives.map((obj, idx) => (
                                                                                                     <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                                                                                                              <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs text-white flex-shrink-0 mt-0.5" style={{ background: `linear-gradient(135deg, ${colors.secondary}, ${colors.primary})` }}>{idx + 1}</span>
-                                                                                                              <span>{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
+                                                                                                              <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs text-white flex-shrink-0 mt-0.5" style={{ background: `linear-gradient(135deg, ${colors.secondary}, ${colors.primary})` }}>
+                                                                                                                        <span className="font-sans leading-[0] pt-[2px]">{getCircledDigit(idx + 1)}</span>
+                                                                                                              </span>
+                                                                                                              <span className="mt-[2px]">{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
                                                                                                     </li>
                                                                                           ))}
                                                                                 </ul>

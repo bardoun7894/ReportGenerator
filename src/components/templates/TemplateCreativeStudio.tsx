@@ -13,6 +13,8 @@ import {
           BuildingLibraryIcon,
           PhotoIcon
 } from "@heroicons/react/24/outline";
+import { MinistryLogo } from "../MinistryLogo";
+import { getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -45,17 +47,12 @@ export default function TemplateCreativeStudio({ formData, reportTypeTitle }: Te
                                                   )}
                                                   <div>
                                                             <div className="flex items-center gap-2">
-                                                                      <div className="w-5 h-5 relative">
-                                                                                <Image
-                                                                                          src="/salogos.svg"
-                                                                                          alt="Ministry Logo"
-                                                                                          fill
-                                                                                          className="object-contain invert brightness-0"
-                                                                                />
+                                                                      <div className="w-10 h-10 relative bg-white/20 rounded-lg p-1">
+                                                                                <MinistryLogo className="w-full h-full object-contain" />
                                                                       </div>
                                                                       <p className="text-xs text-slate-400">وزارة التعليم</p>
                                                             </div>
-                                                            <h2 className="font-bold text-lg">{formData.schoolName}</h2>
+                                                            <h2 className="font-bold text-lg text-white">{formData.schoolName}</h2>
                                                             <p className="text-sm text-slate-400">{formData.educationRegion}</p>
                                                   </div>
                                         </div>
@@ -135,8 +132,8 @@ export default function TemplateCreativeStudio({ formData, reportTypeTitle }: Te
                                                   <ul className="space-y-3">
                                                             {formData.objectives?.map((obj, idx) => (
                                                                       <li key={idx} className="flex items-start gap-3 text-sm text-slate-300">
-                                                                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 flex-shrink-0 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></span>
-                                                                                <span>{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
+                                                                                <span className="w-6 h-6 rounded-full bg-cyan-400 text-black flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-[0_0_10px_rgba(34,211,238,0.5)]"><span className="leading-[0] font-sans">{getCircledDigit(idx + 1)}</span></span>
+                                                                                <span className="mt-0.5">{obj.isAIEnhanced ? obj.enhanced : obj.original}</span>
                                                                       </li>
                                                             ))}
                                                   </ul>
