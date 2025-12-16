@@ -20,6 +20,15 @@ export function getAudienceLabels(audiences: string[]): string[] {
           return audiences.map(getAudienceLabel);
 }
 
+// Helper for Unicode Circled Digits (Solid) ❶ ❷ ❸
+// Range: 1-20 supported by standard fonts
+export function getCircledDigit(n: number): string {
+          if (n >= 1 && n <= 20) {
+                    return String.fromCodePoint(10101 + n); // 10102 is ❶
+          }
+          return `${n}.`; // Fallback
+}
+
 // Parse execution steps from text to array (splits by ١. ٢. ٣. etc or newlines)
 export function parseExecutionSteps(text: string | undefined): string[] {
           if (!text) return [];
@@ -37,6 +46,7 @@ export function parseExecutionSteps(text: string | undefined): string[] {
           // Try to split by Western numbered patterns (1. 2. 3. etc)
           const westernNumberPattern = /\d+\.\s*/g;
           if (westernNumberPattern.test(text)) {
+                    // Split by Western numbers and filter empty
                     const parts = text.split(/\d+\.\s*/).filter(s => s.trim());
                     if (parts.length > 1) return parts.map(s => s.trim());
           }

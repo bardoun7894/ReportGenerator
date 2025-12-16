@@ -2,6 +2,7 @@
 
 import { WizardFormData } from "@/stores/wizard-store";
 import Image from "next/image";
+import { MinistryLogo } from "@/components/MinistryLogo";
 import {
           CalendarDaysIcon,
           MapPinIcon,
@@ -13,7 +14,7 @@ import {
           CameraIcon,
           ListBulletIcon
 } from "@heroicons/react/24/outline";
-import { getAudienceLabel, extractDescription, extractSteps } from "./template-helpers";
+import { getAudienceLabel, extractDescription, extractSteps, getCircledDigit } from "./template-helpers";
 
 interface TemplateProps {
           formData: WizardFormData;
@@ -30,13 +31,8 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                               {/* Header */}
                               <header className="px-4 sm:px-8 md:px-12 py-4 sm:py-6 md:py-8 flex flex-wrap sm:flex-nowrap justify-center sm:justify-between items-start gap-4 border-b-2 border-[#006C35]">
                                         <div className="flex flex-col items-center w-32">
-                                                  <div className="w-24 h-24 relative mb-2">
-                                                            <Image
-                                                                      src="/salogos.svg"
-                                                                      alt="Ministry Logo"
-                                                                      fill
-                                                                      className="object-contain"
-                                                            />
+                                                  <div className="w-24 h-24 relative mb-2 bg-white rounded-lg p-2 filter-none flex items-center justify-center">
+                                                            <MinistryLogo className="w-full h-full object-contain" />
                                                   </div>
                                                   <p className="text-[#006C35] font-bold text-xs text-center">وزارة التعليم</p>
                                                   <p className="text-[#006C35] text-[10px] text-center">Ministry of Education</p>
@@ -46,8 +42,8 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                   <h2 className="text-xl font-bold text-[#006C35] mb-1">{formData.schoolName}</h2>
                                                   <p className="text-gray-600 text-sm mb-6">{formData.educationRegion}</p>
 
-                                                  <div className="inline-block px-12 py-3 bg-[#006C35] text-white rounded-lg shadow-md">
-                                                            <h1 className="text-2xl font-bold">{formData.title}</h1>
+                                                  <div className="relative z-10 mx-auto w-fit px-12 py-3 bg-[#006C35] text-white rounded-lg shadow-md min-w-[200px] flex items-center justify-center">
+                                                            <h1 className="text-2xl font-bold text-white whitespace-pre-wrap">{formData.title || reportTypeTitle || "عنوان التقرير"}</h1>
                                                   </div>
                                         </div>
 
@@ -146,11 +142,11 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                                                                     خطوات التنفيذ
                                                                                           </h4>
                                                                                           {extractSteps(formData.executionSteps).map((step, idx) => (
-                                                                                                    <div key={idx} className="flex gap-2 items-start">
-                                                                                                              <span className="w-5 h-5 bg-[#006C35] text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                                                                                                                        {idx + 1}
+                                                                                                    <div key={idx} className="flex gap-3 items-start">
+                                                                                                              <span className="text-[#006C35] text-2xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                                        {getCircledDigit(idx + 1)}
                                                                                                               </span>
-                                                                                                              <p className="text-gray-700 text-sm leading-relaxed">{step}</p>
+                                                                                                              <p className="text-gray-700 text-sm leading-relaxed pt-1">{step}</p>
                                                                                                     </div>
                                                                                           ))}
                                                                                 </div>
@@ -167,10 +163,10 @@ export default function TemplateShahed({ formData, reportTypeTitle }: TemplatePr
                                                             <div className="grid grid-cols-1 gap-3">
                                                                       {formData.objectives?.map((obj, idx) => (
                                                                                 <div key={idx} className="flex gap-3 items-start bg-[#F9FAFB] p-3 rounded-lg border border-gray-100">
-                                                                                          <span className="w-6 h-6 bg-[#006C35] text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                                                                                                    {idx + 1}
+                                                                                          <span className="text-[#006C35] text-2xl leading-none flex-shrink-0 pt-1 select-none">
+                                                                                                    {getCircledDigit(idx + 1)}
                                                                                           </span>
-                                                                                          <p className="text-gray-700">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
+                                                                                          <p className="text-gray-700 pt-1">{obj.isAIEnhanced ? obj.enhanced : obj.original}</p>
                                                                                 </div>
                                                                       ))}
                                                             </div>
